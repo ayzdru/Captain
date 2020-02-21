@@ -26,7 +26,7 @@
         {
             dockerExplorerTreeView.Items.Clear();
             DockerClient dockerClient = new DockerClientConfiguration(
- new Uri("http://kubernetemaster:4243/"))
+ new Uri("http://kubernetemaster:2375/"))
  .CreateClient();
             IList<ContainerListResponse> containers =await dockerClient.Containers.ListContainersAsync(
       new ContainersListParameters()
@@ -38,14 +38,14 @@
             DockerTreeViewItem childItem1 = new DockerTreeViewItem() { Title = "Containers" };
             foreach (var container in containers)
             {
-                childItem1.Items.Add(new DockerTreeViewItem() { Title = string.Join(",",container.Names) });
+                childItem1.Items.Add(new DockerTreeViewItem() { Title = $"{container.ID} - {container.Image}" });
             }
             root.Items.Add(childItem1);
             var images = await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }); 
             DockerTreeViewItem childItem2 = new DockerTreeViewItem() { Title = "Images" };
             foreach (var image in images)
             {
-                childItem2.Items.Add(new DockerTreeViewItem() { Title = image.ID });
+                childItem2.Items.Add(new DockerTreeViewItem() { Title = string.Join(",", image.RepoTags) });
             }
             root.Items.Add(childItem2);
             dockerExplorerTreeView.Items.Add(root);
