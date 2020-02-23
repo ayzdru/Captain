@@ -50,9 +50,19 @@
     <Compile Include="DockerExplorerToolWindowControl.xaml.cs">
       <DependentUpon>DockerExplorerToolWindowControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BuildImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BuildImageForm.Designer.cs">
+      <DependentUpon>BuildImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\ITreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CaptainDockerPackage.cs" />
+    <Compile Include="ValueObjects\DockerContainerTreeViewItem.cs" />
+    <Compile Include="ValueObjects\DockerImageTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerTreeViewItem.cs" />
+    <Compile Include="ValueObjects\SubNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -78,6 +88,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.202" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.4.1057" />
+    <PackageReference Include="SharpZipLib">
+      <Version>1.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DockerExplorerToolWindowControl.xaml">
@@ -90,6 +103,11 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="Resources\DockerExplorerToolWindowCommand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\BuildImageForm.resx">
+      <DependentUpon>BuildImageForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

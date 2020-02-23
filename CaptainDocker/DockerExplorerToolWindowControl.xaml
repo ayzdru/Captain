@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:valueobjects="clr-namespace:CaptainDocker.ValueObjects"
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
@@ -14,15 +15,47 @@
             <ToolBar DockPanel.Dock="Top" Height="30" VerticalAlignment="Top">
                 <Button x:Name="RefreshButton" Content="Yenile" Click="RefreshButton_ClickAsync" />
                 <Separator  Height="30" Margin="5,0" VerticalAlignment="Top" Width="1"/>
+                <Button x:Name="BuildImageButton" Content="Build Image" Click="BuildImageButton_Click" />
             </ToolBar>
-
-            <TreeView Name="dockerExplorerTreeView">
+            <TreeView x:Name="dockerExplorerTreeView">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerTreeViewItem}" ItemsSource="{Binding ChildNodes}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name, StringFormat='{}{0} '}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerContainerTreeViewItem}" ItemsSource="{Binding ChildNodes}">
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerImageTreeViewItem}" ItemsSource="{Binding ChildNodes}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name, StringFormat='{}{0} '}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type valueobjects:SubNode}" ItemsSource="{Binding ChildNodes}">
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+            <!--<TreeView Name="dockerExplorerTreeView">
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Items}">
-                        <TextBlock Text="{Binding Title}" />
+                    <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerTreeViewItem}" ItemsSource="{Binding Dockers}">
+                        <TextBlock Text="{Binding Name, Mode=TwoWay,    RelativSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Containers}">
+                                <TextBlock Text="Containers"/>
+                                --><!-- leaf will be a SlaveAction --><!--
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
-            </TreeView>
+             
+            </TreeView>-->
         </DockPanel>
     </Grid>
 </UserControl>

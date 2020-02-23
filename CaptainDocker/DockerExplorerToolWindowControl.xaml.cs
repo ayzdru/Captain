@@ -1,5 +1,7 @@
 ﻿namespace CaptainDocker
 {
+    using CaptainDocker.Forms;
+    using CaptainDocker.Interfaces;
     using CaptainDocker.ValueObjects;
     using Docker.DotNet;
     using Docker.DotNet.Models;
@@ -14,17 +16,20 @@
     /// </summary>
     public partial class DockerExplorerToolWindowControl : UserControl
     {
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="DockerExplorerToolWindowControl"/> class.
         /// </summary>
         public DockerExplorerToolWindowControl()
         {
+
             this.InitializeComponent();
+         
+          
         }
 
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)
         {
-            dockerExplorerTreeView.Items.Clear();
             DockerClient dockerClient = new DockerClientConfiguration(
  new Uri("http://kubernetemaster:2375/"))
  .CreateClient();
@@ -34,21 +39,32 @@
           Limit = 10,
       });
 
-            DockerTreeViewItem root = new DockerTreeViewItem() { Title = dockerClient.Configuration.EndpointBaseUri.Host };
-            DockerTreeViewItem childItem1 = new DockerTreeViewItem() { Title = "Containers" };
+            List<DockerTreeViewItem> dockerTreeViewItems = new List<DockerTreeViewItem>();
+            List<ITreeNode> dockerContainerTreeViewItems = new List<ITreeNode>();
             foreach (var container in containers)
             {
-                childItem1.Items.Add(new DockerTreeViewItem() { Title = $"{container.ID} - {container.Image}" });
+                dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { Name = $"{container.ID} - {container.Image}" });
             }
-            root.Items.Add(childItem1);
-            var images = await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }); 
-            DockerTreeViewItem childItem2 = new DockerTreeViewItem() { Title = "Images" };
+            var images = await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true });
+            List<ITreeNode>  dockerImageTreeViewItems = new List<ITreeNode>();
             foreach (var image in images)
             {
-                childItem2.Items.Add(new DockerTreeViewItem() { Title = string.Join(",", image.RepoTags) });
+                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = string.Join(",", image.RepoTags) });
             }
-            root.Items.Add(childItem2);
-            dockerExplorerTreeView.Items.Add(root);
+            var nodes = new List<ITreeNode>
+        {
+            new DockerContainerTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems },
+            new DockerImageTreeViewItem { Name = "Images", ChildNodes = dockerImageTreeViewItems }
+        };
+            DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() { Name = dockerClient.Configuration.EndpointBaseUri.Host, ChildNodes = nodes };
+
+            dockerTreeViewItems.Add(dockerTreeViewItem);
+            dockerExplorerTreeView.ItemsSource = dockerTreeViewItems;
+        }
+
+        private void BuildImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            new BuildImageForm().ShowDialog();
         }
     }
 }
