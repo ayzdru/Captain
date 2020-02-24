@@ -49,7 +49,7 @@
             List<ITreeNode>  dockerImageTreeViewItems = new List<ITreeNode>();
             foreach (var image in images)
             {
-                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = string.Join(",", image.RepoTags) });
+                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = string.Join(",", (image.RepoTags!=null ? image.RepoTags: new string[] { "" })) });
             }
             var nodes = new List<ITreeNode>
         {
