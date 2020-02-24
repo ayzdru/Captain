@@ -62,9 +62,39 @@
             dockerExplorerTreeView.ItemsSource = dockerTreeViewItems;
         }
 
-        private void BuildImageButton_Click(object sender, RoutedEventArgs e)
+       
+        private async void ImagePushContextMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            DockerClient dockerClient = new DockerClientConfiguration(
+ new Uri("http://kubernetemaster:2375/"))
+  .CreateClient();
+            var p = new Progress<JSONMessage>(status =>
+            {
+                Console.WriteLine(status.Status);
+            });
+            await dockerClient.Images.PushImageAsync("kubernetemaster:5000/webapplication4:v1",
+                new ImagePushParameters()
+                {
+
+                },
+                new AuthConfig()
+                {
+                    ServerAddress = "http://kubernetemaster:5000",
+                    Username = "username",
+                    Password = "password"
+                },
+                p);
+
+        }
+
+        private void NewDockerConnectionButton_Click(object sender, RoutedEventArgs e)
         {
             new BuildImageForm().ShowDialog();
+        }
+
+        private void ManageDockerRegistry_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

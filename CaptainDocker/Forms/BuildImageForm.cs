@@ -69,10 +69,28 @@ namespace CaptainDocker.Forms
             return obj as EnvDTE.Project;
         }
 
+
+        private System.Threading.CancellationTokenSource _cts;
+        public System.Threading.CancellationTokenSource Cts { 
+            get
+            {
+                if (_cts == null)
+                {
+                    _cts = new System.Threading.CancellationTokenSource();
+                }
+                return _cts;
+            }
+            set
+            {
+                _cts = value;
+            }
+        }
         public BuildImageForm()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             InitializeComponent();
+            this.buttonFinish.Click += new System.EventHandler(async (s, e) => await this.ButtonFinish_ClickAsync(s, e));
+
             IVsSolution solution = (IVsSolution)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(IVsSolution));
             foreach (Project project in GetProjects(solution))
             {
@@ -89,60 +107,65 @@ namespace CaptainDocker.Forms
         private Stream CreateTarballForDockerfileDirectory(string directory)
         {
             var tarball = new MemoryStream();
-            var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
-            var archive = new TarOutputStream(tarball)
+            var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).ToList();
+            using (var archive = new TarOutputStream(tarball) { IsStreamOwner = false })              
             {
-                //Prevent the TarOutputStream from closing the underlying memory stream when done
-                IsStreamOwner = false
-            };
-
-            foreach (var file in files)
-            {
-
-                //Replacing slashes as KyleGobel suggested and removing leading /
-                string tarName = file.Substring(directory.Length).Replace('\\', '/').TrimStart('/');
-
-                //Let's create the entry header
-                var entry = TarEntry.CreateTarEntry(tarName);
-                var fileStream = File.OpenRead(file);
-                entry.Size = fileStream.Length;
-                archive.PutNextEntry(entry);
-
-                //Now write the bytes of data
-                byte[] localBuffer = new byte[32 * 1024];
-                while (true)
+                files.Add(textBoxDockerfile.Text);
+                foreach (var file in files)
                 {
-                    int numRead = fileStream.Read(localBuffer, 0, localBuffer.Length);
-                    if (numRead <= 0)
-                        break;
 
-                    archive.Write(localBuffer, 0, numRead);
+                    //Replacing slashes as KyleGobel suggested and removing leading /
+                    string tarName = Path.GetFileName(file);
+
+                    //Let's create the entry header
+                    var entry = TarEntry.CreateTarEntry(tarName);
+                    var fileStream = File.OpenRead(file);
+                    entry.Size = fileStream.Length;
+                    archive.PutNextEntry(entry);
+
+                    //Now write the bytes of data
+                    byte[] localBuffer = new byte[32 * 1024];
+                    while (true)
+                    {
+                        int numRead = fileStream.Read(localBuffer, 0, localBuffer.Length);
+                        if (numRead <= 0)
+                            break;
+
+                        archive.Write(localBuffer, 0, numRead);
+                    }
+
+                    //Nothing more to do with this entry
+                    archive.CloseEntry();
                 }
 
-                //Nothing more to do with this entry
-                archive.CloseEntry();
+                archive.Close();
+                tarball.Position = 0;
             }
-            archive.Close();
-
-            //Reset the stream and return it, so it can be used by the caller
-            tarball.Position = 0;
+            
             return tarball;
         }
-        private async void ButtonFinish_ClickAsync(object sender, EventArgs e)
+        private async System.Threading.Tasks.Task ButtonFinish_ClickAsync(object sender, EventArgs e)
         {
+            buttonFinish.Enabled = false;
             DockerClient dockerClient = new DockerClientConfiguration(new Uri("http://kubernetemaster:2375/")).CreateClient();
             var imageBuildParameters = new ImageBuildParameters
             {
-                Dockerfile = "Dockerfile",
+                Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
                 Tags = new List<string> { textBoxName.Text }
             };
-            //C# 8.0 using syntax
-            var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text);
-            var responseStream =await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters);
-            var p = new Progress<JSONMessage>(status =>
-            {
-                Console.WriteLine(status.Status);
-            });
+            using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
+            {             
+                var responseStream =  await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
+            }
+            buttonFinish.Enabled = true;
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Cts.Cancel();
+            Cts.Dispose();
+            Cts = null;
+            buttonFinish.Enabled = true;
         }
     }
 }

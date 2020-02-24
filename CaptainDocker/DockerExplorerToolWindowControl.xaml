@@ -11,12 +11,16 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
     <Grid>
+        
         <DockPanel>
-            <ToolBar DockPanel.Dock="Top" Height="30" VerticalAlignment="Top">
-                <Button x:Name="RefreshButton" Content="Yenile" Click="RefreshButton_ClickAsync" />
-                <Separator  Height="30" Margin="5,0" VerticalAlignment="Top" Width="1"/>
-                <Button x:Name="BuildImageButton" Content="Build Image" Click="BuildImageButton_Click" />
-            </ToolBar>
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar Height="30" VerticalAlignment="Top" >
+                <Button x:Name="refreshButton" Content="Yenile" Click="RefreshButton_ClickAsync" />
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                    <Button x:Name="newDockerConnectionButton" Content="New Docker Connection" Click="NewDockerConnectionButton_Click" />
+                    <Button x:Name="manageDockerRegistry" Content="Manage Docker Registry" Click="ManageDockerRegistry_Click" />
+                </ToolBar>
+            </ToolBarTray>
             <TreeView x:Name="dockerExplorerTreeView">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerTreeViewItem}" ItemsSource="{Binding ChildNodes}">
@@ -32,10 +36,13 @@
                             <TextBlock Text="{Binding Path=Name, StringFormat='{}{0} '}">
                                 <TextBlock.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Menu item 1" />
-                                        <MenuItem Header="Menu item 2" />
+                                        <MenuItem Header="Run" />
+                                        <MenuItem Header="Remove" />
                                         <Separator />
-                                        <MenuItem Header="Menu item 3" />
+                                        <MenuItem x:Name="imagePushContextMenuButton" Header="Push" Click="ImagePushContextMenuButton_Click" />
+                                        <Separator />
+                                        <MenuItem Header="Add Tag" />
+                                        <MenuItem Header="Remove Tag" />
                                     </ContextMenu>
                                 </TextBlock.ContextMenu>
                             </TextBlock>
