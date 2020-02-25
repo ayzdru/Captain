@@ -5,6 +5,9 @@
     using CaptainDocker.ValueObjects;
     using Docker.DotNet;
     using Docker.DotNet.Models;
+    using Microsoft.VisualStudio.Settings;
+    using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Settings;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -22,10 +25,14 @@
         /// </summary>
         public DockerExplorerToolWindowControl()
         {
-
+            ThreadHelper.ThrowIfNotOnUIThread();
             this.InitializeComponent();
-         
-          
+            SettingsManager settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
+            SettingsStore configurationSettingsStore = settingsManager.GetReadOnlySettingsStore(SettingsScope.Configuration);
+            WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+            //userSettingsStore.CreateCollection("Docker");
+            //userSettingsStore.SetString("Docker", "Connections", "asasd");
+            var dd = userSettingsStore.GetString("Docker", "Connections");
         }
 
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)

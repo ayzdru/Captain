@@ -56,9 +56,18 @@
     <Compile Include="Forms\BuildImageForm.Designer.cs">
       <DependentUpon>BuildImageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\NewDockerConnectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewDockerConnectionForm.Designer.cs">
+      <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\ITreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CaptainDockerPackage.cs" />
+    <Compile Include="Settings\DockerConnectionBasicAuthCredentialSetting.cs" />
+    <Compile Include="Settings\DockerConnectionCertificateCredentialSetting.cs" />
+    <Compile Include="Settings\DockerConnectionSetting.cs" />
     <Compile Include="ValueObjects\DockerContainerTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerImageTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerTreeViewItem.cs" />
@@ -90,6 +99,9 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.4.1057" />
     <PackageReference Include="SharpZipLib">
       <Version>1.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>4.7.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
