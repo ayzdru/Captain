@@ -8,6 +8,7 @@ namespace CaptainDocker.Settings
 {
     public class DockerConnectionSetting
     {
+        public string Name { get; set; }
         public string Endpoint { get; set; }
         public DockerConnectionBasicAuthCredentialSetting BasicAuthCredential { get; set; }
         public DockerConnectionCertificateCredentialSetting CertificateCredential { get; set; }
