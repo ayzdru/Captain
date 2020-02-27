@@ -60,7 +60,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(741, 100);
+            this.panel1.Size = new System.Drawing.Size(797, 100);
             this.panel1.TabIndex = 0;
             // 
             // label6
@@ -69,7 +69,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label6.Location = new System.Drawing.Point(0, 98);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(741, 2);
+            this.label6.Size = new System.Drawing.Size(797, 2);
             this.label6.TabIndex = 3;
             this.label6.Text = "label6";
             // 
@@ -87,7 +87,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(123, 51);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(391, 21);
+            this.label2.Size = new System.Drawing.Size(492, 28);
             this.label2.TabIndex = 1;
             this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
             // 
@@ -97,7 +97,7 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.Location = new System.Drawing.Point(120, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 37);
+            this.label1.Size = new System.Drawing.Size(196, 46);
             this.label1.TabIndex = 0;
             this.label1.Text = "Build Image";
             // 
@@ -106,7 +106,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 126);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 21);
+            this.label3.Size = new System.Drawing.Size(68, 28);
             this.label3.TabIndex = 1;
             this.label3.Text = "Name:";
             // 
@@ -116,7 +116,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxName.Location = new System.Drawing.Point(115, 123);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(598, 29);
+            this.textBoxName.Size = new System.Drawing.Size(654, 34);
             this.textBoxName.TabIndex = 2;
             this.textBoxName.Text = "kubernetemaster:5000/webapplication4:v1";
             // 
@@ -126,7 +126,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDirectory.Location = new System.Drawing.Point(115, 163);
             this.textBoxDirectory.Name = "textBoxDirectory";
-            this.textBoxDirectory.Size = new System.Drawing.Size(482, 29);
+            this.textBoxDirectory.Size = new System.Drawing.Size(538, 34);
             this.textBoxDirectory.TabIndex = 4;
             this.textBoxDirectory.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\bin\\Release\\netcorea" +
     "pp3.1\\linux-x64";
@@ -136,7 +136,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 166);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 21);
+            this.label4.Size = new System.Drawing.Size(97, 28);
             this.label4.TabIndex = 3;
             this.label4.Text = "Directory:";
             // 
@@ -149,7 +149,7 @@
             this.panel2.Controls.Add(this.buttonFinish);
             this.panel2.Location = new System.Drawing.Point(0, 250);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(741, 93);
+            this.panel2.Size = new System.Drawing.Size(797, 93);
             this.panel2.TabIndex = 5;
             // 
             // label5
@@ -158,7 +158,7 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Top;
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(741, 2);
+            this.label5.Size = new System.Drawing.Size(797, 2);
             this.label5.TabIndex = 4;
             this.label5.Text = "label5";
             // 
@@ -166,7 +166,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(547, 22);
+            this.buttonCancel.Location = new System.Drawing.Point(603, 22);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(166, 47);
             this.buttonCancel.TabIndex = 2;
@@ -178,7 +178,7 @@
             // 
             this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFinish.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonFinish.Location = new System.Drawing.Point(375, 22);
+            this.buttonFinish.Location = new System.Drawing.Point(431, 22);
             this.buttonFinish.Name = "buttonFinish";
             this.buttonFinish.Size = new System.Drawing.Size(166, 47);
             this.buttonFinish.TabIndex = 1;
@@ -189,7 +189,7 @@
             // 
             this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBrowse.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonBrowse.Location = new System.Drawing.Point(603, 163);
+            this.buttonBrowse.Location = new System.Drawing.Point(659, 163);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(110, 29);
             this.buttonBrowse.TabIndex = 6;
@@ -201,7 +201,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(603, 198);
+            this.button1.Location = new System.Drawing.Point(659, 198);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(110, 29);
             this.button1.TabIndex = 9;
@@ -214,7 +214,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDockerfile.Location = new System.Drawing.Point(115, 198);
             this.textBoxDockerfile.Name = "textBoxDockerfile";
-            this.textBoxDockerfile.Size = new System.Drawing.Size(482, 29);
+            this.textBoxDockerfile.Size = new System.Drawing.Size(538, 34);
             this.textBoxDockerfile.TabIndex = 8;
             this.textBoxDockerfile.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\Dockerfile";
             // 
@@ -223,15 +223,15 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 201);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 21);
+            this.label7.Size = new System.Drawing.Size(104, 28);
             this.label7.TabIndex = 7;
             this.label7.Text = "Dockerfile:";
             // 
             // BuildImageForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(741, 343);
+            this.ClientSize = new System.Drawing.Size(797, 343);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBoxDockerfile);
             this.Controls.Add(this.label7);

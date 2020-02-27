@@ -108,7 +108,7 @@
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.buttonCancel);
             this.panel2.Controls.Add(this.buttonSave);
-            this.panel2.Location = new System.Drawing.Point(0, 493);
+            this.panel2.Location = new System.Drawing.Point(0, 522);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(711, 75);
@@ -120,7 +120,7 @@
             this.label3.Location = new System.Drawing.Point(10, 106);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 17);
+            this.label3.Size = new System.Drawing.Size(60, 23);
             this.label3.TabIndex = 11;
             this.label3.Text = "Name:";
             // 
@@ -151,7 +151,7 @@
             this.label2.Location = new System.Drawing.Point(99, 48);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(331, 17);
+            this.label2.Size = new System.Drawing.Size(431, 23);
             this.label2.TabIndex = 1;
             this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
             // 
@@ -162,7 +162,7 @@
             this.label1.Location = new System.Drawing.Point(95, 11);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(304, 37);
+            this.label1.Size = new System.Drawing.Size(385, 46);
             this.label1.TabIndex = 0;
             this.label1.Text = "New Docker Connection";
             // 
@@ -170,10 +170,10 @@
             // 
             this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxName.Location = new System.Drawing.Point(89, 104);
+            this.textBoxName.Location = new System.Drawing.Point(104, 104);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(601, 25);
+            this.textBoxName.Size = new System.Drawing.Size(586, 29);
             this.textBoxName.TabIndex = 12;
             this.textBoxName.Text = "kubernetemaster";
             // 
@@ -200,17 +200,17 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(676, 355);
+            this.groupBox1.Size = new System.Drawing.Size(676, 386);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(76, 66);
+            this.checkBox1.Location = new System.Drawing.Point(91, 60);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(152, 21);
+            this.checkBox1.Size = new System.Drawing.Size(201, 27);
             this.checkBox1.TabIndex = 16;
             this.checkBox1.Text = "Enable Authentication";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -227,7 +227,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(658, 259);
+            this.groupBox2.Size = new System.Drawing.Size(658, 291);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Authentication";
@@ -239,11 +239,11 @@
             this.groupBox3.Controls.Add(this.textBox2);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Enabled = false;
-            this.groupBox3.Location = new System.Drawing.Point(69, 168);
+            this.groupBox3.Location = new System.Drawing.Point(83, 186);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(585, 80);
+            this.groupBox3.Size = new System.Drawing.Size(571, 80);
             this.groupBox3.TabIndex = 33;
             this.groupBox3.TabStop = false;
             // 
@@ -251,10 +251,10 @@
             // 
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(75, 46);
+            this.textBox3.Location = new System.Drawing.Point(104, 46);
             this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(506, 25);
+            this.textBox3.Size = new System.Drawing.Size(463, 29);
             this.textBox3.TabIndex = 22;
             this.textBox3.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\bin\\Release\\netcorea" +
     "pp3.1\\linux-x64";
@@ -265,7 +265,7 @@
             this.label9.Location = new System.Drawing.Point(6, 49);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(64, 17);
+            this.label9.Size = new System.Drawing.Size(80, 23);
             this.label9.TabIndex = 21;
             this.label9.Text = "Password";
             // 
@@ -273,10 +273,10 @@
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(75, 18);
+            this.textBox2.Location = new System.Drawing.Point(104, 18);
             this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(506, 25);
+            this.textBox2.Size = new System.Drawing.Size(463, 29);
             this.textBox2.TabIndex = 20;
             this.textBox2.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\bin\\Release\\netcorea" +
     "pp3.1\\linux-x64";
@@ -287,7 +287,7 @@
             this.label8.Location = new System.Drawing.Point(6, 20);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 17);
+            this.label8.Size = new System.Drawing.Size(94, 23);
             this.label8.TabIndex = 19;
             this.label8.Text = "UserName:";
             // 
@@ -297,7 +297,7 @@
             this.groupBox4.Controls.Add(this.textBoxDirectory);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Enabled = false;
-            this.groupBox4.Location = new System.Drawing.Point(69, 73);
+            this.groupBox4.Location = new System.Drawing.Point(83, 88);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -312,7 +312,7 @@
             this.buttonBrowse.Location = new System.Drawing.Point(495, 23);
             this.buttonBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(86, 23);
+            this.buttonBrowse.Size = new System.Drawing.Size(72, 31);
             this.buttonBrowse.TabIndex = 19;
             this.buttonBrowse.Text = "Browse...";
             this.buttonBrowse.UseVisualStyleBackColor = true;
@@ -321,10 +321,10 @@
             // 
             this.textBoxDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDirectory.Location = new System.Drawing.Point(74, 23);
+            this.textBoxDirectory.Location = new System.Drawing.Point(104, 25);
             this.textBoxDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDirectory.Name = "textBoxDirectory";
-            this.textBoxDirectory.Size = new System.Drawing.Size(418, 25);
+            this.textBoxDirectory.Size = new System.Drawing.Size(387, 29);
             this.textBoxDirectory.TabIndex = 18;
             this.textBoxDirectory.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\bin\\Release\\netcorea" +
     "pp3.1\\linux-x64";
@@ -335,17 +335,17 @@
             this.label4.Location = new System.Drawing.Point(5, 25);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 17);
+            this.label4.Size = new System.Drawing.Size(91, 23);
             this.label4.TabIndex = 17;
             this.label4.Text = "Certificate:";
             // 
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(69, 136);
+            this.radioButton3.Location = new System.Drawing.Point(84, 155);
             this.radioButton3.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(175, 21);
+            this.radioButton3.Size = new System.Drawing.Size(232, 27);
             this.radioButton3.TabIndex = 31;
             this.radioButton3.Text = "Basic HTTP Authentication";
             this.radioButton3.UseVisualStyleBackColor = true;
@@ -353,10 +353,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(69, 48);
+            this.radioButton2.Location = new System.Drawing.Point(84, 57);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(153, 21);
+            this.radioButton2.Size = new System.Drawing.Size(198, 27);
             this.radioButton2.TabIndex = 30;
             this.radioButton2.Text = "Certificate Credentials";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -365,10 +365,10 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(69, 23);
+            this.radioButton1.Location = new System.Drawing.Point(84, 26);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(145, 21);
+            this.radioButton1.Size = new System.Drawing.Size(184, 27);
             this.radioButton1.TabIndex = 29;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Docker for Windows";
@@ -380,7 +380,7 @@
             this.label7.Location = new System.Drawing.Point(4, 29);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 17);
+            this.label7.Size = new System.Drawing.Size(83, 23);
             this.label7.TabIndex = 13;
             this.label7.Text = "Endpoint:";
             // 
@@ -388,18 +388,18 @@
             // 
             this.textBoxEndpoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEndpoint.Location = new System.Drawing.Point(76, 27);
+            this.textBoxEndpoint.Location = new System.Drawing.Point(91, 27);
             this.textBoxEndpoint.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxEndpoint.Name = "textBoxEndpoint";
-            this.textBoxEndpoint.Size = new System.Drawing.Size(589, 25);
+            this.textBoxEndpoint.Size = new System.Drawing.Size(574, 29);
             this.textBoxEndpoint.TabIndex = 14;
             this.textBoxEndpoint.Text = "http://kubernetemaster:2375/";
             // 
             // NewDockerConnectionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(711, 572);
+            this.ClientSize = new System.Drawing.Size(711, 601);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label3);

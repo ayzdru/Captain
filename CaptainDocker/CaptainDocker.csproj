@@ -50,17 +50,35 @@
     <Compile Include="DockerExplorerToolWindowControl.xaml.cs">
       <DependentUpon>DockerExplorerToolWindowControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AddDockerRegistryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddDockerRegistryForm.Designer.cs">
+      <DependentUpon>AddDockerRegistryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\BuildImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\BuildImageForm.Designer.cs">
       <DependentUpon>BuildImageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ManageDockerRegistryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ManageDockerRegistryForm.Designer.cs">
+      <DependentUpon>ManageDockerRegistryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NewDockerConnectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\NewDockerConnectionForm.Designer.cs">
       <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PushImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PushImageForm.Designer.cs">
+      <DependentUpon>PushImageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ITreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,11 +135,20 @@
     <Content Include="Resources\DockerExplorerToolWindowCommand.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AddDockerRegistryForm.resx">
+      <DependentUpon>AddDockerRegistryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\BuildImageForm.resx">
       <DependentUpon>BuildImageForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ManageDockerRegistryForm.resx">
+      <DependentUpon>ManageDockerRegistryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewDockerConnectionForm.resx">
       <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PushImageForm.resx">
+      <DependentUpon>PushImageForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

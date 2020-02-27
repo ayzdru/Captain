@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CaptainDocker.Forms
+{
+    public partial class ManageDockerRegistryForm : Form
+    {
+        public ManageDockerRegistryForm()
+        {
+            InitializeComponent();
+        }
+
+        private void ManageDockerRegistryForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
