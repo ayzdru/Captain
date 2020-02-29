@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CaptainDocker.ValueObjects
 {
-    public class SubNode : ITreeNode
+    public class DockerImageTitleTreeViewItem : ITreeNode
     {
         public string Name { get; set; }
-        public List<ITreeNode> ChildNodes { get => null; set => throw new System.NotImplementedException(); }
+        public List<ITreeNode> ChildNodes { get; set; }
     }
 }

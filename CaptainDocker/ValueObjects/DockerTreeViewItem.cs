@@ -11,6 +11,7 @@ namespace CaptainDocker.ValueObjects
     public class DockerTreeViewItem : ITreeNode
     {
         public string Name { get; set; }
+        public string EngineApiUrl { get; set; }
         public List<ITreeNode> ChildNodes { get; set; }
     }
 

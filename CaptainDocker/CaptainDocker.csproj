@@ -2,6 +2,8 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -45,16 +47,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Data\Migrations\20200229183626_Initial.cs" />
+    <Compile Include="Data\Migrations\20200229183626_Initial.designer.cs">
+      <DependentUpon>20200229183626_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\20200229192816_DockerConnectionEngineApiUrl.cs" />
+    <Compile Include="Data\Migrations\20200229192816_DockerConnectionEngineApiUrl.designer.cs">
+      <DependentUpon>20200229192816_DockerConnectionEngineApiUrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\20200229212547_DockerRegistry.cs" />
+    <Compile Include="Data\Migrations\20200229212547_DockerRegistry.designer.cs">
+      <DependentUpon>20200229212547_DockerRegistry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="DockerExplorerToolWindow.cs" />
     <Compile Include="DockerExplorerToolWindowCommand.cs" />
     <Compile Include="DockerExplorerToolWindowControl.xaml.cs">
       <DependentUpon>DockerExplorerToolWindowControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddDockerRegistryForm.cs">
+    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\DockerConnection.cs" />
+    <Compile Include="Entities\DockerRegistry.cs" />
+    <Compile Include="Forms\DockerRegistryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddDockerRegistryForm.Designer.cs">
-      <DependentUpon>AddDockerRegistryForm.cs</DependentUpon>
+    <Compile Include="Forms\DockerRegistryForm.Designer.cs">
+      <DependentUpon>DockerRegistryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BaseForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\BuildImageForm.cs">
       <SubType>Form</SubType>
@@ -89,7 +111,7 @@
     <Compile Include="ValueObjects\DockerContainerTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerImageTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerTreeViewItem.cs" />
-    <Compile Include="ValueObjects\SubNode.cs" />
+    <Compile Include="ValueObjects\DockerImageTitleTreeViewItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -113,13 +135,26 @@
     <PackageReference Include="Docker.DotNet">
       <Version>3.125.2</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.202" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore">
+      <Version>2.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer">
+      <Version>2.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <Version>2.1.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.204" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.4.1057" />
     <PackageReference Include="SharpZipLib">
       <Version>1.2.0</Version>
     </PackageReference>
-    <PackageReference Include="System.Text.Json">
-      <Version>4.7.1</Version>
+    <PackageReference Include="System.ComponentModel.Annotations">
+      <Version>4.4.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -135,8 +170,8 @@
     <Content Include="Resources\DockerExplorerToolWindowCommand.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\AddDockerRegistryForm.resx">
-      <DependentUpon>AddDockerRegistryForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DockerRegistryForm.resx">
+      <DependentUpon>DockerRegistryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BuildImageForm.resx">
       <DependentUpon>BuildImageForm.cs</DependentUpon>
@@ -150,6 +185,9 @@
     <EmbeddedResource Include="Forms\PushImageForm.resx">
       <DependentUpon>PushImageForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Configurations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

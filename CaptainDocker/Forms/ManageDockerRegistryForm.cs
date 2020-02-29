@@ -10,14 +10,34 @@ using System.Windows.Forms;
 
 namespace CaptainDocker.Forms
 {
-    public partial class ManageDockerRegistryForm : Form
+    public partial class ManageDockerRegistryForm : BaseForm
     {
         public ManageDockerRegistryForm()
         {
             InitializeComponent();
         }
 
-        private void ManageDockerRegistryForm_Load(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ButtonOk_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ButtonAdd_Click(object sender, EventArgs e)
+        {
+            new DockerRegistryForm().ShowDialog();
+        }
+
+        private void ButtonRemove_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ButtonEdit_Click(object sender, EventArgs e)
         {
 
         }

@@ -89,7 +89,6 @@ namespace CaptainDocker.Forms
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             InitializeComponent();
-            this.buttonFinish.Click += new System.EventHandler(async (s, e) => await this.ButtonFinish_ClickAsync(s, e));
 
             IVsSolution solution = (IVsSolution)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(IVsSolution));
             foreach (Project project in GetProjects(solution))
@@ -97,11 +96,18 @@ namespace CaptainDocker.Forms
 
             }
         }
-        private void ButtonBrowse_Click(object sender, EventArgs e)
+        private void ButtonDirectoryBrowse_Click(object sender, EventArgs e)
         {
            if( folderBrowserDialogDirectory.ShowDialog() == DialogResult.OK)
             {
                 textBoxDirectory.Text = folderBrowserDialogDirectory.SelectedPath;
+            }
+        }
+        private void ButtonDockerfileBrowse_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogDockerfile.ShowDialog() == DialogResult.OK)
+            {
+                textBoxDockerfile.Text = openFileDialogDockerfile.FileName;
             }
         }
         private Stream CreateTarballForDockerfileDirectory(string directory)
@@ -144,7 +150,7 @@ namespace CaptainDocker.Forms
             
             return tarball;
         }
-        private async System.Threading.Tasks.Task ButtonFinish_ClickAsync(object sender, EventArgs e)
+        private async void ButtonFinish_Click(object sender, EventArgs e)
         {
             buttonFinish.Enabled = false;
             DockerClient dockerClient = new DockerClientConfiguration(new Uri("http://kubernetemaster:2375/")).CreateClient();
@@ -160,12 +166,12 @@ namespace CaptainDocker.Forms
             buttonFinish.Enabled = true;
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             Cts.Cancel();
             Cts.Dispose();
             Cts = null;
             buttonFinish.Enabled = true;
-        }
+        }       
     }
 }
