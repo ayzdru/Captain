@@ -42,7 +42,7 @@ namespace CaptainDocker.Forms
 
         private void CheckBoxLoginRequired_CheckedChanged(object sender, EventArgs e)
         {
-            groupBoxLogin.Enabled = checkBoxLoginRequired.Enabled;
+            groupBoxLogin.Enabled = checkBoxLoginRequired.Checked;
         }
 
     }

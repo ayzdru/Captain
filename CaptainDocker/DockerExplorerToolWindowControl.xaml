@@ -53,7 +53,7 @@
                         <TextBlock Text="{Binding Path=Name}">
                             <TextBlock.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem x:Name="buildImageMenuItem" Header="Build Image" Click="BuildImageMenuItem_Click"  />
+                                    <MenuItem x:Name="buildImageMenuItem" Header="Build Image" Click="BuildImageMenuItem_Click" Tag="{Binding Path=DockerConnectionId}"  />
                                 </ContextMenu>
                             </TextBlock.ContextMenu>
                         </TextBlock>

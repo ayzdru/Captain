@@ -63,7 +63,7 @@
                     var nodes = new List<ITreeNode>
         {
             new DockerContainerTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems },
-            new DockerImageTitleTreeViewItem { Name = "Images", ChildNodes = dockerImageTreeViewItems }
+            new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = dockerImageTreeViewItems }
         };
                     DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() { Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = nodes };
 
@@ -112,7 +112,9 @@
 
         private void BuildImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new BuildImageForm().ShowDialog();
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var dockerConnectionId = Guid.Parse(menuItem.Tag.ToString());
+            new BuildImageForm(dockerConnectionId).ShowDialog();
         }
 
         private void PushImageMenuItem_Click(object sender, RoutedEventArgs e)

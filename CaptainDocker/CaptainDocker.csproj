@@ -112,6 +112,7 @@
     <Compile Include="ValueObjects\DockerImageTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerImageTitleTreeViewItem.cs" />
+    <Compile Include="ValueObjects\SelectListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">

@@ -61,7 +61,7 @@
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(584, 2);
+            this.label5.Size = new System.Drawing.Size(632, 2);
             this.label5.TabIndex = 4;
             this.label5.Text = "label5";
             // 
@@ -69,7 +69,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(608, 1);
+            this.buttonCancel.Location = new System.Drawing.Point(656, 1);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(129, 38);
@@ -84,17 +84,17 @@
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.buttonCancel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 292);
+            this.panel2.Location = new System.Drawing.Point(0, 300);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(584, 50);
+            this.panel2.Size = new System.Drawing.Size(632, 50);
             this.panel2.TabIndex = 15;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(437, 9);
+            this.button1.Location = new System.Drawing.Point(485, 9);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(129, 30);
@@ -107,7 +107,7 @@
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonSave.Location = new System.Drawing.Point(304, 9);
+            this.buttonSave.Location = new System.Drawing.Point(352, 9);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(129, 30);
@@ -122,7 +122,7 @@
             this.label3.Location = new System.Drawing.Point(10, 99);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 17);
+            this.label3.Size = new System.Drawing.Size(60, 23);
             this.label3.TabIndex = 11;
             this.label3.Text = "Name:";
             // 
@@ -133,7 +133,7 @@
             this.label6.Location = new System.Drawing.Point(0, 78);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(584, 2);
+            this.label6.Size = new System.Drawing.Size(632, 2);
             this.label6.TabIndex = 3;
             this.label6.Text = "label6";
             // 
@@ -153,18 +153,18 @@
             this.label2.Location = new System.Drawing.Point(97, 48);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(331, 17);
+            this.label2.Size = new System.Drawing.Size(431, 23);
             this.label2.TabIndex = 1;
             this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(93, 11);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(94, 7);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(201, 37);
+            this.label1.Size = new System.Drawing.Size(226, 41);
             this.label1.TabIndex = 0;
             this.label1.Text = "Docker Registry";
             // 
@@ -175,7 +175,7 @@
             this.textBoxName.Location = new System.Drawing.Point(89, 96);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(477, 25);
+            this.textBoxName.Size = new System.Drawing.Size(525, 29);
             this.textBoxName.TabIndex = 12;
             // 
             // panel1
@@ -188,16 +188,16 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(584, 80);
+            this.panel1.Size = new System.Drawing.Size(632, 80);
             this.panel1.TabIndex = 10;
             // 
             // checkBoxLoginRequired
             // 
             this.checkBoxLoginRequired.AutoSize = true;
-            this.checkBoxLoginRequired.Location = new System.Drawing.Point(89, 154);
+            this.checkBoxLoginRequired.Location = new System.Drawing.Point(89, 158);
             this.checkBoxLoginRequired.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxLoginRequired.Name = "checkBoxLoginRequired";
-            this.checkBoxLoginRequired.Size = new System.Drawing.Size(116, 21);
+            this.checkBoxLoginRequired.Size = new System.Drawing.Size(147, 27);
             this.checkBoxLoginRequired.TabIndex = 16;
             this.checkBoxLoginRequired.Text = "Login Required";
             this.checkBoxLoginRequired.UseVisualStyleBackColor = true;
@@ -212,21 +212,21 @@
             this.groupBoxLogin.Controls.Add(this.label4);
             this.groupBoxLogin.Controls.Add(this.textBoxUsername);
             this.groupBoxLogin.Enabled = false;
-            this.groupBoxLogin.Location = new System.Drawing.Point(89, 179);
+            this.groupBoxLogin.Location = new System.Drawing.Point(89, 183);
             this.groupBoxLogin.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxLogin.Name = "groupBoxLogin";
             this.groupBoxLogin.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxLogin.Size = new System.Drawing.Size(477, 95);
+            this.groupBoxLogin.Size = new System.Drawing.Size(525, 101);
             this.groupBoxLogin.TabIndex = 17;
             this.groupBoxLogin.TabStop = false;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 56);
+            this.label7.Location = new System.Drawing.Point(4, 60);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 17);
+            this.label7.Size = new System.Drawing.Size(84, 23);
             this.label7.TabIndex = 15;
             this.label7.Text = "Password:";
             // 
@@ -234,10 +234,10 @@
             // 
             this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPassword.Location = new System.Drawing.Point(81, 53);
+            this.textBoxPassword.Location = new System.Drawing.Point(99, 57);
             this.textBoxPassword.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(392, 25);
+            this.textBoxPassword.Size = new System.Drawing.Size(409, 29);
             this.textBoxPassword.TabIndex = 16;
             // 
             // label4
@@ -246,7 +246,7 @@
             this.label4.Location = new System.Drawing.Point(4, 27);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 17);
+            this.label4.Size = new System.Drawing.Size(91, 23);
             this.label4.TabIndex = 13;
             this.label4.Text = "Username:";
             // 
@@ -254,19 +254,19 @@
             // 
             this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUsername.Location = new System.Drawing.Point(81, 24);
+            this.textBoxUsername.Location = new System.Drawing.Point(99, 24);
             this.textBoxUsername.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(392, 25);
+            this.textBoxUsername.Size = new System.Drawing.Size(409, 29);
             this.textBoxUsername.TabIndex = 14;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 128);
+            this.label8.Location = new System.Drawing.Point(10, 132);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 17);
+            this.label8.Size = new System.Drawing.Size(74, 23);
             this.label8.TabIndex = 18;
             this.label8.Text = "Address:";
             // 
@@ -274,17 +274,17 @@
             // 
             this.textBoxAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxAddress.Location = new System.Drawing.Point(89, 125);
+            this.textBoxAddress.Location = new System.Drawing.Point(89, 129);
             this.textBoxAddress.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxAddress.Name = "textBoxAddress";
-            this.textBoxAddress.Size = new System.Drawing.Size(477, 25);
+            this.textBoxAddress.Size = new System.Drawing.Size(525, 29);
             this.textBoxAddress.TabIndex = 19;
             // 
             // DockerRegistryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 342);
+            this.ClientSize = new System.Drawing.Size(632, 350);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.groupBoxLogin);

@@ -56,7 +56,7 @@
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(584, 2);
+            this.label5.Size = new System.Drawing.Size(632, 2);
             this.label5.TabIndex = 4;
             this.label5.Text = "label5";
             // 
@@ -64,7 +64,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(444, 9);
+            this.buttonCancel.Location = new System.Drawing.Point(492, 9);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(129, 30);
@@ -77,7 +77,7 @@
             // 
             this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFinish.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonFinish.Location = new System.Drawing.Point(310, 9);
+            this.buttonFinish.Location = new System.Drawing.Point(358, 9);
             this.buttonFinish.Margin = new System.Windows.Forms.Padding(2);
             this.buttonFinish.Name = "buttonFinish";
             this.buttonFinish.Size = new System.Drawing.Size(129, 30);
@@ -95,7 +95,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 515);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(584, 50);
+            this.panel2.Size = new System.Drawing.Size(632, 50);
             this.panel2.TabIndex = 15;
             // 
             // label6
@@ -105,7 +105,7 @@
             this.label6.Location = new System.Drawing.Point(0, 78);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(584, 2);
+            this.label6.Size = new System.Drawing.Size(632, 2);
             this.label6.TabIndex = 3;
             this.label6.Text = "label6";
             // 
@@ -122,21 +122,21 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(97, 48);
+            this.label2.Location = new System.Drawing.Point(99, 49);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(331, 17);
+            this.label2.Size = new System.Drawing.Size(431, 23);
             this.label2.TabIndex = 1;
             this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(93, 11);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(95, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(305, 37);
+            this.label1.Size = new System.Drawing.Size(342, 41);
             this.label1.TabIndex = 0;
             this.label1.Text = "Manage Docker Registry";
             // 
@@ -150,13 +150,15 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(584, 80);
+            this.panel1.Size = new System.Drawing.Size(632, 80);
             this.panel1.TabIndex = 10;
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -171,7 +173,7 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(433, 398);
+            this.dataGridView1.Size = new System.Drawing.Size(478, 398);
             this.dataGridView1.TabIndex = 16;
             // 
             // RegistryColumn
@@ -192,7 +194,7 @@
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAdd.Location = new System.Drawing.Point(446, 104);
+            this.buttonAdd.Location = new System.Drawing.Point(494, 104);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(129, 38);
@@ -206,7 +208,7 @@
             this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonEdit.Enabled = false;
             this.buttonEdit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonEdit.Location = new System.Drawing.Point(446, 147);
+            this.buttonEdit.Location = new System.Drawing.Point(494, 147);
             this.buttonEdit.Margin = new System.Windows.Forms.Padding(2);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(129, 38);
@@ -220,7 +222,7 @@
             this.buttonRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRemove.Enabled = false;
             this.buttonRemove.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonRemove.Location = new System.Drawing.Point(446, 190);
+            this.buttonRemove.Location = new System.Drawing.Point(494, 190);
             this.buttonRemove.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(129, 38);
@@ -231,9 +233,9 @@
             // 
             // ManageDockerRegistryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 565);
+            this.ClientSize = new System.Drawing.Size(632, 565);
             this.Controls.Add(this.buttonRemove);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel2);

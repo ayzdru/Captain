@@ -70,14 +70,14 @@
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(584, 2);
+            this.label5.Size = new System.Drawing.Size(632, 2);
             this.label5.TabIndex = 4;
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(434, 13);
+            this.buttonCancel.Location = new System.Drawing.Point(482, 13);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(129, 30);
@@ -90,7 +90,7 @@
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonSave.Location = new System.Drawing.Point(301, 13);
+            this.buttonSave.Location = new System.Drawing.Point(349, 13);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(129, 30);
@@ -108,7 +108,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 476);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(584, 50);
+            this.panel2.Size = new System.Drawing.Size(632, 50);
             this.panel2.TabIndex = 15;
             // 
             // label3
@@ -117,7 +117,7 @@
             this.label3.Location = new System.Drawing.Point(10, 106);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 17);
+            this.label3.Size = new System.Drawing.Size(60, 23);
             this.label3.TabIndex = 11;
             this.label3.Text = "Name:";
             // 
@@ -128,7 +128,7 @@
             this.label6.Location = new System.Drawing.Point(0, 78);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(584, 2);
+            this.label6.Size = new System.Drawing.Size(632, 2);
             this.label6.TabIndex = 3;
             // 
             // pictureBox1
@@ -147,7 +147,7 @@
             this.label2.Location = new System.Drawing.Point(99, 48);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(331, 17);
+            this.label2.Size = new System.Drawing.Size(431, 23);
             this.label2.TabIndex = 1;
             this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
             // 
@@ -158,7 +158,7 @@
             this.label1.Location = new System.Drawing.Point(95, 11);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(304, 37);
+            this.label1.Size = new System.Drawing.Size(385, 46);
             this.label1.TabIndex = 0;
             this.label1.Text = "New Docker Connection";
             // 
@@ -166,10 +166,10 @@
             // 
             this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxName.Location = new System.Drawing.Point(114, 104);
+            this.textBoxName.Location = new System.Drawing.Point(146, 104);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(449, 25);
+            this.textBoxName.Size = new System.Drawing.Size(465, 29);
             this.textBoxName.TabIndex = 12;
             // 
             // panel1
@@ -182,17 +182,17 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(584, 80);
+            this.panel1.Size = new System.Drawing.Size(632, 80);
             this.panel1.TabIndex = 10;
             // 
             // checkBoxEnableAuthentication
             // 
             this.checkBoxEnableAuthentication.AutoSize = true;
             this.checkBoxEnableAuthentication.Enabled = false;
-            this.checkBoxEnableAuthentication.Location = new System.Drawing.Point(114, 162);
+            this.checkBoxEnableAuthentication.Location = new System.Drawing.Point(146, 166);
             this.checkBoxEnableAuthentication.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxEnableAuthentication.Name = "checkBoxEnableAuthentication";
-            this.checkBoxEnableAuthentication.Size = new System.Drawing.Size(243, 21);
+            this.checkBoxEnableAuthentication.Size = new System.Drawing.Size(320, 27);
             this.checkBoxEnableAuthentication.TabIndex = 20;
             this.checkBoxEnableAuthentication.Text = "Enable Authentication (Coming Soon)";
             this.checkBoxEnableAuthentication.UseVisualStyleBackColor = true;
@@ -208,11 +208,11 @@
             this.groupBoxAuthentication.Controls.Add(this.radioButton2);
             this.groupBoxAuthentication.Controls.Add(this.radioButton1);
             this.groupBoxAuthentication.Enabled = false;
-            this.groupBoxAuthentication.Location = new System.Drawing.Point(114, 187);
+            this.groupBoxAuthentication.Location = new System.Drawing.Point(146, 197);
             this.groupBoxAuthentication.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxAuthentication.Name = "groupBoxAuthentication";
             this.groupBoxAuthentication.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxAuthentication.Size = new System.Drawing.Size(449, 269);
+            this.groupBoxAuthentication.Size = new System.Drawing.Size(465, 261);
             this.groupBoxAuthentication.TabIndex = 19;
             this.groupBoxAuthentication.TabStop = false;
             this.groupBoxAuthentication.Text = "Authentication";
@@ -230,7 +230,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(439, 80);
+            this.groupBox3.Size = new System.Drawing.Size(455, 80);
             this.groupBox3.TabIndex = 33;
             this.groupBox3.TabStop = false;
             // 
@@ -241,7 +241,7 @@
             this.textBox3.Location = new System.Drawing.Point(104, 46);
             this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(331, 25);
+            this.textBox3.Size = new System.Drawing.Size(347, 29);
             this.textBox3.TabIndex = 22;
             // 
             // label9
@@ -250,7 +250,7 @@
             this.label9.Location = new System.Drawing.Point(6, 49);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(64, 17);
+            this.label9.Size = new System.Drawing.Size(80, 23);
             this.label9.TabIndex = 21;
             this.label9.Text = "Password";
             // 
@@ -261,7 +261,7 @@
             this.textBox2.Location = new System.Drawing.Point(104, 18);
             this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(331, 25);
+            this.textBox2.Size = new System.Drawing.Size(347, 29);
             this.textBox2.TabIndex = 20;
             // 
             // label8
@@ -270,7 +270,7 @@
             this.label8.Location = new System.Drawing.Point(6, 20);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 17);
+            this.label8.Size = new System.Drawing.Size(94, 23);
             this.label8.TabIndex = 19;
             this.label8.Text = "UserName:";
             // 
@@ -286,7 +286,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(439, 63);
+            this.groupBox4.Size = new System.Drawing.Size(455, 63);
             this.groupBox4.TabIndex = 32;
             this.groupBox4.TabStop = false;
             // 
@@ -294,7 +294,7 @@
             // 
             this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBrowse.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonBrowse.Location = new System.Drawing.Point(349, 23);
+            this.buttonBrowse.Location = new System.Drawing.Point(365, 23);
             this.buttonBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(86, 30);
@@ -309,7 +309,7 @@
             this.textBoxDirectory.Location = new System.Drawing.Point(104, 25);
             this.textBoxDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDirectory.Name = "textBoxDirectory";
-            this.textBoxDirectory.Size = new System.Drawing.Size(241, 25);
+            this.textBoxDirectory.Size = new System.Drawing.Size(257, 29);
             this.textBoxDirectory.TabIndex = 18;
             // 
             // label4
@@ -318,7 +318,7 @@
             this.label4.Location = new System.Drawing.Point(5, 25);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 17);
+            this.label4.Size = new System.Drawing.Size(91, 23);
             this.label4.TabIndex = 17;
             this.label4.Text = "Certificate:";
             // 
@@ -328,7 +328,7 @@
             this.radioButton3.Location = new System.Drawing.Point(6, 145);
             this.radioButton3.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(175, 21);
+            this.radioButton3.Size = new System.Drawing.Size(232, 27);
             this.radioButton3.TabIndex = 31;
             this.radioButton3.Text = "Basic HTTP Authentication";
             this.radioButton3.UseVisualStyleBackColor = true;
@@ -339,7 +339,7 @@
             this.radioButton2.Location = new System.Drawing.Point(7, 53);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(153, 21);
+            this.radioButton2.Size = new System.Drawing.Size(198, 27);
             this.radioButton2.TabIndex = 30;
             this.radioButton2.Text = "Certificate Credentials";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -351,7 +351,7 @@
             this.radioButton1.Location = new System.Drawing.Point(7, 22);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(145, 21);
+            this.radioButton1.Size = new System.Drawing.Size(184, 27);
             this.radioButton1.TabIndex = 29;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Docker for Windows";
@@ -360,10 +360,10 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 136);
+            this.label7.Location = new System.Drawing.Point(9, 140);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(99, 17);
+            this.label7.Size = new System.Drawing.Size(132, 23);
             this.label7.TabIndex = 17;
             this.label7.Text = "Engine API URL:";
             // 
@@ -371,17 +371,17 @@
             // 
             this.textBoxEngineApiUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEngineApiUrl.Location = new System.Drawing.Point(114, 133);
+            this.textBoxEngineApiUrl.Location = new System.Drawing.Point(146, 137);
             this.textBoxEngineApiUrl.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxEngineApiUrl.Name = "textBoxEngineApiUrl";
-            this.textBoxEngineApiUrl.Size = new System.Drawing.Size(449, 25);
+            this.textBoxEngineApiUrl.Size = new System.Drawing.Size(465, 29);
             this.textBoxEngineApiUrl.TabIndex = 18;
             // 
             // NewDockerConnectionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 526);
+            this.ClientSize = new System.Drawing.Size(632, 526);
             this.Controls.Add(this.checkBoxEnableAuthentication);
             this.Controls.Add(this.groupBoxAuthentication);
             this.Controls.Add(this.label7);

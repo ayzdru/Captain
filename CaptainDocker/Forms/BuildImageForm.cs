@@ -1,4 +1,7 @@
-﻿using Docker.DotNet;
+﻿using CaptainDocker.Data;
+using CaptainDocker.Entities;
+using CaptainDocker.ValueObjects;
+using Docker.DotNet;
 using Docker.DotNet.Models;
 using EnvDTE;
 using ICSharpCode.SharpZipLib.Tar;
@@ -20,8 +23,9 @@ using System.Windows.Forms;
 
 namespace CaptainDocker.Forms
 {
-    public partial class BuildImageForm : Form
+    public partial class BuildImageForm : BaseForm
     {
+        
         public static IEnumerable<EnvDTE.Project> GetProjects(IVsSolution solution)
         {
             foreach (IVsHierarchy hier in GetProjectsInSolution(solution))
@@ -85,8 +89,10 @@ namespace CaptainDocker.Forms
                 _cts = value;
             }
         }
-        public BuildImageForm()
+        public Guid DockerConnectionId { get; set; }
+        public BuildImageForm(Guid dockerConnectionId)
         {
+            DockerConnectionId = dockerConnectionId;
             ThreadHelper.ThrowIfNotOnUIThread();
             InitializeComponent();
 
@@ -172,6 +178,26 @@ namespace CaptainDocker.Forms
             Cts.Dispose();
             Cts = null;
             buttonFinish.Enabled = true;
-        }       
+        }
+      
+        private void BuildImageForm_Load(object sender, EventArgs e)
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var dockerConnections = dbContext.DockerConnections.Select(d => new SelectListItem{ Text = $"{d.Name} - {d.EngineApiUrl}", Value = d.Id }).ToList();
+                comboBoxDockerEngine.DataSource = dockerConnections;
+                int index = 0;
+                foreach (SelectListItem item in comboBoxDockerEngine.Items)
+                {
+                   if(item.Value == DockerConnectionId)
+                    {
+                        comboBoxDockerEngine.SelectedIndex = index;
+                        break;
+                    }
+                    index++;
+                }
+            }
+          
+        }
     }
 }
