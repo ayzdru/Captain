@@ -40,7 +40,7 @@
                                         <MenuItem Header="Run" />
                                         <MenuItem Header="Remove" />
                                         <Separator />
-                                        <MenuItem x:Name="pushImageMenuItem" Header="Push Image" Click="PushImageMenuItem_Click" />
+                                        <MenuItem x:Name="pushImageMenuItem" Header="Push Image" Click="PushImageMenuItem_Click" Tag="{Binding Path=DockerConnectionId}"/>
                                         <Separator />
                                         <MenuItem Header="Add Tag" />
                                         <MenuItem Header="Remove Tag" />

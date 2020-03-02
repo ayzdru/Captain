@@ -119,7 +119,9 @@
 
         private void PushImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new PushImageForm().ShowDialog();
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var dockerConnectionId = Guid.Parse(menuItem.Tag.ToString());
+            new PushImageForm(dockerConnectionId).ShowDialog();
         }
       
     }

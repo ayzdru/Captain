@@ -1,5 +1,6 @@
 ﻿using CaptainDocker.Data;
 using CaptainDocker.Entities;
+using CaptainDocker.Extensions;
 using CaptainDocker.ValueObjects;
 using Docker.DotNet;
 using Docker.DotNet.Models;
@@ -184,18 +185,9 @@ namespace CaptainDocker.Forms
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var dockerConnections = dbContext.DockerConnections.Select(d => new SelectListItem{ Text = $"{d.Name} - {d.EngineApiUrl}", Value = d.Id }).ToList();
+                var dockerConnections = dbContext.DockerConnections.GetComboBoxItems().ToList();
                 comboBoxDockerEngine.DataSource = dockerConnections;
-                int index = 0;
-                foreach (SelectListItem item in comboBoxDockerEngine.Items)
-                {
-                   if(item.Value == DockerConnectionId)
-                    {
-                        comboBoxDockerEngine.SelectedIndex = index;
-                        break;
-                    }
-                    index++;
-                }
+                comboBoxDockerEngine.SelectById(DockerConnectionId);
             }
           
         }

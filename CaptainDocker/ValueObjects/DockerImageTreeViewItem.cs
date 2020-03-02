@@ -10,6 +10,7 @@ namespace CaptainDocker.ValueObjects
     public class DockerImageTreeViewItem : ITreeNode
     {
         public string Name { get; set; }
+        public Guid DockerConnectionId { get; set; }
         public List<ITreeNode> ChildNodes { get; set; }
     }
 }

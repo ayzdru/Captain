@@ -69,6 +69,9 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\DockerConnection.cs" />
     <Compile Include="Entities\DockerRegistry.cs" />
+    <Compile Include="Extensions\ComboBoxExtension.cs" />
+    <Compile Include="Extensions\DockerRegistryExtension.cs" />
+    <Compile Include="Extensions\DockerConnectionExtensions.cs" />
     <Compile Include="Forms\DockerRegistryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +138,9 @@
   <ItemGroup>
     <PackageReference Include="Docker.DotNet">
       <Version>3.125.2</Version>
+    </PackageReference>
+    <PackageReference Include="Docker.Registry.DotNet">
+      <Version>1.0.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore">
       <Version>2.1.0</Version>
