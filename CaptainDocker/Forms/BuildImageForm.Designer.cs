@@ -94,7 +94,7 @@
             this.label2.Location = new System.Drawing.Point(98, 50);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(331, 17);
+            this.label2.Size = new System.Drawing.Size(431, 23);
             this.label2.TabIndex = 1;
             this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
             // 
@@ -105,7 +105,7 @@
             this.label1.Location = new System.Drawing.Point(95, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 32);
+            this.label1.Size = new System.Drawing.Size(175, 41);
             this.label1.TabIndex = 0;
             this.label1.Text = "Build Image";
             // 
@@ -115,7 +115,7 @@
             this.label3.Location = new System.Drawing.Point(11, 133);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 17);
+            this.label3.Size = new System.Drawing.Size(60, 23);
             this.label3.TabIndex = 1;
             this.label3.Text = "Name:";
             // 
@@ -126,9 +126,9 @@
             this.textBoxName.Location = new System.Drawing.Point(142, 131);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(480, 25);
+            this.textBoxName.Size = new System.Drawing.Size(480, 29);
             this.textBoxName.TabIndex = 2;
-            this.textBoxName.Text = "webapplication4:v2";
+            this.textBoxName.Text = "kubernetemaster:5000/webapplication9:v5";
             // 
             // textBoxDirectory
             // 
@@ -137,10 +137,10 @@
             this.textBoxDirectory.Location = new System.Drawing.Point(142, 167);
             this.textBoxDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDirectory.Name = "textBoxDirectory";
-            this.textBoxDirectory.Size = new System.Drawing.Size(390, 25);
+            this.textBoxDirectory.Size = new System.Drawing.Size(390, 29);
             this.textBoxDirectory.TabIndex = 4;
-            this.textBoxDirectory.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\bin\\Release\\netcorea" +
-    "pp3.1\\publish\\";
+            this.textBoxDirectory.Text = "C:\\Users\\Ayaz\\source\\repos\\WebApplication9\\WebApplication9\\bin\\Release\\netcoreapp" +
+    "3.1\\publish\\";
             // 
             // label4
             // 
@@ -148,7 +148,7 @@
             this.label4.Location = new System.Drawing.Point(10, 170);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 17);
+            this.label4.Size = new System.Drawing.Size(83, 23);
             this.label4.TabIndex = 3;
             this.label4.Text = "Directory:";
             // 
@@ -234,9 +234,9 @@
             this.textBoxDockerfile.Location = new System.Drawing.Point(142, 201);
             this.textBoxDockerfile.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDockerfile.Name = "textBoxDockerfile";
-            this.textBoxDockerfile.Size = new System.Drawing.Size(390, 25);
+            this.textBoxDockerfile.Size = new System.Drawing.Size(390, 29);
             this.textBoxDockerfile.TabIndex = 8;
-            this.textBoxDockerfile.Text = "C:\\Users\\Mehtap\\source\\repos\\WebApplication4\\WebApplication4\\Dockerfile";
+            this.textBoxDockerfile.Text = "C:\\Users\\Ayaz\\source\\repos\\WebApplication9\\WebApplication9\\Dockerfile";
             // 
             // label7
             // 
@@ -244,7 +244,7 @@
             this.label7.Location = new System.Drawing.Point(10, 204);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 17);
+            this.label7.Size = new System.Drawing.Size(89, 23);
             this.label7.TabIndex = 7;
             this.label7.Text = "Dockerfile:";
             // 
@@ -262,7 +262,7 @@
             this.comboBoxDockerEngine.Location = new System.Drawing.Point(142, 98);
             this.comboBoxDockerEngine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxDockerEngine.Name = "comboBoxDockerEngine";
-            this.comboBoxDockerEngine.Size = new System.Drawing.Size(480, 25);
+            this.comboBoxDockerEngine.Size = new System.Drawing.Size(480, 29);
             this.comboBoxDockerEngine.TabIndex = 19;
             this.comboBoxDockerEngine.ValueMember = "Value";
             // 
@@ -271,13 +271,13 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(12, 101);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(95, 17);
+            this.label9.Size = new System.Drawing.Size(124, 23);
             this.label9.TabIndex = 18;
             this.label9.Text = "Docker Engine:";
             // 
             // BuildImageForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 305);
             this.Controls.Add(this.comboBoxDockerEngine);

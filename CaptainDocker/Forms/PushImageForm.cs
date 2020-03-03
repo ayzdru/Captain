@@ -63,49 +63,16 @@ namespace CaptainDocker.Forms
         private DockerRegistry DockerRegistry { get; set; }
         private async void ComboBoxRegistry_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBoxRegistry.SelectedItem!=null)
+            if (comboBoxRegistry.SelectedItem != null)
             {
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
                     var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
-                    DockerRegistry = dockerRegistry;
-                    var registryClientConfiguration = new RegistryClientConfiguration(new Uri(DockerRegistry.Address));
-                    using (var registryClient = (string.IsNullOrEmpty(DockerRegistry.Username) || string.IsNullOrEmpty(DockerRegistry.Password)) ? registryClientConfiguration.CreateClient() : registryClientConfiguration.CreateClient(new Docker.Registry.DotNet.Authentication.PasswordOAuthAuthenticationProvider(DockerRegistry.Username, DockerRegistry.Password)))
-                    {                       
-                        var catalog = await registryClient.Catalog.GetCatalogAsync(new Docker.Registry.DotNet.Models.CatalogParameters());
-                        var repositories = catalog.Repositories.Select(q => new SelectListItem() { Text = q }).ToList();
-                        comboBoxRepository.Items.Clear();
-                        foreach (var repository in repositories)
-                        {
-                            comboBoxRepository.Items.Add(repository);
-                        }
-                    }
+                    DockerRegistry = dockerRegistry;                   
                 }
             }
         }
-     
-        private async void ComboBoxRepository_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxRepository.SelectedItem != null && DockerRegistry != null)
-            {
-                var repositoryItem = comboBoxRepository.SelectedItem as SelectListItem;
-                var registryClientConfiguration = new RegistryClientConfiguration(new Uri(DockerRegistry.Address));
-                using (var registryClient = (string.IsNullOrEmpty(DockerRegistry.Username) || string.IsNullOrEmpty(DockerRegistry.Password)) ? registryClientConfiguration.CreateClient() : registryClientConfiguration.CreateClient(new Docker.Registry.DotNet.Authentication.PasswordOAuthAuthenticationProvider(DockerRegistry.Username, DockerRegistry.Password)))
-                {
-                    var tags = (await registryClient.Tags.ListImageTagsAsync(repositoryItem.Text, new Docker.Registry.DotNet.Models.ListImageTagsParameters()))?.Tags.Select(t=> new SelectListItem() { Text = t }).ToList();
-                    if(tags != null && tags.Count>0)
-                    {
-                        comboBoxTag.Items.Clear();
-                        foreach (var tag in tags)
-                        {
-                            comboBoxTag.Items.Add(tag);
-                        }
-                    }
-                }
-            }
-        }
-
         private async void buttonFinish_Click(object sender, EventArgs e)
         {
             if (comboBoxDockerEngine.SelectedItem != null && DockerRegistry != null)
@@ -120,7 +87,7 @@ namespace CaptainDocker.Forms
 
                         var p = new Progress<JSONMessage>(status =>
                         {
-
+                            buttonFinish.Text = status.Status;
                         });
                         await dockerClient.Images.PushImageAsync(
                             comboBoxImage.Text,
@@ -140,6 +107,11 @@ namespace CaptainDocker.Forms
                 }
             }
            
+        }
+
+        private void ComboBoxImage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -26,7 +26,7 @@ namespace CaptainDocker.Forms
 {
     public partial class BuildImageForm : BaseForm
     {
-        
+
         public static IEnumerable<EnvDTE.Project> GetProjects(IVsSolution solution)
         {
             foreach (IVsHierarchy hier in GetProjectsInSolution(solution))
@@ -76,7 +76,8 @@ namespace CaptainDocker.Forms
 
 
         private System.Threading.CancellationTokenSource _cts;
-        public System.Threading.CancellationTokenSource Cts { 
+        public System.Threading.CancellationTokenSource Cts
+        {
             get
             {
                 if (_cts == null)
@@ -105,7 +106,7 @@ namespace CaptainDocker.Forms
         }
         private void ButtonDirectoryBrowse_Click(object sender, EventArgs e)
         {
-           if( folderBrowserDialogDirectory.ShowDialog() == DialogResult.OK)
+            if (folderBrowserDialogDirectory.ShowDialog() == DialogResult.OK)
             {
                 textBoxDirectory.Text = folderBrowserDialogDirectory.SelectedPath;
             }
@@ -121,15 +122,15 @@ namespace CaptainDocker.Forms
         {
             var tarball = new MemoryStream();
             var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).ToList();
-            using (var archive = new TarOutputStream(tarball) { IsStreamOwner = false })              
+            using (var archive = new TarOutputStream(tarball) { IsStreamOwner = false })
             {
                 files.Add(textBoxDockerfile.Text);
                 foreach (var file in files)
                 {
 
-                    //Replacing slashes as KyleGobel suggested and removing leading /
-                    string tarName = Path.GetFileName(file);
-
+                    //Replacing slashes as KyleGobel suggested and removing leading /                 
+                    string tarName = file.Contains(directory) ? file.Substring(directory.Length).Replace('\\', '/').TrimStart('/') : Path.GetFileName(file);
+                    
                     //Let's create the entry header
                     var entry = TarEntry.CreateTarEntry(tarName);
                     var fileStream = File.OpenRead(file);
@@ -154,21 +155,29 @@ namespace CaptainDocker.Forms
                 archive.Close();
                 tarball.Position = 0;
             }
-            
+
             return tarball;
         }
         private async void ButtonFinish_Click(object sender, EventArgs e)
         {
             buttonFinish.Enabled = false;
-            DockerClient dockerClient = new DockerClientConfiguration(new Uri("http://kubernetemaster:2375/")).CreateClient();
-            var imageBuildParameters = new ImageBuildParameters
+            using (var dbContext = new ApplicationDbContext())
             {
-                Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
-                Tags = new List<string> { textBoxName.Text }
-            };
-            using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
-            {             
-                var responseStream =  await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
+                var dockerEngineItem = comboBoxDockerEngine.SelectedItem as SelectListItem;
+                var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
+                if (dockerConnection != null)
+                {
+                    DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                    var imageBuildParameters = new ImageBuildParameters
+                    {
+                        Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
+                        Tags = new List<string> { textBoxName.Text }
+                    };
+                    using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
+                    {
+                        var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
+                    }
+                }
             }
             buttonFinish.Enabled = true;
         }
@@ -180,7 +189,7 @@ namespace CaptainDocker.Forms
             Cts = null;
             buttonFinish.Enabled = true;
         }
-      
+
         private void BuildImageForm_Load(object sender, EventArgs e)
         {
             using (var dbContext = new ApplicationDbContext())
@@ -189,7 +198,7 @@ namespace CaptainDocker.Forms
                 comboBoxDockerEngine.DataSource = dockerConnections;
                 comboBoxDockerEngine.SelectById(DockerConnectionId);
             }
-          
+
         }
     }
 }
