@@ -15,6 +15,10 @@ namespace CaptainDocker.Extensions
         {
             return dockerRegistries.Select(d => new SelectListItem { Text = $"{d.Name} - {d.Address}", Value = d.Id });
         }
+        public static IQueryable<SelectListItem> GetComboBoxItems(this IQueryable<DockerRegistry> quaryable)
+        {
+            return quaryable.Select(d => new SelectListItem { Text = $"{d.Name} - {d.Address}", Value = d.Id });
+        }
         public static IQueryable<DockerRegistry> GetById(this DbSet<DockerRegistry> dockerRegistries, Guid id)
         {
             return dockerRegistries.Where(q => q.Id == id);

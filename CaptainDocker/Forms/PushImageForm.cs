@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace CaptainDocker.Forms
 {
-    public partial class PushImageForm : Form
+    public partial class PushImageForm : BaseForm
     {
         public Guid DockerConnectionId { get; set; }
         public string Image { get; set; }
@@ -33,13 +33,7 @@ namespace CaptainDocker.Forms
             {
                 var dockerConnections = dbContext.DockerConnections.GetComboBoxItems().ToList();
                 comboBoxDockerEngine.DataSource = dockerConnections;
-                comboBoxDockerEngine.SelectById(DockerConnectionId);
-                var dockerRegistries = dbContext.DockerRegistries.GetComboBoxItems().ToList();
-                comboBoxRegistry.DataSource = dockerRegistries;
-               if(comboBoxRegistry.Items.Count>0)
-                {
-                    comboBoxRegistry.SelectedIndex = 0;
-                }                
+                comboBoxDockerEngine.SelectById(DockerConnectionId);                
             }
         }
         private async void ComboBoxDockerEngine_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,7 +47,18 @@ namespace CaptainDocker.Forms
                     if(dockerConnection!=null)
                     {
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q=> q.RepoTags!=null).SelectMany(q=> q.RepoTags).Select(q=> new SelectListItem() { Text = q }).ToList();
+                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q=> q.RepoTags!=null).SelectMany(q=> q.RepoTags).Select(q=> {
+                            var value = "";
+                            if(q.Contains("/"))
+                            {
+                             value =  q.Split('/')[0];                              
+                            }       
+                            else
+                            {
+                                value = "registry.hub.docker.com";
+                            }
+                            return new SelectListItem<string>() { Text = q, Value = value };
+                        }).ToList();
                         comboBoxImage.DataSource = images;
                         
                     }
@@ -111,7 +116,20 @@ namespace CaptainDocker.Forms
 
         private void ComboBoxImage_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (comboBoxImage.SelectedItem != null)
+            {
+                using (var dbContext= new  ApplicationDbContext())
+                {
+                    var imageItem = comboBoxImage.SelectedItem as SelectListItem<string>;
+                    var dockerRegistries = dbContext.DockerRegistries.Where(q => q.Address.Contains(imageItem.Value)).GetComboBoxItems().ToList();
+                    comboBoxRegistry.DataSource = dockerRegistries;
+                    if (comboBoxRegistry.Items.Count > 0)
+                    {
+                        comboBoxRegistry.SelectedIndex = 0;
+                    }
+                }
+              
+            }
         }
     }
 }

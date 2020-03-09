@@ -62,7 +62,7 @@
                     }
                     var nodes = new List<ITreeNode>
         {
-            new DockerContainerTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems },
+            new DockerContainerTitleTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems },
             new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = dockerImageTreeViewItems }
         };
                     DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() { Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = nodes };

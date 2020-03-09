@@ -108,10 +108,16 @@
     <Compile Include="Interfaces\ITreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CaptainDockerPackage.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings\DockerConnectionBasicAuthCredentialSetting.cs" />
     <Compile Include="Settings\DockerConnectionCertificateCredentialSetting.cs" />
     <Compile Include="Settings\DockerConnectionSetting.cs" />
     <Compile Include="ValueObjects\DockerContainerTreeViewItem.cs" />
+    <Compile Include="ValueObjects\DockerContainerTitleTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerImageTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerTreeViewItem.cs" />
     <Compile Include="ValueObjects\DockerImageTitleTreeViewItem.cs" />
@@ -171,9 +177,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\push.png" />
+    <None Include="Resources\new-docker-connection.png" />
+    <None Include="Resources\manage-docker-registry.png" />
     <VSCTCompile Include="CaptainDockerPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
+    <None Include="Resources\docker-container %281%29.png" />
+    <None Include="Resources\crane.png" />
     <Content Include="Resources\DockerExplorerToolWindowCommand.png" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +202,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PushImageForm.resx">
       <DependentUpon>PushImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

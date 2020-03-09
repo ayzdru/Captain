@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace CaptainDocker.ValueObjects
 {
-    public class SelectListItem
+    public class SelectListItem<T>
     {
         public string Text { get; set; }
-        public Guid Value { get; set; }
+        public T Value { get; set; }
+    }
+    public class SelectListItem : SelectListItem<Guid>
+    {
+       
     }
 }
