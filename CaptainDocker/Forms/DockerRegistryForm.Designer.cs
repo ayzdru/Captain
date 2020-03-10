@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockerRegistryForm));
             this.label5 = new System.Windows.Forms.Label();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -39,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.checkBoxLoginRequired = new System.Windows.Forms.CheckBox();
             this.groupBoxLogin = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,11 +48,10 @@
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBoxLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBoxLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // label5
@@ -65,54 +65,41 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "label5";
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.buttonCancel);
+            this.panel2.Controls.Add(this.buttonSave);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 301);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(632, 60);
+            this.panel2.TabIndex = 15;
+            // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(656, 1);
+            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonCancel.Location = new System.Drawing.Point(494, 14);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(129, 38);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Size = new System.Drawing.Size(120, 35);
+            this.buttonCancel.TabIndex = 6;
+            this.buttonCancel.Text = "&Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.buttonSave);
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.buttonCancel);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 300);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(632, 50);
-            this.panel2.TabIndex = 15;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(485, 9);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 30);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.ButtonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // buttonSave
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonSave.Location = new System.Drawing.Point(352, 9);
+            this.buttonSave.Location = new System.Drawing.Point(370, 14);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(129, 30);
+            this.buttonSave.Size = new System.Drawing.Size(120, 35);
             this.buttonSave.TabIndex = 5;
-            this.buttonSave.Text = "Save";
+            this.buttonSave.Text = "&Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
@@ -181,10 +168,22 @@
             this.panel1.Size = new System.Drawing.Size(632, 80);
             this.panel1.TabIndex = 10;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::CaptainDocker.Properties.Resources.manage_docker_registry;
+            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(80, 60);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // checkBoxLoginRequired
             // 
             this.checkBoxLoginRequired.AutoSize = true;
-            this.checkBoxLoginRequired.Location = new System.Drawing.Point(89, 158);
+            this.checkBoxLoginRequired.Location = new System.Drawing.Point(89, 162);
             this.checkBoxLoginRequired.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxLoginRequired.Name = "checkBoxLoginRequired";
             this.checkBoxLoginRequired.Size = new System.Drawing.Size(147, 27);
@@ -271,23 +270,11 @@
             this.textBoxAddress.TabIndex = 19;
             this.textBoxAddress.Text = "registry.hub.docker.com";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::CaptainDocker.Properties.Resources.manage_docker_registry;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(80, 60);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
             // DockerRegistryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 350);
+            this.ClientSize = new System.Drawing.Size(632, 361);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.groupBoxLogin);
@@ -297,15 +284,17 @@
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "DockerRegistryForm";
-            this.Text = "DockerRegistryForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Docker Registry";
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBoxLogin.ResumeLayout(false);
             this.groupBoxLogin.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,7 +302,6 @@
 
         #endregion
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
@@ -328,7 +316,7 @@
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxUsername;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxAddress;

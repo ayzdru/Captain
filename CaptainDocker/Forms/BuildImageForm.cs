@@ -158,9 +158,9 @@ namespace CaptainDocker.Forms
 
             return tarball;
         }
-        private async void ButtonFinish_Click(object sender, EventArgs e)
+        private async void ButtonBuild_Click(object sender, EventArgs e)
         {
-            buttonFinish.Enabled = false;
+            buttonBuild.Enabled = false;
             using (var dbContext = new ApplicationDbContext())
             {
                 var dockerEngineItem = comboBoxDockerEngine.SelectedItem as SelectListItem;
@@ -171,7 +171,7 @@ namespace CaptainDocker.Forms
                     var imageBuildParameters = new ImageBuildParameters
                     {
                         Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
-                        Tags = new List<string> { textBoxName.Text }
+                        Tags = new List<string> { textBoxImageName.Text }
                     };
                     using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
                     {
@@ -179,7 +179,7 @@ namespace CaptainDocker.Forms
                     }
                 }
             }
-            buttonFinish.Enabled = true;
+            buttonBuild.Enabled = true;
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
@@ -187,7 +187,7 @@ namespace CaptainDocker.Forms
             Cts.Cancel();
             Cts.Dispose();
             Cts = null;
-            buttonFinish.Enabled = true;
+            buttonBuild.Enabled = true;
         }
 
         private void BuildImageForm_Load(object sender, EventArgs e)

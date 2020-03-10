@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuildImageForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBoxImageName = new System.Windows.Forms.TextBox();
             this.textBoxDirectory = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonFinish = new System.Windows.Forms.Button();
+            this.buttonBuild = new System.Windows.Forms.Button();
             this.buttonDirectoryBrowse = new System.Windows.Forms.Button();
             this.folderBrowserDialogDirectory = new System.Windows.Forms.FolderBrowserDialog();
             this.buttonDockerfileBrowse = new System.Windows.Forms.Button();
@@ -117,20 +118,20 @@
             this.label3.Location = new System.Drawing.Point(11, 133);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 23);
+            this.label3.Size = new System.Drawing.Size(113, 23);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Name:";
+            this.label3.Text = "Image Name:";
             // 
-            // textBoxName
+            // textBoxImageName
             // 
-            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxImageName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxName.Location = new System.Drawing.Point(142, 131);
-            this.textBoxName.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(480, 29);
-            this.textBoxName.TabIndex = 2;
-            this.textBoxName.Text = "kubernetemaster:5000/webapplication9:v5";
+            this.textBoxImageName.Location = new System.Drawing.Point(142, 131);
+            this.textBoxImageName.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxImageName.Name = "textBoxImageName";
+            this.textBoxImageName.Size = new System.Drawing.Size(480, 29);
+            this.textBoxImageName.TabIndex = 2;
+            this.textBoxImageName.Text = "kubernetemaster:5000/webapplication9:v5";
             // 
             // textBoxDirectory
             // 
@@ -140,7 +141,7 @@
             this.textBoxDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDirectory.Name = "textBoxDirectory";
             this.textBoxDirectory.Size = new System.Drawing.Size(390, 29);
-            this.textBoxDirectory.TabIndex = 4;
+            this.textBoxDirectory.TabIndex = 3;
             this.textBoxDirectory.Text = "C:\\Users\\Ayaz\\source\\repos\\WebApplication9\\WebApplication9\\bin\\Release\\netcoreapp" +
     "3.1\\publish\\";
             // 
@@ -158,12 +159,12 @@
             // 
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.buttonCancel);
-            this.panel2.Controls.Add(this.buttonFinish);
+            this.panel2.Controls.Add(this.buttonBuild);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 255);
+            this.panel2.Location = new System.Drawing.Point(0, 250);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(632, 50);
+            this.panel2.Size = new System.Drawing.Size(632, 60);
             this.panel2.TabIndex = 5;
             // 
             // label5
@@ -181,27 +182,27 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(492, 9);
+            this.buttonCancel.Location = new System.Drawing.Point(501, 14);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(129, 30);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Size = new System.Drawing.Size(120, 35);
+            this.buttonCancel.TabIndex = 8;
+            this.buttonCancel.Text = "&Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
-            // buttonFinish
+            // buttonBuild
             // 
-            this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFinish.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonFinish.Location = new System.Drawing.Point(358, 9);
-            this.buttonFinish.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(129, 30);
-            this.buttonFinish.TabIndex = 1;
-            this.buttonFinish.Text = "Finish";
-            this.buttonFinish.UseVisualStyleBackColor = true;
-            this.buttonFinish.Click += new System.EventHandler(this.ButtonFinish_Click);
+            this.buttonBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBuild.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonBuild.Location = new System.Drawing.Point(377, 14);
+            this.buttonBuild.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonBuild.Name = "buttonBuild";
+            this.buttonBuild.Size = new System.Drawing.Size(120, 35);
+            this.buttonBuild.TabIndex = 7;
+            this.buttonBuild.Text = "&Build";
+            this.buttonBuild.UseVisualStyleBackColor = true;
+            this.buttonBuild.Click += new System.EventHandler(this.ButtonBuild_Click);
             // 
             // buttonDirectoryBrowse
             // 
@@ -211,7 +212,7 @@
             this.buttonDirectoryBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDirectoryBrowse.Name = "buttonDirectoryBrowse";
             this.buttonDirectoryBrowse.Size = new System.Drawing.Size(86, 30);
-            this.buttonDirectoryBrowse.TabIndex = 6;
+            this.buttonDirectoryBrowse.TabIndex = 4;
             this.buttonDirectoryBrowse.Text = "Browse...";
             this.buttonDirectoryBrowse.UseVisualStyleBackColor = true;
             this.buttonDirectoryBrowse.Click += new System.EventHandler(this.ButtonDirectoryBrowse_Click);
@@ -224,7 +225,7 @@
             this.buttonDockerfileBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDockerfileBrowse.Name = "buttonDockerfileBrowse";
             this.buttonDockerfileBrowse.Size = new System.Drawing.Size(86, 30);
-            this.buttonDockerfileBrowse.TabIndex = 9;
+            this.buttonDockerfileBrowse.TabIndex = 6;
             this.buttonDockerfileBrowse.Text = "Browse...";
             this.buttonDockerfileBrowse.UseVisualStyleBackColor = true;
             this.buttonDockerfileBrowse.Click += new System.EventHandler(this.ButtonDockerfileBrowse_Click);
@@ -237,7 +238,7 @@
             this.textBoxDockerfile.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDockerfile.Name = "textBoxDockerfile";
             this.textBoxDockerfile.Size = new System.Drawing.Size(390, 29);
-            this.textBoxDockerfile.TabIndex = 8;
+            this.textBoxDockerfile.TabIndex = 5;
             this.textBoxDockerfile.Text = "C:\\Users\\Ayaz\\source\\repos\\WebApplication9\\WebApplication9\\Dockerfile";
             // 
             // label7
@@ -265,7 +266,7 @@
             this.comboBoxDockerEngine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxDockerEngine.Name = "comboBoxDockerEngine";
             this.comboBoxDockerEngine.Size = new System.Drawing.Size(480, 29);
-            this.comboBoxDockerEngine.TabIndex = 19;
+            this.comboBoxDockerEngine.TabIndex = 1;
             this.comboBoxDockerEngine.ValueMember = "Value";
             // 
             // label9
@@ -281,7 +282,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 305);
+            this.ClientSize = new System.Drawing.Size(632, 310);
             this.Controls.Add(this.comboBoxDockerEngine);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.buttonDockerfileBrowse);
@@ -291,14 +292,15 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.textBoxDirectory);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBoxName);
+            this.Controls.Add(this.textBoxImageName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "BuildImageForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BuildImageForm";
+            this.Text = "Build Image";
             this.Load += new System.EventHandler(this.BuildImageForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -317,12 +319,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxImageName;
         private System.Windows.Forms.TextBox textBoxDirectory;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonFinish;
+        private System.Windows.Forms.Button buttonBuild;
         private System.Windows.Forms.Button buttonDirectoryBrowse;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogDirectory;
         private System.Windows.Forms.Label label5;

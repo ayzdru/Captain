@@ -37,7 +37,7 @@ namespace CaptainDocker.Forms
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void CheckBoxLoginRequired_CheckedChanged(object sender, EventArgs e)
