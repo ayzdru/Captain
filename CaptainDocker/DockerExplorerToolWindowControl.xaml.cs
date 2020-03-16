@@ -1,6 +1,7 @@
 ﻿namespace CaptainDocker
 {
     using CaptainDocker.Data;
+    using CaptainDocker.Extensions;
     using CaptainDocker.Forms;
     using CaptainDocker.Interfaces;
     using CaptainDocker.Settings;
@@ -12,6 +13,7 @@
     using Microsoft.VisualStudio.Shell.Settings;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Windows;
@@ -31,13 +33,14 @@
             this.InitializeComponent();
          
         }
+        public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; }
 
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)
         {
+            DockerTreeViewItems = new ObservableCollection<DockerTreeViewItem>();
             using (var dbContext = new ApplicationDbContext())
             {
                 var dockerConnections = dbContext.DockerConnections.ToList();
-                List<DockerTreeViewItem> dockerTreeViewItems = new List<DockerTreeViewItem>();
                 foreach (var dockerConnection in dockerConnections)
                 {
                     DockerClient dockerClient = new DockerClientConfiguration(
@@ -49,55 +52,44 @@
                   Limit = 10,
               });
 
-                    List<ITreeNode> dockerContainerTreeViewItems = new List<ITreeNode>();
+                    ObservableCollection<ITreeNode> dockerContainerTreeViewItems = new ObservableCollection<ITreeNode>();
                     foreach (var container in containers)
                     {
                         dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { Name = $"{container.ID} - {container.Image}" });
-                    }
-                    var images = await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true });
-                    List<ITreeNode> dockerImageTreeViewItems = new List<ITreeNode>();
+                    } 
+                    var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q => q.RepoDigests != null && !q.RepoDigests.Any(r=> r.Contains("<none>")));
+                    ObservableCollection<ITreeNode> dockerImageTreeViewItems = new ObservableCollection<ITreeNode>();
                     foreach (var image in images)
                     {
-                        dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = string.Join(",", (image.RepoTags != null ? image.RepoTags : new string[] { "" })) });
+                        if (image.RepoTags != null)
+                        {
+                            foreach (var repoTag in image.RepoTags)
+                            {
+                                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = repoTag, DockerConnectionId = dockerConnection.Id, ImageId = image.ID });
+                            }
+                        }
+                       else
+                        {
+                            foreach (var repoDigest in image.RepoDigests)
+                            {
+                                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = repoDigest, DockerConnectionId = dockerConnection.Id, ImageId = image.ID });
+                            }
+                        }
                     }
-                    var nodes = new List<ITreeNode>
+                    var nodes = new ObservableCollection<ITreeNode>
         {
             new DockerContainerTitleTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems },
             new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = dockerImageTreeViewItems }
         };
-                    DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() { Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = nodes };
+                    DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() {DockerConnectionId = dockerConnection.Id, Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = nodes };
 
-                    dockerTreeViewItems.Add(dockerTreeViewItem);
+                    DockerTreeViewItems.Add(dockerTreeViewItem);
                 }
-                dockerExplorerTreeView.ItemsSource = dockerTreeViewItems;
+                dockerExplorerTreeView.ItemsSource = DockerTreeViewItems;
 
             }
         }
 
-       
-        private async void ImagePushContextMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            DockerClient dockerClient = new DockerClientConfiguration(
- new Uri("http://kubernetemaster:2375/"))
-  .CreateClient();
-            var p = new Progress<JSONMessage>(status =>
-            {
-                Console.WriteLine(status.Status);
-            });
-            await dockerClient.Images.PushImageAsync("kubernetemaster:5000/webapplication4:v1",
-                new ImagePushParameters()
-                {
-
-                },
-                new AuthConfig()
-                {
-                    ServerAddress = "http://kubernetemaster:5000",
-                    Username = "username",
-                    Password = "password"
-                },
-                p);
-
-        }
 
         private void NewDockerConnectionButton_Click(object sender, RoutedEventArgs e)
         {
@@ -123,6 +115,32 @@
             var dockerConnectionId = Guid.Parse(menuItem.Tag.ToString());
             new PushImageForm(dockerConnectionId).ShowDialog();
         }
-      
+
+        private async void RemoveImageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var tag = menuItem.Tag as DockerImageTreeViewItem;
+            if (MessageBox.Show($"{tag.Name} will be deleted?\nAre you sure?", "Image Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    var dockerConnection = dbContext.DockerConnections.GetById(tag.DockerConnectionId).SingleOrDefault();
+                    if (dockerConnection != null)
+                    {
+                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                        var result =  await dockerClient.Images.DeleteImageAsync(tag.Name, new ImageDeleteParameters()
+                        {
+                            Force = true
+                        });
+                        var dockerTreeViewItem =  DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
+                        var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[1].ChildNodes.Cast<DockerImageTreeViewItem>().Where(d => d.Name == tag.Name && d.ImageId == tag.ImageId).SingleOrDefault();
+                        var removed = dockerTreeViewItem.ChildNodes[1].ChildNodes.Remove(dockerImageTreeViewItem);
+
+
+
+                    }
+                }
+            }
+        }
     }
 }

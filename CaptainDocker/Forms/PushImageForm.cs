@@ -47,7 +47,7 @@ namespace CaptainDocker.Forms
                     if(dockerConnection!=null)
                     {
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q=> q.RepoTags!=null).SelectMany(q=> q.RepoTags).Select(q=> {
+                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q=> q.RepoTags!= null && !q.RepoTags.Any(r => r.Contains("<none>"))).SelectMany(q=> q.RepoTags).Select(q=> {
                             var value = "";
                             if(q.Contains("/"))
                             {

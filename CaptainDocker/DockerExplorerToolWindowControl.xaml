@@ -10,10 +10,9 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
-    
+
     <Grid>
-        
-        <DockPanel>            
+        <DockPanel>
             <ToolBarTray DockPanel.Dock="Top">
                 <ToolBar Height="30" VerticalAlignment="Top" >
                     <Button x:Name="refreshButton" Click="RefreshButton_ClickAsync" ToolTip="Refresh">
@@ -108,7 +107,7 @@
                                 </Image.Source>
                             </Image>
                             <TextBlock Text="{Binding Path=Name}" />
-                        </StackPanel> 
+                        </StackPanel>
                     </HierarchicalDataTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerImageTreeViewItem}" ItemsSource="{Binding ChildNodes}">
                         <StackPanel Orientation="Horizontal">
@@ -130,7 +129,24 @@
                                 <TextBlock.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Run" />
-                                        <MenuItem Header="Remove" />
+                                        <MenuItem x:Name="removeImageMenuItem" Click="RemoveImageMenuItem_Click" Header="Remove" Tag="{Binding Path=.}">                                           
+                                            <MenuItem.Icon>
+                                                <Image>
+                                                    <Image.Source>
+                                                        <DrawingImage>
+                                                            <DrawingImage.Drawing>
+                                                                <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                                                                    <DrawingGroup.Transform>
+                                                                        <TranslateTransform X="0" Y="5.457294264488155E-06" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M448,512z M0,0z M268,416L292,416A12,12,0,0,0,304,404L304,188A12,12,0,0,0,292,176L268,176A12,12,0,0,0,256,188L256,404A12,12,0,0,0,268,416z M432,80L349.59,80 315.59,23.3A48,48,0,0,0,274.41,0L173.59,0A48,48,0,0,0,132.43,23.3L98.41,80 16,80A16,16,0,0,0,0,96L0,112A16,16,0,0,0,16,128L32,128 32,464A48,48,0,0,0,80,512L368,512A48,48,0,0,0,416,464L416,128 432,128A16,16,0,0,0,448,112L448,96A16,16,0,0,0,432,80z M171.84,50.91A6,6,0,0,1,177,48L271,48A6,6,0,0,1,276.15,50.91L293.61,80 154.39,80z M368,464L80,464 80,128 368,128z M156,416L180,416A12,12,0,0,0,192,404L192,188A12,12,0,0,0,180,176L156,176A12,12,0,0,0,144,188L144,404A12,12,0,0,0,156,416z" />
+                                                                </DrawingGroup>
+                                                            </DrawingImage.Drawing>
+                                                        </DrawingImage>
+                                                    </Image.Source>
+                                                </Image>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                         <Separator />
                                         <MenuItem x:Name="pushImageMenuItem" Header="Push Image" Click="PushImageMenuItem_Click" Tag="{Binding Path=DockerConnectionId}">
                                             <MenuItem.Icon>
@@ -154,8 +170,7 @@
                                                         </DrawingImage>
                                                     </Image.Source>
                                                 </Image>
-                                            </MenuItem.Icon> 
-                                        
+                                            </MenuItem.Icon>
                                         </MenuItem>
                                         <Separator />
                                         <MenuItem Header="Add Tag" />
@@ -164,7 +179,7 @@
                                 </TextBlock.ContextMenu>
                             </TextBlock>
                         </StackPanel>
-                    </HierarchicalDataTemplate>                  
+                    </HierarchicalDataTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerImageTitleTreeViewItem}" ItemsSource="{Binding ChildNodes}">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="12" Margin="0 0 5 0">
@@ -263,7 +278,7 @@
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.Resources>
-            </TreeView>    
+            </TreeView>
         </DockPanel>
     </Grid>
 </UserControl>
