@@ -112,35 +112,53 @@
         private void PushImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
-            var dockerConnectionId = Guid.Parse(menuItem.Tag.ToString());
-            new PushImageForm(dockerConnectionId).ShowDialog();
+            var tag = menuItem.Tag as DockerImageTreeViewItem;
+            new PushImageForm(tag.DockerConnectionId, tag.ImageId, tag.Name).ShowDialog();
         }
 
         private async void RemoveImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
             var tag = menuItem.Tag as DockerImageTreeViewItem;
-            if (MessageBox.Show($"{tag.Name} will be deleted?\nAre you sure?", "Image Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"{tag.Name} will be deleted?\nAre you sure?", "Image Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var dockerConnection = dbContext.DockerConnections.GetById(tag.DockerConnectionId).SingleOrDefault();
                     if (dockerConnection != null)
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var result =  await dockerClient.Images.DeleteImageAsync(tag.Name, new ImageDeleteParameters()
+                        var removed = false;
+
+                        try
                         {
-                            Force = true
-                        });
-                        var dockerTreeViewItem =  DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
-                        var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[1].ChildNodes.Cast<DockerImageTreeViewItem>().Where(d => d.Name == tag.Name && d.ImageId == tag.ImageId).SingleOrDefault();
-                        var removed = dockerTreeViewItem.ChildNodes[1].ChildNodes.Remove(dockerImageTreeViewItem);
-
-
+                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                       
+                            var result = await dockerClient.Images.DeleteImageAsync(tag.Name, new ImageDeleteParameters()
+                            {
+                                Force = true
+                            });
+                            var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
+                            var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[1].ChildNodes.Cast<DockerImageTreeViewItem>().Where(d => d.Name == tag.Name && d.ImageId == tag.ImageId).SingleOrDefault();
+                            removed = dockerTreeViewItem.ChildNodes[1].ChildNodes.Remove(dockerImageTreeViewItem);
+                        }
+                        catch (Exception exception)
+                        {
+                        
+                        }
+                      
+                        if(removed)
+                        {
+                            MessageBox.Show($"{tag.Name} image could not be deleted.", "Image Delete", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
 
                     }
                 }
             }
+        }
+
+        private void AddImageTagMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

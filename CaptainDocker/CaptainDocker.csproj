@@ -99,6 +99,12 @@
     <Compile Include="Forms\NewDockerConnectionForm.Designer.cs">
       <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ManageImageTagForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ManageImageTagForm.Designer.cs">
+      <DependentUpon>ManageImageTagForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PushImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\tag1.png" />
+    <None Include="Resources\tag.png" />
     <None Include="Resources\push.png" />
     <None Include="Resources\new-docker-connection.png" />
     <None Include="Resources\manage-docker-registry.png" />
@@ -199,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewDockerConnectionForm.resx">
       <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ManageImageTagForm.resx">
+      <DependentUpon>ManageImageTagForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PushImageForm.resx">
       <DependentUpon>PushImageForm.cs</DependentUpon>

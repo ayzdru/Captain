@@ -148,7 +148,7 @@
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem x:Name="pushImageMenuItem" Header="Push Image" Click="PushImageMenuItem_Click" Tag="{Binding Path=DockerConnectionId}">
+                                        <MenuItem x:Name="pushImageMenuItem" Header="Push Image" Click="PushImageMenuItem_Click" Tag="{Binding Path=.}">
                                             <MenuItem.Icon>
                                                 <Image>
                                                     <Image.Source>
@@ -173,7 +173,25 @@
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem Header="Add Tag" />
+                                        <MenuItem x:Name="AddImageTagMenuItem" Header="Add Image Tag" Click="AddImageTagMenuItem_Click" Tag="{Binding Path=.}">
+                                            <MenuItem.Icon>
+                                                <Image>
+                                                    <Image.Source>
+                                                        <DrawingImage>
+                                                            <DrawingImage.Drawing>
+                                                                <DrawingGroup ClipGeometry="M0,0 V426.667 H426.667 V0 H0 Z">
+                                                                    <DrawingGroup Opacity="1">
+                                                                        <DrawingGroup Opacity="1">
+                                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M426.667,426.667z M0,0z M414.08,204.373L222.187,12.48C214.4,4.8,203.733,0,192,0L42.667,0C19.093,0,0,19.093,0,42.667L0,192C0,203.84,4.8,214.507,12.587,222.187L204.587,414.187C212.267,421.867 222.934,426.667 234.667,426.667 246.4,426.667 257.174,421.867 264.854,414.187L414.187,264.854C421.867,257.067 426.667,246.401 426.667,234.667 426.667,222.827 421.867,212.16 414.08,204.373z M74.667,106.667C56.96,106.667 42.667,92.374 42.667,74.667 42.667,56.96 56.96,42.667 74.667,42.667 92.374,42.667 106.667,56.96 106.667,74.667 106.667,92.374 92.373,106.667 74.667,106.667z" />
+                                                                        </DrawingGroup>
+                                                                    </DrawingGroup>
+                                                                </DrawingGroup>
+                                                            </DrawingImage.Drawing>
+                                                        </DrawingImage>
+                                                    </Image.Source>
+                                                </Image>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                         <MenuItem Header="Remove Tag" />
                                     </ContextMenu>
                                 </TextBlock.ContextMenu>

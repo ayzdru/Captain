@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace CaptainDocker.Forms
 {
-    public partial class PushImageForm : BaseForm
+    public partial class ManageImageTagForm : BaseForm
     {
         public class ImageSelectListItem
         {
@@ -39,7 +39,7 @@ namespace CaptainDocker.Forms
         public string ImageId { get; set; }
         public string ImageName { get; set; }
         public bool _isFirstDockerConnectionSelect = true;
-        public PushImageForm(Guid dockerConnectionId, string imageId, string imageName)
+        public ManageImageTagForm(Guid dockerConnectionId, string imageId, string imageName)
         {
             DockerConnectionId = dockerConnectionId;
             ImageId = imageId;
@@ -117,23 +117,10 @@ namespace CaptainDocker.Forms
 
                 }
             }
-        }
-        private DockerRegistry DockerRegistry { get; set; }
-        private async void ComboBoxRegistry_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxRegistry.SelectedItem != null)
-            {
-                using (var dbContext = new ApplicationDbContext())
-                {
-                    var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
-                    var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
-                    DockerRegistry = dockerRegistry;                   
-                }
-            }
-        }
+        }   
         private async void buttonFinish_Click(object sender, EventArgs e)
         {
-            if (comboBoxDockerEngine.SelectedItem != null && DockerRegistry != null)
+            if (comboBoxDockerEngine.SelectedItem != null)
             {
                 using (var dbContext = new ApplicationDbContext())
                 {
@@ -143,24 +130,6 @@ namespace CaptainDocker.Forms
                     {
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
 
-                        var p = new Progress<JSONMessage>(status =>
-                        {
-                            buttonFinish.Text = status.Status;
-                        });
-                        await dockerClient.Images.PushImageAsync(
-                            comboBoxImage.Text,
-                            new ImagePushParameters()
-                            {
-                                 
-                            },
-                            new AuthConfig()
-                            {
-                                ServerAddress = DockerRegistry.Address,
-                                Username = DockerRegistry.Username,
-                                Password = DockerRegistry.Password
-                            },
-                            p
-                            );
                     }
                 }
             }
@@ -176,12 +145,7 @@ namespace CaptainDocker.Forms
                     var imageItem = comboBoxImage.SelectedItem as SelectListItem<ImageSelectListItem>;
                     if (imageItem != null)
                     {
-                        var dockerRegistries = dbContext.DockerRegistries.Where(q => q.Address.Contains(imageItem.Value.RegistryUrl)).GetComboBoxItems().ToList();
-                        comboBoxRegistry.DataSource = dockerRegistries;
-                        if (comboBoxRegistry.Items.Count > 0)
-                        {
-                            comboBoxRegistry.SelectedIndex = 0;
-                        }
+                      
                     }
                 }
               
