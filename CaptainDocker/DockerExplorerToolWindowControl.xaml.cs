@@ -24,14 +24,27 @@
     /// </summary>
     public partial class DockerExplorerToolWindowControl : UserControl
     {
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DockerExplorerToolWindowControl"/> class.
         /// </summary>
         public DockerExplorerToolWindowControl()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             this.InitializeComponent();
-         
+            SettingsManager settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
+            WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+            if (!userSettingsStore.CollectionExists(SettingsForm.CaptainDockerCollectionName) && !userSettingsStore.PropertyExists(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection))
+            {
+                userSettingsStore.CreateCollection(SettingsForm.CaptainDockerCollectionName);
+                var databaseConnection = @"Server=(localdb)\mssqllocaldb;Database=CaptainDocker;Trusted_Connection=True;MultipleActiveResultSets=true";
+                userSettingsStore.SetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection, databaseConnection);
+                Constants.Application.DatabaseConnection = databaseConnection;
+            }
+            else
+            {
+                Constants.Application.DatabaseConnection = userSettingsStore.GetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection);
+            }
         }
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; }
 
@@ -45,7 +58,7 @@
                 {
                     DockerClient dockerClient = new DockerClientConfiguration(
     new Uri(dockerConnection.EngineApiUrl))
-    .CreateClient();
+    .CreateClient();                   
                     IList<ContainerListResponse> containers = await dockerClient.Containers.ListContainersAsync(
               new ContainersListParameters()
               {
@@ -61,6 +74,7 @@
                     ObservableCollection<ITreeNode> dockerImageTreeViewItems = new ObservableCollection<ITreeNode>();
                     foreach (var image in images)
                     {
+                        
                         if (image.RepoTags != null)
                         {
                             foreach (var repoTag in image.RepoTags)
@@ -156,9 +170,16 @@
             }
         }
 
-        private void AddImageTagMenuItem_Click(object sender, RoutedEventArgs e)
+        private void ManageImageTagMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var tag = menuItem.Tag as DockerImageTreeViewItem;
+            new ManageImageTagForm(tag.DockerConnectionId, tag.ImageId, tag.Name).ShowDialog();
+        }
 
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            new SettingsForm().ShowDialog();
         }
     }
 }

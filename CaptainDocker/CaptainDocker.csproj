@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Constants\ApplicationConstant.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\Migrations\20200229183626_Initial.cs" />
     <Compile Include="Data\Migrations\20200229183626_Initial.designer.cs">
@@ -93,6 +94,12 @@
     <Compile Include="Forms\ManageDockerRegistryForm.Designer.cs">
       <DependentUpon>ManageDockerRegistryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AddImageTagForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddImageTagForm.Designer.cs">
+      <DependentUpon>AddImageTagForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NewDockerConnectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +111,12 @@
     </Compile>
     <Compile Include="Forms\ManageImageTagForm.Designer.cs">
       <DependentUpon>ManageImageTagForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PushImageForm.cs">
       <SubType>Form</SubType>
@@ -183,16 +196,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\tag1.png" />
-    <None Include="Resources\tag.png" />
+    <None Include="Resources\manage-image-tag.png" />
+    <None Include="Resources\images.png" />
+    <None Include="Resources\settings.png" />
     <None Include="Resources\push.png" />
     <None Include="Resources\new-docker-connection.png" />
     <None Include="Resources\manage-docker-registry.png" />
     <VSCTCompile Include="CaptainDockerPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
-    <None Include="Resources\docker-container %281%29.png" />
     <None Include="Resources\crane.png" />
+    <None Include="Resources\add-image-tag.png" />
     <Content Include="Resources\DockerExplorerToolWindowCommand.png" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +219,9 @@
     <EmbeddedResource Include="Forms\ManageDockerRegistryForm.resx">
       <DependentUpon>ManageDockerRegistryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddImageTagForm.resx">
+      <DependentUpon>AddImageTagForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewDockerConnectionForm.resx">
       <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PushImageForm.resx">
       <DependentUpon>PushImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

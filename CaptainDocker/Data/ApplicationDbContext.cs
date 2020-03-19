@@ -12,7 +12,7 @@ namespace CaptainDocker.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CaptainDocker;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(Constants.Application.DatabaseConnection);
         }
 
         public DbSet<DockerConnection> DockerConnections { get; set; }
