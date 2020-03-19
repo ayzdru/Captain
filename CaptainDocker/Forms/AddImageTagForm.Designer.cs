@@ -80,7 +80,6 @@
             this.buttonFinish.TabIndex = 1;
             this.buttonFinish.Text = "&Add";
             this.buttonFinish.UseVisualStyleBackColor = true;
-            this.buttonFinish.Click += new System.EventHandler(this.buttonFinish_Click);
             // 
             // panel2
             // 
@@ -205,7 +204,6 @@
             this.Name = "AddImageTagForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add Image Tag";
-            this.Load += new System.EventHandler(this.PushImageForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
