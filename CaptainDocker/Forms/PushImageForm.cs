@@ -24,7 +24,7 @@ namespace CaptainDocker.Forms
             public ImageSelectListItem(string imageId)
             {
                 ImageId = imageId;
-                RegistryUrl = "registry.hub.docker.com";
+                RegistryUrl =Constants.Application.DefaultRegistry;
             }
             public ImageSelectListItem(string registryUrl, string imageId)
             {
@@ -67,7 +67,7 @@ namespace CaptainDocker.Forms
                     if(dockerConnection!=null)
                     {
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q => q.RepoDigests != null && !q.RepoDigests.Any(r => r.Contains("<none>"))).ToList();
+                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
                         List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
                         foreach (var image in images)
                         {
@@ -103,7 +103,7 @@ namespace CaptainDocker.Forms
                     _isFirstDockerConnectionSelect = false;
                     try
                     {
-                        var selectedImage = comboBoxImage.Items.Cast<SelectListItem<ImageSelectListItem>>().Select((s, i) => new { Item = s, Index = i }).Where(s => s.Item.Value.ImageId == ImageId && s.Item.Text == ImageName).SingleOrDefault();
+                        var selectedImage = comboBoxImage.Items.Cast<SelectListItem<ImageSelectListItem>>().Select((item, index) => new { Item = item, Index = index }).Where(s => s.Item.Value.ImageId == ImageId && s.Item.Text == ImageName).SingleOrDefault();
                         if (selectedImage != null)
                         {
                             comboBoxImage.SelectedIndex = selectedImage.Index;

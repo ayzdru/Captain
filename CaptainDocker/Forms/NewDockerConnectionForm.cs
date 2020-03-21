@@ -29,6 +29,7 @@ namespace CaptainDocker.Forms
                 dbContext.DockerConnections.Add(new DockerConnection(textBoxName.Text, textBoxEngineApiUrl.Text));
                 dbContext.SaveChanges();
             }
+            this.Close();
         }
 
         private void CheckBoxEnableAuthentication_CheckedChanged(object sender, EventArgs e)

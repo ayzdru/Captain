@@ -50,6 +50,7 @@
 
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)
         {
+            refreshButton.IsEnabled = false;
             DockerTreeViewItems = new ObservableCollection<DockerTreeViewItem>();
             using (var dbContext = new ApplicationDbContext())
             {
@@ -70,11 +71,10 @@
                     {
                         dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { Name = $"{container.ID} - {container.Image}" });
                     } 
-                    var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).Where(q => q.RepoDigests != null && !q.RepoDigests.Any(r=> r.Contains("<none>")));
+                    var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }));
                     ObservableCollection<ITreeNode> dockerImageTreeViewItems = new ObservableCollection<ITreeNode>();
                     foreach (var image in images)
-                    {
-                        
+                    {                        
                         if (image.RepoTags != null)
                         {
                             foreach (var repoTag in image.RepoTags)
@@ -102,12 +102,14 @@
                 dockerExplorerTreeView.ItemsSource = DockerTreeViewItems;
 
             }
+            refreshButton.IsEnabled = true;
         }
 
 
         private void NewDockerConnectionButton_Click(object sender, RoutedEventArgs e)
         {
             new NewDockerConnectionForm().ShowDialog();
+            RefreshButton_ClickAsync(null, null);
         }
 
         private void ManageDockerRegistryButton_Click(object sender, RoutedEventArgs e)
@@ -134,7 +136,7 @@
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
             var tag = menuItem.Tag as DockerImageTreeViewItem;
-            if (MessageBox.Show($"{tag.Name} will be deleted?\nAre you sure?", "Image Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"{tag.Name} will be deleted?\nAre you sure?", "Image", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 using (var dbContext = new ApplicationDbContext())
                 {
@@ -146,7 +148,6 @@
                         try
                         {
                             DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                       
                             var result = await dockerClient.Images.DeleteImageAsync(tag.Name, new ImageDeleteParameters()
                             {
                                 Force = true
@@ -160,9 +161,9 @@
                         
                         }
                       
-                        if(removed)
+                        if(!removed)
                         {
-                            MessageBox.Show($"{tag.Name} image could not be deleted.", "Image Delete", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"{tag.Name} image could not be deleted.", "Image", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
                     }
@@ -170,16 +171,53 @@
             }
         }
 
-        private void ManageImageTagMenuItem_Click(object sender, RoutedEventArgs e)
+        private void AddImageTagMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
             var tag = menuItem.Tag as DockerImageTreeViewItem;
-            new ManageImageTagForm(tag.DockerConnectionId, tag.ImageId, tag.Name).ShowDialog();
+            var addImageTagForm = new AddImageTagForm(tag.DockerConnectionId, tag.ImageId, tag.Name);
+            addImageTagForm.ShowDialog();
+            if(addImageTagForm.ImageTag!=null)
+            {
+                var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
+                var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[1].ChildNodes.Cast<DockerImageTreeViewItem>().Select((item, index) => new { Item = item, Index = index }).Where(d => d.Item.Name == tag.Name && d.Item.ImageId == tag.ImageId).SingleOrDefault();
+                dockerTreeViewItem.ChildNodes[1].ChildNodes.Insert(dockerImageTreeViewItem.Index, new DockerImageTreeViewItem() { DockerConnectionId = addImageTagForm.DockerConnectionId, ImageId = addImageTagForm.ImageId, Name = $"{addImageTagForm.ImageTag.Repository}:{addImageTagForm.ImageTag.Tag}" });
+            }
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             new SettingsForm().ShowDialog();
+        }
+
+        private void PullImageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var tag = menuItem.Tag as DockerImageTitleTreeViewItem;
+            var pullImageForm = new PullImageForm(tag.DockerConnectionId);
+            pullImageForm.ShowDialog();
+            if (pullImageForm.CreateImage != null)
+            {
+                var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
+                dockerTreeViewItem.ChildNodes[1].ChildNodes.Insert(0, new DockerImageTreeViewItem() { DockerConnectionId = pullImageForm.DockerConnectionId, ImageId =Guid.NewGuid().ToString(), Name = $"{pullImageForm.CreateImage.Repository}:{pullImageForm.CreateImage.Tag}" });
+            }
+        }
+
+        private void RemoveDockerConnectionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var tag = menuItem.Tag as DockerTreeViewItem;
+            if (MessageBox.Show($"{tag.Name} will be deleted?\nAre you sure?", "Docker Connection", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    var dockerConnection = dbContext.DockerConnections.GetById(tag.DockerConnectionId).SingleOrDefault();
+                    dbContext.DockerConnections.Remove(dockerConnection);
+                    dbContext.SaveChanges();
+                    var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
+                    DockerTreeViewItems.Remove(dockerTreeViewItem);
+                }                
+            }
         }
     }
 }

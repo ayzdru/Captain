@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManageDockerRegistryForm));
             this.label5 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -39,7 +41,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridViewDockerRegistries = new System.Windows.Forms.DataGridView();
-            this.RegistryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AccountColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
@@ -162,28 +166,65 @@
             this.dataGridViewDockerRegistries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewDockerRegistries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewDockerRegistries.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewDockerRegistries.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewDockerRegistries.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewDockerRegistries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDockerRegistries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.RegistryColumn,
+            this.IdColumn,
+            this.NameColumn,
+            this.AddressColumn,
             this.AccountColumn});
             this.dataGridViewDockerRegistries.Location = new System.Drawing.Point(9, 104);
             this.dataGridViewDockerRegistries.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewDockerRegistries.MultiSelect = false;
             this.dataGridViewDockerRegistries.Name = "dataGridViewDockerRegistries";
             this.dataGridViewDockerRegistries.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewDockerRegistries.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewDockerRegistries.RowHeadersVisible = false;
             this.dataGridViewDockerRegistries.RowHeadersWidth = 51;
             this.dataGridViewDockerRegistries.RowTemplate.Height = 24;
             this.dataGridViewDockerRegistries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewDockerRegistries.Size = new System.Drawing.Size(478, 418);
             this.dataGridViewDockerRegistries.TabIndex = 16;
+            this.dataGridViewDockerRegistries.SelectionChanged += new System.EventHandler(this.dataGridViewDockerRegistries_SelectionChanged);
             // 
-            // RegistryColumn
+            // IdColumn
             // 
-            this.RegistryColumn.HeaderText = "Registry";
-            this.RegistryColumn.MinimumWidth = 6;
-            this.RegistryColumn.Name = "RegistryColumn";
-            this.RegistryColumn.ReadOnly = true;
+            this.IdColumn.HeaderText = "Id";
+            this.IdColumn.MinimumWidth = 6;
+            this.IdColumn.Name = "IdColumn";
+            this.IdColumn.ReadOnly = true;
+            this.IdColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.IdColumn.Visible = false;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.MinimumWidth = 6;
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // AddressColumn
+            // 
+            this.AddressColumn.HeaderText = "Address";
+            this.AddressColumn.MinimumWidth = 6;
+            this.AddressColumn.Name = "AddressColumn";
+            this.AddressColumn.ReadOnly = true;
+            this.AddressColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // AccountColumn
             // 
@@ -191,6 +232,7 @@
             this.AccountColumn.MinimumWidth = 6;
             this.AccountColumn.Name = "AccountColumn";
             this.AccountColumn.ReadOnly = true;
+            this.AccountColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // buttonAdd
             // 
@@ -250,6 +292,7 @@
             this.Name = "ManageDockerRegistryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manage Docker Registry";
+            this.Load += new System.EventHandler(this.ManageDockerRegistryForm_Load);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -271,10 +314,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dataGridViewDockerRegistries;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RegistryColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AccountColumn;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AddressColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AccountColumn;
     }
 }

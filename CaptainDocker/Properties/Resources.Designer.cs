@@ -73,6 +73,16 @@ namespace CaptainDocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap captain_docker_logo {
+            get {
+                object obj = ResourceManager.GetObject("captain_docker_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap crane {
             get {
                 object obj = ResourceManager.GetObject("crane", resourceCulture);
@@ -116,6 +126,16 @@ namespace CaptainDocker.Properties {
         internal static System.Drawing.Bitmap new_docker_connection {
             get {
                 object obj = ResourceManager.GetObject("new-docker-connection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pull {
+            get {
+                object obj = ResourceManager.GetObject("pull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

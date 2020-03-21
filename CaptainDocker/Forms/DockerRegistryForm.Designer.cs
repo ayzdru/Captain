@@ -35,8 +35,8 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelDescription = new System.Windows.Forms.Label();
+            this.labelHeader = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -71,7 +71,7 @@
             this.panel2.Controls.Add(this.buttonSave);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 301);
+            this.panel2.Location = new System.Drawing.Point(0, 311);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(632, 60);
@@ -124,26 +124,26 @@
             this.label6.TabIndex = 3;
             this.label6.Text = "label6";
             // 
-            // label2
+            // labelDescription
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(97, 48);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(431, 23);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            this.labelDescription.AutoSize = true;
+            this.labelDescription.Location = new System.Drawing.Point(97, 48);
+            this.labelDescription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelDescription.Name = "labelDescription";
+            this.labelDescription.Size = new System.Drawing.Size(96, 23);
+            this.labelDescription.TabIndex = 1;
+            this.labelDescription.Text = "Description";
             // 
-            // label1
+            // labelHeader
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(94, 7);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(226, 41);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Docker Registry";
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelHeader.Location = new System.Drawing.Point(94, 7);
+            this.labelHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(226, 41);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "Docker Registry";
             // 
             // textBoxName
             // 
@@ -159,8 +159,8 @@
             // 
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.labelDescription);
+            this.panel1.Controls.Add(this.labelHeader);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
@@ -201,7 +201,7 @@
             this.groupBoxLogin.Controls.Add(this.label4);
             this.groupBoxLogin.Controls.Add(this.textBoxUsername);
             this.groupBoxLogin.Enabled = false;
-            this.groupBoxLogin.Location = new System.Drawing.Point(89, 183);
+            this.groupBoxLogin.Location = new System.Drawing.Point(89, 193);
             this.groupBoxLogin.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxLogin.Name = "groupBoxLogin";
             this.groupBoxLogin.Padding = new System.Windows.Forms.Padding(2);
@@ -268,13 +268,12 @@
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(525, 29);
             this.textBoxAddress.TabIndex = 19;
-            this.textBoxAddress.Text = "registry.hub.docker.com";
             // 
             // DockerRegistryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 361);
+            this.ClientSize = new System.Drawing.Size(632, 371);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.groupBoxLogin);
@@ -289,6 +288,7 @@
             this.Name = "DockerRegistryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Docker Registry";
+            this.Load += new System.EventHandler(this.DockerRegistryForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -306,19 +306,19 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.Label labelDescription;
+        private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.CheckBox checkBoxLoginRequired;
         private System.Windows.Forms.GroupBox groupBoxLogin;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBoxAddress;
+        public System.Windows.Forms.TextBox textBoxName;
+        public System.Windows.Forms.TextBox textBoxUsername;
+        public System.Windows.Forms.TextBox textBoxAddress;
+        public System.Windows.Forms.CheckBox checkBoxLoginRequired;
     }
 }

@@ -8,6 +8,7 @@ public partial class Constants
     public static class Application
     {
         public static string DatabaseConnection { get; set; }
+        public const string DefaultRegistry = "registry.hub.docker.com";
     }
 
 }

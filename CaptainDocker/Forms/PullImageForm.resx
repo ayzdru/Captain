@@ -117,35 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="manage-image-tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\manage-image-tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\images.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="add-image-tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add-image-tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="push" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\push.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="captain_docker_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\captain-docker-logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="crane" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\crane.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="manage-docker-registry" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\manage-docker-registry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="new-docker-connection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\new-docker-connection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pull" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pull.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        Y2/10/x/AH5UvmXK1fo6AAAAAElFTkSuQmCC
+</value>
   </data>
 </root>

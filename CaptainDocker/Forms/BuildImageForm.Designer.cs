@@ -99,7 +99,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(665, 29);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Select Project\\Publish Folder, Dockerfile and specify image name to build it.";
+            this.label2.Text = "Build an image from a tar archive with a Dockerfile in it.";
             // 
             // label1
             // 
