@@ -8,6 +8,7 @@
     using CaptainDocker.ValueObjects;
     using Docker.DotNet;
     using Docker.DotNet.Models;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.VisualStudio.Settings;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Settings;
@@ -44,65 +45,91 @@
             else
             {
                 Constants.Application.DatabaseConnection = userSettingsStore.GetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection);
+            }            
+            try
+            {
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    dbContext.Database.Migrate();
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw new NotSupportedException(ex.Message);
+            }
+
         }
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; }
 
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)
         {
+           
             refreshButton.IsEnabled = false;
-            DockerTreeViewItems = new ObservableCollection<DockerTreeViewItem>();
-            using (var dbContext = new ApplicationDbContext())
-            {
-                var dockerConnections = dbContext.DockerConnections.ToList();
-                foreach (var dockerConnection in dockerConnections)
+                DockerTreeViewItems = new ObservableCollection<DockerTreeViewItem>();
+                using (var dbContext = new ApplicationDbContext())
                 {
-                    DockerClient dockerClient = new DockerClientConfiguration(
-    new Uri(dockerConnection.EngineApiUrl))
-    .CreateClient();                   
-                    IList<ContainerListResponse> containers = await dockerClient.Containers.ListContainersAsync(
-              new ContainersListParameters()
-              {
-                  Limit = 10,
-              });
-
-                    ObservableCollection<ITreeNode> dockerContainerTreeViewItems = new ObservableCollection<ITreeNode>();
-                    foreach (var container in containers)
+                    var dockerConnections = dbContext.DockerConnections.ToList();
+                    foreach (var dockerConnection in dockerConnections)
                     {
-                        dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { Name = $"{container.ID} - {container.Image}" });
-                    } 
-                    var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }));
-                    ObservableCollection<ITreeNode> dockerImageTreeViewItems = new ObservableCollection<ITreeNode>();
-                    foreach (var image in images)
-                    {                        
-                        if (image.RepoTags != null)
+                    var nodes = new ObservableCollection<ITreeNode>();
+                    try
+                    {
+                        DockerClient dockerClient = new DockerClientConfiguration(
+        new Uri(dockerConnection.EngineApiUrl))
+        .CreateClient();
+                        IList<ContainerListResponse> containers = await dockerClient.Containers.ListContainersAsync(
+                  new ContainersListParameters()
+                  {
+                      Limit = 10,
+                  });
+
+                        ObservableCollection<ITreeNode> dockerContainerTreeViewItems = new ObservableCollection<ITreeNode>();
+                        foreach (var container in containers)
                         {
-                            foreach (var repoTag in image.RepoTags)
+                            dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { Name = $"{container.ID} - {container.Image}" });
+                        }
+                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }));
+                        ObservableCollection<ITreeNode> dockerImageTreeViewItems = new ObservableCollection<ITreeNode>();
+                        foreach (var image in images)
+                        {
+                            if (image.RepoTags != null)
                             {
-                                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = repoTag, DockerConnectionId = dockerConnection.Id, ImageId = image.ID });
+                                foreach (var repoTag in image.RepoTags)
+                                {
+                                    dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = repoTag, DockerConnectionId = dockerConnection.Id, ImageId = image.ID });
+                                }
+                            }
+                            else
+                            {
+                                foreach (var repoDigest in image.RepoDigests)
+                                {
+                                    dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = repoDigest, DockerConnectionId = dockerConnection.Id, ImageId = image.ID });
+                                }
                             }
                         }
-                       else
-                        {
-                            foreach (var repoDigest in image.RepoDigests)
-                            {
-                                dockerImageTreeViewItems.Add(new DockerImageTreeViewItem() { Name = repoDigest, DockerConnectionId = dockerConnection.Id, ImageId = image.ID });
-                            }
-                        }
+
+
+                        nodes.Add(new DockerContainerTitleTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems });
+                        nodes.Add(new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = dockerImageTreeViewItems });
+       
                     }
-                    var nodes = new ObservableCollection<ITreeNode>
-        {
-            new DockerContainerTitleTreeViewItem { Name = "Containers", ChildNodes = dockerContainerTreeViewItems },
-            new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = dockerImageTreeViewItems }
-        };
-                    DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() {DockerConnectionId = dockerConnection.Id, Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = nodes };
+                    catch (Exception ex)
+                    {
 
-                    DockerTreeViewItems.Add(dockerTreeViewItem);
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    
+                        DockerTreeViewItem dockerTreeViewItem = new DockerTreeViewItem() { DockerConnectionId = dockerConnection.Id, Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = nodes };
+
+                        DockerTreeViewItems.Add(dockerTreeViewItem);
+                    }
+                    dockerExplorerTreeView.ItemsSource = DockerTreeViewItems;
+
                 }
-                dockerExplorerTreeView.ItemsSource = DockerTreeViewItems;
-
-            }
-            refreshButton.IsEnabled = true;
+                refreshButton.IsEnabled = true;
+            
+            
         }
 
 
