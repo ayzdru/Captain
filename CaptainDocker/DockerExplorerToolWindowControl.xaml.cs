@@ -63,8 +63,7 @@
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; }
 
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)
-        {
-           
+        {           
             refreshButton.IsEnabled = false;
                 DockerTreeViewItems = new ObservableCollection<DockerTreeViewItem>();
                 using (var dbContext = new ApplicationDbContext())

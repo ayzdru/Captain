@@ -112,6 +112,12 @@
     <Compile Include="Forms\AddImageTagForm.Designer.cs">
       <DependentUpon>AddImageTagForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CreateContainerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateContainerForm.Designer.cs">
+      <DependentUpon>CreateContainerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,6 +233,9 @@
     <EmbeddedResource Include="Forms\AddImageTagForm.resx">
       <DependentUpon>AddImageTagForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateContainerForm.resx">
+      <DependentUpon>CreateContainerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PushImageForm.resx">
       <DependentUpon>PushImageForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +255,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <None Include="Resources\create-container.png" />
     <None Include="Resources\pull.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
