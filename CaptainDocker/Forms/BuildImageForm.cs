@@ -176,6 +176,8 @@ namespace CaptainDocker.Forms
                     using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
                     {
                         var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
+                        StreamReader reader = new StreamReader(responseStream);
+                        string text = reader.ReadToEnd();
                     }
                 }
             }
