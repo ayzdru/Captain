@@ -146,10 +146,12 @@ namespace CaptainDocker.Forms
                         Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
                         Tags = new List<string> { textBoxImageName.Text }
                     };
-                    var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text);
-                    var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
-                    var streamReader = new StreamReader(responseStream);
-                    var text = await streamReader.ReadToEndAsync();
+                    using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
+                    {
+                        var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
+                        StreamReader reader = new StreamReader(responseStream);
+                        string text = reader.ReadToEnd();
+                    }
 
                     if (comboBoxProjects.SelectedItem != null)
                     {
