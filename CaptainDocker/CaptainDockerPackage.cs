@@ -1,7 +1,17 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using CaptainDocker.Data;
+using CaptainDocker.Entities;
+using EnvDTE;
+using EnvDTE80;
+using Microsoft;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
 namespace CaptainDocker
@@ -23,12 +33,19 @@ namespace CaptainDocker
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
+    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(CaptainDockerPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideToolWindow(typeof(DockerExplorerToolWindow))]
+
+    
     public sealed class CaptainDockerPackage : AsyncPackage
     {
+        public static DTE _dte;
+        SolutionEvents _solutionEvents;
         /// <summary>
         /// CaptainDockerPackage GUID string.
         /// </summary>
@@ -45,12 +62,45 @@ namespace CaptainDocker
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            // When initialized asynchronously, the current thread may be a background thread at this point.
-            // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            _dte = (DTE)await this.GetServiceAsync(typeof(DTE));
+            _solutionEvents = ((Events2)_dte.Events).SolutionEvents;
+            _solutionEvents.Opened += SolutionEvents_Opened;
+
             await DockerExplorerToolWindowCommand.InitializeAsync(this);
+            
         }
 
+        private void SolutionEvents_Opened()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (_dte.Solution.IsOpen)
+            {
+                var databaseConnection = Path.GetDirectoryName(_dte.Solution.FullName);
+                Constants.Application.DatabaseConnection = databaseConnection;
+                try
+                {
+                    if (!string.IsNullOrEmpty(Constants.Application.DatabaseConnection))
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            dbContext.Database.EnsureCreated();
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
+
+
+
         #endregion
+
+
     }
 }

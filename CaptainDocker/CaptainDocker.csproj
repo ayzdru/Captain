@@ -5,6 +5,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -49,19 +50,6 @@
   <ItemGroup>
     <Compile Include="Constants\ApplicationConstant.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
-    <Compile Include="Data\Migrations\20200229183626_Initial.cs" />
-    <Compile Include="Data\Migrations\20200229183626_Initial.designer.cs">
-      <DependentUpon>20200229183626_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Migrations\20200229192816_DockerConnectionEngineApiUrl.cs" />
-    <Compile Include="Data\Migrations\20200229192816_DockerConnectionEngineApiUrl.designer.cs">
-      <DependentUpon>20200229192816_DockerConnectionEngineApiUrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Migrations\20200229212547_DockerRegistry.cs" />
-    <Compile Include="Data\Migrations\20200229212547_DockerRegistry.designer.cs">
-      <DependentUpon>20200229212547_DockerRegistry.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="DockerExplorerToolWindow.cs" />
     <Compile Include="DockerExplorerToolWindowCommand.cs" />
     <Compile Include="DockerExplorerToolWindowControl.xaml.cs">
@@ -70,6 +58,7 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\DockerConnection.cs" />
     <Compile Include="Entities\DockerRegistry.cs" />
+    <Compile Include="Entities\Project.cs" />
     <Compile Include="Extensions\ComboBoxExtension.cs" />
     <Compile Include="Extensions\DockerRegistryExtension.cs" />
     <Compile Include="Extensions\DockerConnectionExtensions.cs" />
@@ -173,21 +162,13 @@
     <PackageReference Include="Docker.Registry.DotNet">
       <Version>1.0.10</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore">
-      <Version>2.1.0</Version>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.206" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer">
-      <Version>2.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-      <Version>2.1.0</Version>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.6.2058">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.204" ExcludeAssets="runtime">
-      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.4.1057" />
     <PackageReference Include="SharpZipLib">
       <Version>1.2.0</Version>
     </PackageReference>
@@ -249,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Configurations\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\captain-docker-logo.png">
@@ -257,6 +239,12 @@
     </Content>
     <None Include="Resources\create-container.png" />
     <None Include="Resources\pull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Users\Ayaz\Downloads\Compressed\FileContextCore-2.2.0\FileContextCore-2.2.0\FileContextCore\FileContextCore.csproj">
+      <Project>{8e11c096-a001-4a95-8afc-507a94dfe945}</Project>
+      <Name>FileContextCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

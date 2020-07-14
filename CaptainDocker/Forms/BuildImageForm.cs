@@ -21,60 +21,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EnvDTE80;
 
 namespace CaptainDocker.Forms
 {
     public partial class BuildImageForm : BaseForm
     {
-
-        public static IEnumerable<EnvDTE.Project> GetProjects(IVsSolution solution)
-        {
-            foreach (IVsHierarchy hier in GetProjectsInSolution(solution))
-            {
-                EnvDTE.Project project = GetDTEProject(hier);
-                if (project != null)
-                    yield return project;
-            }
-        }
-
-        public static IEnumerable<IVsHierarchy> GetProjectsInSolution(IVsSolution solution)
-        {
-            return GetProjectsInSolution(solution, __VSENUMPROJFLAGS.EPF_LOADEDINSOLUTION);
-        }
-
-        public static IEnumerable<IVsHierarchy> GetProjectsInSolution(IVsSolution solution, __VSENUMPROJFLAGS flags)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (solution == null)
-                yield break;
-
-            IEnumHierarchies enumHierarchies;
-            Guid guid = Guid.Empty;
-            solution.GetProjectEnum((uint)flags, ref guid, out enumHierarchies);
-            if (enumHierarchies == null)
-                yield break;
-
-            IVsHierarchy[] hierarchy = new IVsHierarchy[1];
-            uint fetched;
-            while (enumHierarchies.Next(1, hierarchy, out fetched) == VSConstants.S_OK && fetched == 1)
-            {
-                if (hierarchy.Length > 0 && hierarchy[0] != null)
-                    yield return hierarchy[0];
-            }
-        }
-
-        public static EnvDTE.Project GetDTEProject(IVsHierarchy hierarchy)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (hierarchy == null)
-                throw new ArgumentNullException("hierarchy");
-
-            object obj;
-            hierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out obj);
-            return obj as EnvDTE.Project;
-        }
-
-
         private System.Threading.CancellationTokenSource _cts;
         public System.Threading.CancellationTokenSource Cts
         {
@@ -92,17 +44,38 @@ namespace CaptainDocker.Forms
             }
         }
         public Guid DockerConnectionId { get; set; }
+        private EnvDTE.Project[] GetProjects(EnvDTE.Project project)
+        {
+            if (null == project)
+            {
+                return new EnvDTE.Project[0];
+            }
+
+            var projects = new List<EnvDTE.Project>();
+
+            if (project.Kind != ProjectKinds.vsProjectKindSolutionFolder)
+            {
+                projects.Add(project);
+            }
+
+            if (project.ProjectItems != null)
+            {
+                for (var i = 1; i <= project.ProjectItems.Count; i++)
+                {
+                    var subProject = project.ProjectItems.Item(i).SubProject;
+                    projects.AddRange(GetProjects(subProject));
+                }
+            }
+
+            return projects.ToArray();
+        }
         public BuildImageForm(Guid dockerConnectionId)
         {
             DockerConnectionId = dockerConnectionId;
             ThreadHelper.ThrowIfNotOnUIThread();
             InitializeComponent();
+            
 
-            IVsSolution solution = (IVsSolution)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(IVsSolution));
-            foreach (Project project in GetProjects(solution))
-            {
-
-            }
         }
         private void ButtonDirectoryBrowse_Click(object sender, EventArgs e)
         {
@@ -173,12 +146,31 @@ namespace CaptainDocker.Forms
                         Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
                         Tags = new List<string> { textBoxImageName.Text }
                     };
-                    using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
+                    var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text);
+                    var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
+                    var streamReader = new StreamReader(responseStream);
+                    var text = await streamReader.ReadToEndAsync();
+
+                    if (comboBoxProjects.SelectedItem != null)
                     {
-                        var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
-                        StreamReader reader = new StreamReader(responseStream);
-                        string text = reader.ReadToEnd();
+                        var projectItem = comboBoxProjects.SelectedItem as SelectListItem<string>;
+                        var project = dbContext.Projects.Where(q => q.Name == projectItem.Text).SingleOrDefault();
+                        if (project != null)
+                        {
+                            project.ImageName = textBoxImageName.Text;
+                            project.Directory = textBoxDirectory.Text;
+                            project.Dockerfile = textBoxDockerfile.Text;
+                            dbContext.Projects.Update(project);
+                            dbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            dbContext.Projects.Add(new Entities.Project(projectItem.Text, textBoxImageName.Text,
+                                textBoxDirectory.Text, textBoxDockerfile.Text));
+                            dbContext.SaveChanges();
+                        }
                     }
+                   
                 }
             }
             buttonBuild.Enabled = true;
@@ -201,6 +193,48 @@ namespace CaptainDocker.Forms
                 comboBoxDockerEngine.SelectById(DockerConnectionId);
             }
 
+            var projects = CaptainDockerPackage._dte.Solution.Projects;
+            foreach (EnvDTE.Project project in projects)
+            {
+                var subProjects = GetProjects(project);
+                foreach (var subProject in subProjects)
+                {
+                    if (!string.IsNullOrEmpty(subProject.FullName))
+                    {
+                        comboBoxProjects.Items.Add(new SelectListItem<string>() { Text = subProject.Name, Value = Path.GetDirectoryName(subProject.FullName) });
+                    }
+                }
+            }
+
+        }
+
+        private void comboBoxProjects_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxProjects.SelectedItem != null)
+            {
+                var projectItem = comboBoxProjects.SelectedItem as SelectListItem<string>;
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    var project =
+                        dbContext.Projects.Where(q => q.Name == projectItem.Text).SingleOrDefault();
+                    if (project != null)
+                    {
+                        textBoxImageName.Text = project.ImageName;
+                        textBoxDirectory.Text = project.Directory;
+                        textBoxDockerfile.Text = project.Dockerfile;
+                        folderBrowserDialogDirectory.SelectedPath = project.Directory;
+                        openFileDialogDockerfile.InitialDirectory = Path.GetDirectoryName(project.Dockerfile);
+                    }
+                    else
+                    {
+                        textBoxImageName.Text = null;
+                        textBoxDirectory.Text = projectItem.Value;
+                        textBoxDockerfile.Text = Path.Combine(projectItem.Value, "Dockerfile");
+                        folderBrowserDialogDirectory.SelectedPath = projectItem.Value;
+                        openFileDialogDockerfile.InitialDirectory = projectItem.Value;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace CaptainDocker
+﻿using CaptainDocker.Entities;
+using EnvDTE;
+using Microsoft.VisualStudio;
+
+namespace CaptainDocker
 {
     using CaptainDocker.Data;
     using CaptainDocker.Extensions;
@@ -16,48 +20,39 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-
     /// <summary>
     /// Interaction logic for DockerExplorerToolWindowControl.
     /// </summary>
     public partial class DockerExplorerToolWindowControl : UserControl
     {
-
+     
         /// <summary>
         /// Initializes a new instance of the <see cref="DockerExplorerToolWindowControl"/> class.
         /// </summary>
+       
         public DockerExplorerToolWindowControl()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             this.InitializeComponent();
-            SettingsManager settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
-            WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
-            if (!userSettingsStore.CollectionExists(SettingsForm.CaptainDockerCollectionName) && !userSettingsStore.PropertyExists(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection))
-            {
-                userSettingsStore.CreateCollection(SettingsForm.CaptainDockerCollectionName);
-                var databaseConnection = @"Server=(localdb)\mssqllocaldb;Database=CaptainDocker;Trusted_Connection=True;MultipleActiveResultSets=true";
-                userSettingsStore.SetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection, databaseConnection);
-                Constants.Application.DatabaseConnection = databaseConnection;
-            }
-            else
-            {
-                Constants.Application.DatabaseConnection = userSettingsStore.GetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection);
-            }            
-            try
-            {
-                using (var dbContext = new ApplicationDbContext())
-                {
-                    dbContext.Database.Migrate();
-                }
-            }
-            catch (Exception ex)
-            {
+            //SettingsManager settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
+            //WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+            //if (!userSettingsStore.CollectionExists(SettingsForm.CaptainDockerCollectionName) && !userSettingsStore.PropertyExists(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection))
+            //{
+            //    userSettingsStore.CreateCollection(SettingsForm.CaptainDockerCollectionName);
 
-                throw new NotSupportedException(ex.Message);
-            }
+            //    userSettingsStore.SetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection, databaseConnection);
+
+            //}
+            //else
+            //{
+            //    userSettingsStore.DeleteCollection(SettingsForm.CaptainDockerCollectionName);
+            //    Constants.Application.DatabaseConnection = userSettingsStore.GetString(SettingsForm.CaptainDockerCollectionName, SettingsForm.CaptainDockerDatabaseConnection);
+            //}            
+            
 
         }
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; }

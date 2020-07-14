@@ -50,6 +50,8 @@
             this.openFileDialogDockerfile = new System.Windows.Forms.OpenFileDialog();
             this.comboBoxDockerEngine = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.comboBoxProjects = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -115,7 +117,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 133);
+            this.label3.Location = new System.Drawing.Point(11, 166);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 23);
@@ -126,29 +128,26 @@
             // 
             this.textBoxImageName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxImageName.Location = new System.Drawing.Point(142, 131);
+            this.textBoxImageName.Location = new System.Drawing.Point(142, 164);
             this.textBoxImageName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxImageName.Name = "textBoxImageName";
             this.textBoxImageName.Size = new System.Drawing.Size(480, 29);
             this.textBoxImageName.TabIndex = 2;
-            this.textBoxImageName.Text = "kubernetemaster:5000/webapplication9:v5";
             // 
             // textBoxDirectory
             // 
             this.textBoxDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDirectory.Location = new System.Drawing.Point(142, 167);
+            this.textBoxDirectory.Location = new System.Drawing.Point(142, 200);
             this.textBoxDirectory.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDirectory.Name = "textBoxDirectory";
             this.textBoxDirectory.Size = new System.Drawing.Size(390, 29);
             this.textBoxDirectory.TabIndex = 3;
-            this.textBoxDirectory.Text = "C:\\Users\\Ayaz\\source\\repos\\WebApplication9\\WebApplication9\\bin\\Release\\netcoreapp" +
-    "3.1\\publish\\";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 170);
+            this.label4.Location = new System.Drawing.Point(10, 203);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 23);
@@ -161,7 +160,7 @@
             this.panel2.Controls.Add(this.buttonCancel);
             this.panel2.Controls.Add(this.buttonBuild);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 250);
+            this.panel2.Location = new System.Drawing.Point(0, 280);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(632, 60);
@@ -208,7 +207,7 @@
             // 
             this.buttonDirectoryBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDirectoryBrowse.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonDirectoryBrowse.Location = new System.Drawing.Point(536, 165);
+            this.buttonDirectoryBrowse.Location = new System.Drawing.Point(536, 198);
             this.buttonDirectoryBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDirectoryBrowse.Name = "buttonDirectoryBrowse";
             this.buttonDirectoryBrowse.Size = new System.Drawing.Size(86, 30);
@@ -221,7 +220,7 @@
             // 
             this.buttonDockerfileBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDockerfileBrowse.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonDockerfileBrowse.Location = new System.Drawing.Point(536, 200);
+            this.buttonDockerfileBrowse.Location = new System.Drawing.Point(536, 233);
             this.buttonDockerfileBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDockerfileBrowse.Name = "buttonDockerfileBrowse";
             this.buttonDockerfileBrowse.Size = new System.Drawing.Size(86, 30);
@@ -234,17 +233,16 @@
             // 
             this.textBoxDockerfile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDockerfile.Location = new System.Drawing.Point(142, 201);
+            this.textBoxDockerfile.Location = new System.Drawing.Point(142, 234);
             this.textBoxDockerfile.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDockerfile.Name = "textBoxDockerfile";
             this.textBoxDockerfile.Size = new System.Drawing.Size(390, 29);
             this.textBoxDockerfile.TabIndex = 5;
-            this.textBoxDockerfile.Text = "C:\\Users\\Ayaz\\source\\repos\\WebApplication9\\WebApplication9\\Dockerfile";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 204);
+            this.label7.Location = new System.Drawing.Point(10, 237);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 23);
@@ -278,11 +276,37 @@
             this.label9.TabIndex = 18;
             this.label9.Text = "Docker Engine:";
             // 
+            // comboBoxProjects
+            // 
+            this.comboBoxProjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxProjects.DisplayMember = "Text";
+            this.comboBoxProjects.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProjects.FormattingEnabled = true;
+            this.comboBoxProjects.Location = new System.Drawing.Point(142, 131);
+            this.comboBoxProjects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBoxProjects.Name = "comboBoxProjects";
+            this.comboBoxProjects.Size = new System.Drawing.Size(480, 29);
+            this.comboBoxProjects.TabIndex = 19;
+            this.comboBoxProjects.ValueMember = "Value";
+            this.comboBoxProjects.SelectedIndexChanged += new System.EventHandler(this.comboBoxProjects_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 134);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(67, 23);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Project:";
+            // 
             // BuildImageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 310);
+            this.ClientSize = new System.Drawing.Size(632, 340);
+            this.Controls.Add(this.comboBoxProjects);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.comboBoxDockerEngine);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.buttonDockerfileBrowse);
@@ -334,5 +358,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialogDockerfile;
         private System.Windows.Forms.ComboBox comboBoxDockerEngine;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBoxProjects;
+        private System.Windows.Forms.Label label8;
     }
 }
