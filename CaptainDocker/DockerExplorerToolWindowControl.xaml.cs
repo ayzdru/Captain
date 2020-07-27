@@ -1,5 +1,6 @@
 ﻿using CaptainDocker.Entities;
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio;
 
 namespace CaptainDocker
@@ -29,14 +30,53 @@ namespace CaptainDocker
     /// </summary>
     public partial class DockerExplorerToolWindowControl : UserControl
     {
-     
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DockerExplorerToolWindowControl"/> class.
         /// </summary>
-       
+        SolutionEvents _solutionEvents;
+        private void SolutionEvents_BeforeClosing()
+        {
+            dockerExplorerToolbar.IsEnabled = false;
+            DockerTreeViewItems = new ObservableCollection<DockerTreeViewItem>();
+            openProjectSolutionLabel.Visibility = Visibility.Visible;
+            Constants.Application.DatabaseConnection = null;
+        }
+
+        private void SolutionEvents_Opened()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            dockerExplorerToolbar.IsEnabled = true;
+            openProjectSolutionLabel.Visibility = Visibility.Hidden;
+            if (CaptainDockerPackage._dte.Solution.IsOpen)
+            {
+                var databaseConnection = Path.GetDirectoryName(CaptainDockerPackage._dte.Solution.FullName);
+                Constants.Application.DatabaseConnection = databaseConnection;
+                try
+                {
+                    if (!string.IsNullOrEmpty(Constants.Application.DatabaseConnection))
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            dbContext.Database.EnsureCreated();
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
         public DockerExplorerToolWindowControl()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
+
+            _solutionEvents = ((Events2)CaptainDockerPackage._dte.Events).SolutionEvents;
+            _solutionEvents.Opened += SolutionEvents_Opened;
+            _solutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
             this.InitializeComponent();
             //SettingsManager settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
             //WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);

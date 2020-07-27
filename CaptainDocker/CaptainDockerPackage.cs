@@ -45,7 +45,7 @@ namespace CaptainDocker
     public sealed class CaptainDockerPackage : AsyncPackage
     {
         public static DTE _dte;
-        SolutionEvents _solutionEvents;
+        
         /// <summary>
         /// CaptainDockerPackage GUID string.
         /// </summary>
@@ -64,37 +64,12 @@ namespace CaptainDocker
         {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             _dte = (DTE)await this.GetServiceAsync(typeof(DTE));
-            _solutionEvents = ((Events2)_dte.Events).SolutionEvents;
-            _solutionEvents.Opened += SolutionEvents_Opened;
-
+            
             await DockerExplorerToolWindowCommand.InitializeAsync(this);
             
         }
 
-        private void SolutionEvents_Opened()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (_dte.Solution.IsOpen)
-            {
-                var databaseConnection = Path.GetDirectoryName(_dte.Solution.FullName);
-                Constants.Application.DatabaseConnection = databaseConnection;
-                try
-                {
-                    if (!string.IsNullOrEmpty(Constants.Application.DatabaseConnection))
-                    {
-                        using (var dbContext = new ApplicationDbContext())
-                        {
-                            dbContext.Database.EnsureCreated();
-                        }
-                    }
-
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-        }
+        
 
 
 
