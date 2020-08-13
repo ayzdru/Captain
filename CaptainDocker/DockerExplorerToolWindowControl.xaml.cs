@@ -246,11 +246,6 @@ namespace CaptainDocker
             }
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            new SettingsForm().ShowDialog();
-        }
-
         private void PullImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
