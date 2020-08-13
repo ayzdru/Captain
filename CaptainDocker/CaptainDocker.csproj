@@ -121,6 +121,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Settings\DockerConnectionBasicAuthCredentialSetting.cs" />
     <Compile Include="Settings\DockerConnectionCertificateCredentialSetting.cs" />
     <Compile Include="Settings\DockerConnectionSetting.cs" />
@@ -132,6 +137,10 @@
     <Compile Include="ValueObjects\SelectListItem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -232,8 +241,8 @@
     <None Include="Resources\pull.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\Ayaz\Downloads\Compressed\FileContextCore-2.2.0\FileContextCore-2.2.0\FileContextCore\FileContextCore.csproj">
-      <Project>{8e11c096-a001-4a95-8afc-507a94dfe945}</Project>
+    <ProjectReference Include="..\FileContextCore\FileContextCore.csproj">
+      <Project>{f4ded41b-455c-4068-8e0a-f65fa269766c}</Project>
       <Name>FileContextCore</Name>
     </ProjectReference>
   </ItemGroup>

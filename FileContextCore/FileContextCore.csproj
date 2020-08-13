@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>FileContextCoreCert.pfx</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.2.0</Version>
+    <Company>morrisjdev</Company>
+    <Authors>morrisjdev</Authors>
+    <Description>File provider for Entity Framework Core (to be used for development purposes)</Description>
+    <Copyright>Copyright © Morris Janatzek</Copyright>
+    <Title>FileContextCore</Title>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/morrisjdev/FileContextCore/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://morrisj.net/img/morrisjdev_logo.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/morrisjdev/FileContextCore</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Entity Framework Core;entity-framework-core;EF;Data;O/RM;FileContext;FileDB;JSON;XML;CSV;ELSX;Excel</PackageTags>
+    <PackageProjectUrl>https://github.com/morrisjdev/FileContextCore</PackageProjectUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <DelaySign>false</DelaySign>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="12.1.0" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
