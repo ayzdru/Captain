@@ -6,6 +6,7 @@ using Docker.DotNet;
 using Docker.DotNet.Models;
 using Docker.Registry.DotNet;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -129,8 +130,22 @@ namespace CaptainDocker.Forms
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if (dockerConnection != null)
                     {
+
+                        var exposedPorts = dataGridViewExposedPorts.Rows.OfType<DataGridViewRow>().Select(s =>
+                            new {Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}"}).ToDictionary(t => t.Key, t => new EmptyStruct()); ;
+                        var portBindings = dataGridViewExposedPorts.Rows.OfType<DataGridViewRow>().Select(s =>
+                            new { Key = $"{s.Cells[0].Value.ToString()}" , Value = new List<PortBinding>(){ new PortBinding(){ HostIP = s.Cells[2].Value.ToString(), HostPort = s.Cells[3].Value.ToString() } } }).ToDictionary(t => t.Key, t => (IList<PortBinding>)t.Value); ;
+
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        dockerClient.Containers.CreateContainerAsync(new CreateContainerParameters() {   });
+                       await dockerClient.Containers.CreateContainerAsync(new CreateContainerParameters() { Image = comboBoxImage.SelectedText, Name = textBoxName.Text, Entrypoint = textBoxEntrypoint.Text.Split(' ').ToList(), Env = textBoxEnvironment.Text.Split(' ').ToList(),AttachStderr = checkBoxAttachToStderr.Checked, AttachStdin = checkBoxAttachToStdin.Checked, AttachStdout =  checkBoxAttachToStdout.Checked, Cmd = textBoxCommand.Text.Split(' ').ToList(),
+                           ExposedPorts = exposedPorts,
+                           HostConfig = new HostConfig()
+                           {
+                               PublishAllPorts = checkBoxPublishAllPorts.Checked,
+                               PortBindings = portBindings
+                           }
+                           
+                       });
                     }
                 }
             }
