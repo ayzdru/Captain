@@ -1,6 +1,6 @@
 ﻿namespace CaptainDocker.Forms
 {
-    partial class AddImageTagForm
+    partial class ContainerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,24 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddImageTagForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContainerForm));
             this.label5 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonFinish = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.comboBoxDockerEngine = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.comboBoxImage = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBoxEntrypoint = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBoxTag = new System.Windows.Forms.TextBox();
+            this.textBoxEnvironment = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBoxRepository = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBoxCommand = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -70,30 +73,28 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(148, 35);
             this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "&Cancel";
+            this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
-            // buttonAdd
+            // buttonFinish
             // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAdd.Location = new System.Drawing.Point(321, 10);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(148, 35);
-            this.buttonAdd.TabIndex = 1;
-            this.buttonAdd.Text = "&Add";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.ButtonAdd_Click);
+            this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFinish.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonFinish.Location = new System.Drawing.Point(321, 10);
+            this.buttonFinish.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonFinish.Name = "buttonFinish";
+            this.buttonFinish.Size = new System.Drawing.Size(148, 35);
+            this.buttonFinish.TabIndex = 1;
+            this.buttonFinish.Text = "Finish";
+            this.buttonFinish.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.buttonCancel);
-            this.panel2.Controls.Add(this.buttonAdd);
+            this.panel2.Controls.Add(this.buttonFinish);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 288);
+            this.panel2.Location = new System.Drawing.Point(0, 425);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(632, 58);
@@ -114,9 +115,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(104, 59);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(413, 23);
+            this.label2.Size = new System.Drawing.Size(244, 23);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Tag an image so that it becomes part of a repository.";
+            this.label2.Text = "Create a container with image.";
             // 
             // label1
             // 
@@ -124,9 +125,9 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.Location = new System.Drawing.Point(101, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(218, 41);
+            this.label1.Size = new System.Drawing.Size(241, 41);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Add Image Tag";
+            this.label1.Text = "Create Container";
             // 
             // panel1
             // 
@@ -144,7 +145,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::CaptainDocker.Properties.Resources.add_image_tag;
+            this.pictureBox1.Image = global::CaptainDocker.Properties.Resources.create_container;
             this.pictureBox1.Location = new System.Drawing.Point(15, 13);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
@@ -153,36 +154,20 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // comboBoxDockerEngine
+            // label7
             // 
-            this.comboBoxDockerEngine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxDockerEngine.DisplayMember = "Text";
-            this.comboBoxDockerEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDockerEngine.FormattingEnabled = true;
-            this.comboBoxDockerEngine.Location = new System.Drawing.Point(140, 116);
-            this.comboBoxDockerEngine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBoxDockerEngine.Name = "comboBoxDockerEngine";
-            this.comboBoxDockerEngine.Size = new System.Drawing.Size(480, 31);
-            this.comboBoxDockerEngine.TabIndex = 21;
-            this.comboBoxDockerEngine.ValueMember = "Value";
-            this.comboBoxDockerEngine.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDockerEngine_SelectedIndexChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(10, 120);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(124, 23);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "Docker Engine:";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(11, 194);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 23);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Name:";
             // 
             // comboBoxImage
             // 
             this.comboBoxImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxImage.DisplayMember = "Text";
-            this.comboBoxImage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxImage.FormattingEnabled = true;
             this.comboBoxImage.Location = new System.Drawing.Point(140, 153);
             this.comboBoxImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -200,68 +185,96 @@
             this.label8.TabIndex = 24;
             this.label8.Text = "Image:";
             // 
+            // textBoxName
+            // 
+            this.textBoxName.Location = new System.Drawing.Point(140, 191);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(482, 30);
+            this.textBoxName.TabIndex = 26;
+            // 
+            // textBoxEntrypoint
+            // 
+            this.textBoxEntrypoint.Location = new System.Drawing.Point(140, 228);
+            this.textBoxEntrypoint.Name = "textBoxEntrypoint";
+            this.textBoxEntrypoint.Size = new System.Drawing.Size(482, 30);
+            this.textBoxEntrypoint.TabIndex = 28;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(11, 231);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 23);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "Tag:";
+            this.label3.Size = new System.Drawing.Size(93, 23);
+            this.label3.TabIndex = 27;
+            this.label3.Text = "Entrypoint:";
             // 
-            // textBoxTag
+            // textBoxEnvironment
             // 
-            this.textBoxTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTag.Location = new System.Drawing.Point(140, 228);
-            this.textBoxTag.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxTag.Name = "textBoxTag";
-            this.textBoxTag.Size = new System.Drawing.Size(480, 30);
-            this.textBoxTag.TabIndex = 37;
+            this.textBoxEnvironment.Location = new System.Drawing.Point(140, 264);
+            this.textBoxEnvironment.Name = "textBoxEnvironment";
+            this.textBoxEnvironment.Size = new System.Drawing.Size(482, 30);
+            this.textBoxEnvironment.TabIndex = 30;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 193);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(11, 268);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 23);
-            this.label4.TabIndex = 34;
-            this.label4.Text = "Repository:";
+            this.label4.Size = new System.Drawing.Size(111, 23);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "Environment:";
             // 
-            // textBoxRepository
+            // label10
             // 
-            this.textBoxRepository.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxRepository.Location = new System.Drawing.Point(140, 190);
-            this.textBoxRepository.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxRepository.Name = "textBoxRepository";
-            this.textBoxRepository.Size = new System.Drawing.Size(480, 30);
-            this.textBoxRepository.TabIndex = 35;
+            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label10.Location = new System.Drawing.Point(12, 350);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(608, 0);
+            this.label10.TabIndex = 31;
             // 
-            // AddImageTagForm
+            // textBoxCommand
+            // 
+            this.textBoxCommand.Location = new System.Drawing.Point(140, 301);
+            this.textBoxCommand.Name = "textBoxCommand";
+            this.textBoxCommand.Size = new System.Drawing.Size(482, 30);
+            this.textBoxCommand.TabIndex = 40;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 305);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 23);
+            this.label11.TabIndex = 39;
+            this.label11.Text = "Command:";
+            // 
+            // ContainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 346);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxTag);
+            this.ClientSize = new System.Drawing.Size(632, 483);
+            this.Controls.Add(this.textBoxCommand);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.textBoxEnvironment);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBoxRepository);
+            this.Controls.Add(this.textBoxEntrypoint);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.comboBoxImage);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.comboBoxDockerEngine);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "AddImageTagForm";
+            this.Name = "ContainerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Add Image Tag";
-            this.Load += new System.EventHandler(this.PushImageForm_Load);
+            this.Text = "Create Container";
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -275,20 +288,23 @@
 
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button buttonFinish;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox comboBoxDockerEngine;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBoxImage;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxEntrypoint;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxTag;
+        private System.Windows.Forms.TextBox textBoxEnvironment;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxRepository;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBoxCommand;
+        private System.Windows.Forms.Label label11;
     }
 }

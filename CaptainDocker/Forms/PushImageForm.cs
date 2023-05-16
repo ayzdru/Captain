@@ -131,7 +131,7 @@ namespace CaptainDocker.Forms
                 }
             }
         }
-        private async void buttonFinish_Click(object sender, EventArgs e)
+        private async void buttonPush_Click(object sender, EventArgs e)
         {
             if (comboBoxDockerEngine.SelectedItem != null && DockerRegistry != null)
             {
@@ -145,7 +145,7 @@ namespace CaptainDocker.Forms
 
                         var p = new Progress<JSONMessage>(status =>
                         {
-                            buttonFinish.Text = status.Status;
+                            buttonPush.Text = status.Status;
                         });
                         await dockerClient.Images.PushImageAsync(
                             comboBoxImage.Text,

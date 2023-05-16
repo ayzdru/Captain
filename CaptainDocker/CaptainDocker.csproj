@@ -62,6 +62,12 @@
     <Compile Include="Extensions\ComboBoxExtension.cs" />
     <Compile Include="Extensions\DockerRegistryExtension.cs" />
     <Compile Include="Extensions\DockerConnectionExtensions.cs" />
+    <Compile Include="Forms\ContainerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ContainerForm.Designer.cs">
+      <DependentUpon>ContainerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PullImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,20 +161,20 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Docker.DotNet">
-      <Version>3.125.2</Version>
+      <Version>3.125.14</Version>
     </PackageReference>
     <PackageReference Include="Docker.Registry.DotNet">
-      <Version>1.0.10</Version>
+      <Version>1.2.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.206" ExcludeAssets="runtime">
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.5.33428.388" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.6.2058">
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.5.4074">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SharpZipLib">
-      <Version>1.2.0</Version>
+      <Version>1.4.2</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations">
       <Version>4.4.1</Version>
@@ -194,6 +200,9 @@
     <None Include="Resources\add-image-tag.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ContainerForm.resx">
+      <DependentUpon>ContainerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PullImageForm.resx">
       <DependentUpon>PullImageForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -19,17 +19,7 @@ namespace CaptainDocker.Forms
 {
     public partial class PullImageForm : BaseForm
     {
-        public class CreateImageResponse
-        {
-            public CreateImageResponse(string repository, string tag)
-            {
-                Repository = repository;
-                Tag = tag;
-            }
-
-            public string Repository { get; set; }
-            public string Tag { get; set; }
-        }
+      
         public class ImageSelectListItem
         {
             public ImageSelectListItem(string imageId)
@@ -46,8 +36,7 @@ namespace CaptainDocker.Forms
             public string RegistryUrl { get; set; }
             public string ImageId { get; set; }
         }
-        public Guid DockerConnectionId { get; set; }     
-        public CreateImageResponse CreateImage { get; set; } = null;
+        public Guid DockerConnectionId { get; set; }            
         public PullImageForm(Guid dockerConnectionId)
         {
             DockerConnectionId = dockerConnectionId;            
@@ -64,10 +53,17 @@ namespace CaptainDocker.Forms
                 var dockerRegistries = dbContext.DockerRegistries.GetComboBoxItems().ToList();
                 comboBoxRegistry.DataSource = dockerRegistries;
             }
-        }       
-        private async void ButtonOk_Click(object sender, EventArgs e)
+        }
+        private void ProgressAppendText(string text)
         {
-            buttonOk.Enabled = false;
+            if (text != null)
+            {
+                richTextBoxProgress.AppendText(text);
+            }
+        }
+        private async void ButtonPull_Click(object sender, EventArgs e)
+        {
+            buttonPull.Enabled = false;
             if (comboBoxDockerEngine.SelectedItem != null && comboBoxRegistry.SelectedItem != null)
             {                
                 using (var dbContext = new ApplicationDbContext())
@@ -75,34 +71,33 @@ namespace CaptainDocker.Forms
                     var dockerEngineItem = comboBoxDockerEngine.SelectedItem as SelectListItem;
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if (dockerConnection != null)
-                    {
-                        string id = "";
-                        var p = new Progress<JSONMessage>(status =>
+                    {                      
+                        var progress = new Progress<JSONMessage>(status =>
                         {
-                            buttonOk.Text = status.Status;
-                            if(status.Status.Contains("Digest: "))
-                            {
-                                id = status.Status.Replace("Digest: ", "");
-                            }                            
+                            ProgressAppendText(status.Status);
+                            ProgressAppendText(status.Stream);
+                            ProgressAppendText(status.ProgressMessage);
+                            ProgressAppendText(status.ErrorMessage);                                                 
                         });
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
                        
                         try
                         {
+                            var image = $"{textBoxRepository.Text}:{textBoxTag.Text}";
                             var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
                             var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
-                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage= $"{textBoxRepository.Text}:{textBoxTag.Text}"}, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ?  new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, p);
+                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage= image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ?  new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress);
+                            MessageBox.Show("Pull Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(this.Text, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        this.CreateImage = new  CreateImageResponse(textBoxRepository.Text, textBoxTag.Text);
-                        this.Close();
+                        richTextBoxProgress.ScrollToCaret();                       
                     }
                 }
             }
-            buttonOk.Enabled = true;
+            buttonPull.Enabled = true;
         }
         private void ButtonCancel_Click(object sender, EventArgs e)
         {

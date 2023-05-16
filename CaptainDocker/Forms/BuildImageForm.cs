@@ -131,6 +131,13 @@ namespace CaptainDocker.Forms
 
             return tarball;
         }
+        private void ProgressAppendText(string text)
+        {
+            if (text != null)
+            {
+                richTextBoxProgress.AppendText(text);
+            }
+        }
         private async void ButtonBuild_Click(object sender, EventArgs e)
         {
             buttonBuild.Enabled = false;
@@ -146,12 +153,19 @@ namespace CaptainDocker.Forms
                         Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
                         Tags = new List<string> { textBoxImageName.Text }
                     };
+               
+                    var progress = new Progress<JSONMessage>(status =>
+                    {
+                        ProgressAppendText(status.Status);
+                        ProgressAppendText(status.Stream);
+                        ProgressAppendText(status.ProgressMessage);
+                        ProgressAppendText(status.ErrorMessage);
+                    });
                     using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
                     {
-                        var responseStream = await dockerClient.Images.BuildImageFromDockerfileAsync(tarball, imageBuildParameters, Cts.Token);
-                        StreamReader reader = new StreamReader(responseStream);
-                        string text = reader.ReadToEnd();
+                        await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null,null, progress, Cts.Token);
                     }
+                    richTextBoxProgress.ScrollToCaret();
 
                     if (comboBoxProjects.SelectedItem != null)
                     {
@@ -168,11 +182,12 @@ namespace CaptainDocker.Forms
                         else
                         {
                             dbContext.Projects.Add(new Entities.Project(projectItem.Text, textBoxImageName.Text,
-                                textBoxDirectory.Text, textBoxDockerfile.Text));
+                            textBoxDirectory.Text, textBoxDockerfile.Text));
                             dbContext.SaveChanges();
                         }
                     }
-                   
+                    MessageBox.Show("Build Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
             }
             buttonBuild.Enabled = true;

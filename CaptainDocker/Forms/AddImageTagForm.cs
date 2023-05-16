@@ -132,7 +132,7 @@ namespace CaptainDocker.Forms
                 }
             }
         }   
-        private async void ButtonOk_Click(object sender, EventArgs e)
+        private async void ButtonAdd_Click(object sender, EventArgs e)
         {
             if (comboBoxImage.SelectedItem != null)
             {

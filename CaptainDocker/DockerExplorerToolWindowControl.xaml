@@ -114,6 +114,30 @@
                                         </Image>
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem x:Name="refreshDockerConnectionMenuItem" Header="Refresh" Click="RefreshDockerConnectionMenuItem_ClickAsync" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M463.702,162.655L442.491,14.164C440.747,1.99,425.784,-3.069,417.032,5.683L386.138,36.577C346.411,12.612 301.309,0 254.932,0 115.464,0 3.491,109.16 0.005,248.511 -0.185,256.128 5.352,262.661 12.881,263.745L72.822,272.314C81.758,273.618 90.071,266.602 89.947,257.256 88.704,165.286 162.986,90 254.932,90 277.197,90 299.199,94.526 319.532,103.183L289.752,132.963C281.055,141.66,285.991,156.669,298.233,158.422L446.724,179.633C456.508,181.108,465.105,172.599,463.702,162.655z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M499.117,249.412L439.22,240.857C431.482,239.877 422.096,246.508 422.096,257 422.096,347.981 348.077,422 257.096,422 234.948,422 213.048,417.518 192.79,408.948L221.618,380.12C230.315,371.423,225.379,356.414,213.137,354.661L64.646,333.435C54.893,332.042,46.256,340.406,47.668,350.413L68.878,498.905C70.624,511.092,85.574,516.117,94.337,507.386L125.978,475.76C165.514,499.505 210.587,512 257.096,512 395.89,512 507.848,403.382 511.993,264.72 512.213,257.088 506.676,250.496 499.117,249.412z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </StackPanel.ContextMenu>
                     </StackPanel>
@@ -132,6 +156,51 @@
                             </Image.Source>
                         </Image>
                         <TextBlock Text="{Binding Path=Name}" />
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="createContainerMenuItem" Header="Create Container" Click="CreateContainerMenuItem_Click" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V1603 H1603 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1" Transform="0.1,0,0,-0.1,0,1603">
+                                                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M1603,1603z M0,0z M403,16016C214,15970 59,15816 15,15629 2,15572 0,14715 0,8033 0,2606 3,486 11,448 26,376 81,265 129,209 180,151 265,94 350,60L415,35 7970,32C15468,30 15526,30 15603,50 15794,98 15932,236 15980,427 16000,504 16000,562 15998,8060L15995,15615 15970,15680C15902,15854 15768,15975 15599,16015 15542,16028 14687,16030 7995,16029 1946,16028 445,16026 403,16016z M12306,7119C12484,7087 12636,6946 12682,6771 12697,6711 12699,6611 12699,5593L12700,4480 13813,4480C15018,4480 14978,4482 15088,4426 15191,4374 15278,4271 15322,4149 15344,4087 15345,4074 15345,3770 15345,3493 15343,3447 15326,3387 15282,3227 15149,3098 14985,3054 14945,3043 14719,3040 13818,3040L12700,3040 12699,1928C12699,909 12697,809 12682,749 12637,580 12499,446 12328,405 12253,388 11736,384 11650,400 11490,430 11349,546 11288,698L11265,755 11260,1895 11255,3035 10115,3040C9072,3045 8971,3046 8933,3062 8770,3127 8655,3260 8620,3420 8612,3458 8609,3573 8612,3790 8615,4082 8617,4109 8637,4162 8687,4295 8795,4403 8928,4454 8985,4475 8990,4475 10120,4480L11255,4485 11260,5625 11265,6765 11287,6820C11317,6892 11339,6924 11401,6987 11460,7047 11544,7094 11626,7114 11700,7132 12215,7136 12306,7119z" />
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="refreshContainerMenuItem" Header="Refresh" Click="RefreshContainerMenuItem_ClickAsync" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M463.702,162.655L442.491,14.164C440.747,1.99,425.784,-3.069,417.032,5.683L386.138,36.577C346.411,12.612 301.309,0 254.932,0 115.464,0 3.491,109.16 0.005,248.511 -0.185,256.128 5.352,262.661 12.881,263.745L72.822,272.314C81.758,273.618 90.071,266.602 89.947,257.256 88.704,165.286 162.986,90 254.932,90 277.197,90 299.199,94.526 319.532,103.183L289.752,132.963C281.055,141.66,285.991,156.669,298.233,158.422L446.724,179.633C456.508,181.108,465.105,172.599,463.702,162.655z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M499.117,249.412L439.22,240.857C431.482,239.877 422.096,246.508 422.096,257 422.096,347.981 348.077,422 257.096,422 234.948,422 213.048,417.518 192.79,408.948L221.618,380.12C230.315,371.423,225.379,356.414,213.137,354.661L64.646,333.435C54.893,332.042,46.256,340.406,47.668,350.413L68.878,498.905C70.624,511.092,85.574,516.117,94.337,507.386L125.978,475.76C165.514,499.505 210.587,512 257.096,512 395.89,512 507.848,403.382 511.993,264.72 512.213,257.088 506.676,250.496 499.117,249.412z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                     </StackPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerContainerTreeViewItem}" ItemsSource="{Binding ChildNodes}">
@@ -151,6 +220,28 @@
                             </Image.Source>
                         </Image>
                         <TextBlock Text="{Binding Path=Name}" />
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="removeContainerMenuItem" Header="Remove" Click="RemoveContainerMenuItem_ClickAsync" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                                                            <DrawingGroup.Transform>
+                                                                <TranslateTransform X="0" Y="5.457294264488155E-06" />
+                                                            </DrawingGroup.Transform>
+                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M448,512z M0,0z M268,416L292,416A12,12,0,0,0,304,404L304,188A12,12,0,0,0,292,176L268,176A12,12,0,0,0,256,188L256,404A12,12,0,0,0,268,416z M432,80L349.59,80 315.59,23.3A48,48,0,0,0,274.41,0L173.59,0A48,48,0,0,0,132.43,23.3L98.41,80 16,80A16,16,0,0,0,0,96L0,112A16,16,0,0,0,16,128L32,128 32,464A48,48,0,0,0,80,512L368,512A48,48,0,0,0,416,464L416,128 432,128A16,16,0,0,0,448,112L448,96A16,16,0,0,0,432,80z M171.84,50.91A6,6,0,0,1,177,48L271,48A6,6,0,0,1,276.15,50.91L293.61,80 154.39,80z M368,464L80,464 80,128 368,128z M156,416L180,416A12,12,0,0,0,192,404L192,188A12,12,0,0,0,180,176L156,176A12,12,0,0,0,144,188L144,404A12,12,0,0,0,156,416z" />
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                     </StackPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type valueobjects:DockerImageTreeViewItem}" ItemsSource="{Binding ChildNodes}">
@@ -172,24 +263,23 @@
                         <TextBlock Text="{Binding Path=Name, StringFormat='{}{0} '}" />
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                <MenuItem x:Name="removeImageMenuItem" Click="RemoveImageMenuItem_Click" Header="Remove" Tag="{Binding Path=.}">
+                                <MenuItem x:Name="createContainerMenuItem" Header="Create Container" Click="CreateContainerMenuItem_Click" Tag="{Binding Path=.}">
                                     <MenuItem.Icon>
                                         <Image>
                                             <Image.Source>
                                                 <DrawingImage>
                                                     <DrawingImage.Drawing>
-                                                        <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
-                                                            <DrawingGroup.Transform>
-                                                                <TranslateTransform X="0" Y="5.457294264488155E-06" />
-                                                            </DrawingGroup.Transform>
-                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M448,512z M0,0z M268,416L292,416A12,12,0,0,0,304,404L304,188A12,12,0,0,0,292,176L268,176A12,12,0,0,0,256,188L256,404A12,12,0,0,0,268,416z M432,80L349.59,80 315.59,23.3A48,48,0,0,0,274.41,0L173.59,0A48,48,0,0,0,132.43,23.3L98.41,80 16,80A16,16,0,0,0,0,96L0,112A16,16,0,0,0,16,128L32,128 32,464A48,48,0,0,0,80,512L368,512A48,48,0,0,0,416,464L416,128 432,128A16,16,0,0,0,448,112L448,96A16,16,0,0,0,432,80z M171.84,50.91A6,6,0,0,1,177,48L271,48A6,6,0,0,1,276.15,50.91L293.61,80 154.39,80z M368,464L80,464 80,128 368,128z M156,416L180,416A12,12,0,0,0,192,404L192,188A12,12,0,0,0,180,176L156,176A12,12,0,0,0,144,188L144,404A12,12,0,0,0,156,416z" />
+                                                        <DrawingGroup ClipGeometry="M0,0 V1603 H1603 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1" Transform="0.1,0,0,-0.1,0,1603">
+                                                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M1603,1603z M0,0z M403,16016C214,15970 59,15816 15,15629 2,15572 0,14715 0,8033 0,2606 3,486 11,448 26,376 81,265 129,209 180,151 265,94 350,60L415,35 7970,32C15468,30 15526,30 15603,50 15794,98 15932,236 15980,427 16000,504 16000,562 15998,8060L15995,15615 15970,15680C15902,15854 15768,15975 15599,16015 15542,16028 14687,16030 7995,16029 1946,16028 445,16026 403,16016z M12306,7119C12484,7087 12636,6946 12682,6771 12697,6711 12699,6611 12699,5593L12700,4480 13813,4480C15018,4480 14978,4482 15088,4426 15191,4374 15278,4271 15322,4149 15344,4087 15345,4074 15345,3770 15345,3493 15343,3447 15326,3387 15282,3227 15149,3098 14985,3054 14945,3043 14719,3040 13818,3040L12700,3040 12699,1928C12699,909 12697,809 12682,749 12637,580 12499,446 12328,405 12253,388 11736,384 11650,400 11490,430 11349,546 11288,698L11265,755 11260,1895 11255,3035 10115,3040C9072,3045 8971,3046 8933,3062 8770,3127 8655,3260 8620,3420 8612,3458 8609,3573 8612,3790 8615,4082 8617,4109 8637,4162 8687,4295 8795,4403 8928,4454 8985,4475 8990,4475 10120,4480L11255,4485 11260,5625 11265,6765 11287,6820C11317,6892 11339,6924 11401,6987 11460,7047 11544,7094 11626,7114 11700,7132 12215,7136 12306,7119z" />
+                                                            </DrawingGroup>
                                                         </DrawingGroup>
                                                     </DrawingImage.Drawing>
                                                 </DrawingImage>
                                             </Image.Source>
                                         </Image>
                                     </MenuItem.Icon>
-                                </MenuItem>
+                                </MenuItem>                               
                                 <Separator />
                                 <MenuItem x:Name="pushImageMenuItem" Header="Push Image" Click="PushImageMenuItem_Click" Tag="{Binding Path=.}">
                                     <MenuItem.Icon>
@@ -231,6 +321,26 @@
                                         </Image>
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <Separator />
+                                <MenuItem x:Name="removeImageMenuItem" Click="RemoveImageMenuItem_Click" Header="Remove" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                                                            <DrawingGroup.Transform>
+                                                                <TranslateTransform X="0" Y="5.457294264488155E-06" />
+                                                            </DrawingGroup.Transform>
+                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M448,512z M0,0z M268,416L292,416A12,12,0,0,0,304,404L304,188A12,12,0,0,0,292,176L268,176A12,12,0,0,0,256,188L256,404A12,12,0,0,0,268,416z M432,80L349.59,80 315.59,23.3A48,48,0,0,0,274.41,0L173.59,0A48,48,0,0,0,132.43,23.3L98.41,80 16,80A16,16,0,0,0,0,96L0,112A16,16,0,0,0,16,128L32,128 32,464A48,48,0,0,0,80,512L368,512A48,48,0,0,0,416,464L416,128 432,128A16,16,0,0,0,448,112L448,96A16,16,0,0,0,432,80z M171.84,50.91A6,6,0,0,1,177,48L271,48A6,6,0,0,1,276.15,50.91L293.61,80 154.39,80z M368,464L80,464 80,128 368,128z M156,416L180,416A12,12,0,0,0,192,404L192,188A12,12,0,0,0,180,176L156,176A12,12,0,0,0,144,188L144,404A12,12,0,0,0,156,416z" />
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
                             </ContextMenu>
                         </StackPanel.ContextMenu>
                     </StackPanel>
@@ -254,7 +364,7 @@
                         <TextBlock Text="{Binding Path=Name}" />
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                <MenuItem x:Name="buildImageMenuItem" Header="Build Image" Click="BuildImageMenuItem_Click" Tag="{Binding Path=DockerConnectionId}">
+                                <MenuItem x:Name="buildImageMenuItem" Header="Build Image" Click="BuildImageMenuItem_Click" Tag="{Binding Path=.}">
                                     <MenuItem.Icon>
                                         <Image>
                                             <Image.Source>
@@ -321,6 +431,48 @@
                                                             <DrawingGroup Opacity="1">
                                                                 <DrawingGroup Opacity="1">
                                                                     <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M432,352L432,448 80,448 80,352 16,352 16,480C16,497.696,30.336,512,48,512L464,512C481.696,512,496,497.696,496,480L496,352 432,352z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="removeDanglingImagesMenuItem" Header="Remove Dangling Images" Click="RemoveDanglingImagesMenuItem_ClickAsync" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                                                            <DrawingGroup.Transform>
+                                                                <TranslateTransform X="0" Y="5.457294264488155E-06" />
+                                                            </DrawingGroup.Transform>
+                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1 M448,512z M0,0z M268,416L292,416A12,12,0,0,0,304,404L304,188A12,12,0,0,0,292,176L268,176A12,12,0,0,0,256,188L256,404A12,12,0,0,0,268,416z M432,80L349.59,80 315.59,23.3A48,48,0,0,0,274.41,0L173.59,0A48,48,0,0,0,132.43,23.3L98.41,80 16,80A16,16,0,0,0,0,96L0,112A16,16,0,0,0,16,128L32,128 32,464A48,48,0,0,0,80,512L368,512A48,48,0,0,0,416,464L416,128 432,128A16,16,0,0,0,448,112L448,96A16,16,0,0,0,432,80z M171.84,50.91A6,6,0,0,1,177,48L271,48A6,6,0,0,1,276.15,50.91L293.61,80 154.39,80z M368,464L80,464 80,128 368,128z M156,416L180,416A12,12,0,0,0,192,404L192,188A12,12,0,0,0,180,176L156,176A12,12,0,0,0,144,188L144,404A12,12,0,0,0,156,416z" />
+                                                        </DrawingGroup>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="refreshImageMenuItem" Header="Refresh" Click="RefreshImageMenuItem_ClickAsync" Tag="{Binding Path=.}">
+                                    <MenuItem.Icon>
+                                        <Image>
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M463.702,162.655L442.491,14.164C440.747,1.99,425.784,-3.069,417.032,5.683L386.138,36.577C346.411,12.612 301.309,0 254.932,0 115.464,0 3.491,109.16 0.005,248.511 -0.185,256.128 5.352,262.661 12.881,263.745L72.822,272.314C81.758,273.618 90.071,266.602 89.947,257.256 88.704,165.286 162.986,90 254.932,90 277.197,90 299.199,94.526 319.532,103.183L289.752,132.963C281.055,141.66,285.991,156.669,298.233,158.422L446.724,179.633C456.508,181.108,465.105,172.599,463.702,162.655z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup Opacity="1">
+                                                                <DrawingGroup Opacity="1">
+                                                                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M499.117,249.412L439.22,240.857C431.482,239.877 422.096,246.508 422.096,257 422.096,347.981 348.077,422 257.096,422 234.948,422 213.048,417.518 192.79,408.948L221.618,380.12C230.315,371.423,225.379,356.414,213.137,354.661L64.646,333.435C54.893,332.042,46.256,340.406,47.668,350.413L68.878,498.905C70.624,511.092,85.574,516.117,94.337,507.386L125.978,475.76C165.514,499.505 210.587,512 257.096,512 395.89,512 507.848,403.382 511.993,264.72 512.213,257.088 506.676,250.496 499.117,249.412z" />
                                                                 </DrawingGroup>
                                                             </DrawingGroup>
                                                         </DrawingGroup>

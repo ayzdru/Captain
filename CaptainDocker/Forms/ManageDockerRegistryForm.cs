@@ -20,14 +20,9 @@ namespace CaptainDocker.Forms
         
         }
 
-        private void ButtonCancel_Click(object sender, EventArgs e)
+        private void ButtonClose_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void ButtonOk_Click(object sender, EventArgs e)
-        {
-
+            this.Close();
         }
 
         private void ButtonAdd_Click(object sender, EventArgs e)

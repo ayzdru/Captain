@@ -2,18 +2,91 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CaptainDocker.ValueObjects
 {
-    public class DockerTreeViewItem : ITreeNode
+    public class DockerTreeViewItem : ITreeNode, INotifyPropertyChanged
     {
-        public Guid DockerConnectionId { get; set; }
-        public string Name { get; set; }
-        public string EngineApiUrl { get; set; }
-        public ObservableCollection<ITreeNode> ChildNodes { get; set; }
+        private Guid _dockerConnectionId;
+        public Guid DockerConnectionId
+        {
+            get
+            {
+                return this._dockerConnectionId;
+            }
+
+            set
+            {
+                if (value != this._dockerConnectionId)
+                {
+                    this._dockerConnectionId = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }       
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                return this._name;
+            }
+
+            set
+            {
+                if (value != this._name)
+                {
+                    this._name = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        private string _engineApiUrl;
+        public string EngineApiUrl
+        {
+            get
+            {
+                return this._engineApiUrl;
+            }
+
+            set
+            {
+                if (value != this._engineApiUrl)
+                {
+                    this._engineApiUrl = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<ITreeNode> _childNodes;
+        public ObservableCollection<ITreeNode> ChildNodes
+        {
+            get
+            {
+                return this._childNodes;
+            }
+
+            set
+            {
+                if (value != this._childNodes)
+                {
+                    this._childNodes = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }     
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
 }
