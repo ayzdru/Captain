@@ -18,11 +18,11 @@ using System.Windows.Forms;
 
 namespace CaptainDocker.Forms
 {
-    public partial class ContainerForm : BaseForm
+    public partial class ImageForm : BaseForm
     {
         public Guid DockerConnectionId { get; set; }
         public string ContainerId { get; set; }
-        public ContainerForm()
+        public ImageForm()
         {
             
         }    

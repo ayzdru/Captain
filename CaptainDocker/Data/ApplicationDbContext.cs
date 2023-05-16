@@ -14,6 +14,18 @@ namespace CaptainDocker.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                    .Entity<DockerConnection>()
+                    .Property(p => p.AuthenticationType)
+                    .HasConversion<short?>().IsRequired(false);
+
+            modelBuilder.Entity<DockerConnection>().Property(p => p.BasicAuthCredentialUsername).IsRequired(false);
+            modelBuilder.Entity<DockerConnection>().Property(p => p.BasicAuthCredentialPassword).IsRequired(false);
+            modelBuilder.Entity<DockerConnection>().Property(p => p.CertificateCredentialFilePath).IsRequired(false);
+            modelBuilder.Entity<DockerConnection>().Property(p => p.CertificateCredentialPassword).IsRequired(false);
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(Constants.Application.DatabaseConnection);

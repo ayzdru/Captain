@@ -5,6 +5,7 @@ using CaptainDocker.ValueObjects;
 using Docker.DotNet;
 using Docker.DotNet.Models;
 using Docker.Registry.DotNet;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,22 @@ namespace CaptainDocker.Forms
 {
     public partial class PushImageForm : BaseForm
     {
+        private System.Threading.CancellationTokenSource _cts;
+        public System.Threading.CancellationTokenSource Cts
+        {
+            get
+            {
+                if (_cts == null)
+                {
+                    _cts = new System.Threading.CancellationTokenSource();
+                }
+                return _cts;
+            }
+            set
+            {
+                _cts = value;
+            }
+        }
         public class ImageSelectListItem
         {
             public ImageSelectListItem(string imageId)
@@ -131,6 +148,13 @@ namespace CaptainDocker.Forms
                 }
             }
         }
+        private void ProgressAppendText(string text)
+        {
+            if (text != null)
+            {
+                richTextBoxProgress.AppendText(text);
+            }
+        }
         private async void buttonPush_Click(object sender, EventArgs e)
         {
             if (comboBoxDockerEngine.SelectedItem != null && DockerRegistry != null)
@@ -143,15 +167,18 @@ namespace CaptainDocker.Forms
                     {
                         DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
 
-                        var p = new Progress<JSONMessage>(status =>
+                        var progress = new Progress<JSONMessage>(status =>
                         {
-                            buttonPush.Text = status.Status;
+                            ProgressAppendText(status.Status);
+                            ProgressAppendText(status.Stream);
+                            ProgressAppendText(status.ProgressMessage);
+                            ProgressAppendText(status.ErrorMessage);
                         });
                         await dockerClient.Images.PushImageAsync(
                             comboBoxImage.Text,
                             new ImagePushParameters()
                             {
-                                 
+                                  
                             },
                             new AuthConfig()
                             {
@@ -159,8 +186,9 @@ namespace CaptainDocker.Forms
                                 Username = DockerRegistry.Username,
                                 Password = DockerRegistry.Password
                             },
-                            p
+                            progress, Cts.Token
                             );
+                        MessageBox.Show("Push Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -186,6 +214,14 @@ namespace CaptainDocker.Forms
                 }
               
             }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Cts.Cancel();
+            Cts.Dispose();
+            Cts = null;
+            buttonPull.Enabled = true;
         }
     }
 }

@@ -86,25 +86,25 @@ namespace CaptainDocker
         }
 
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; } = new ObservableCollection<DockerTreeViewItem>();
-        private async Task<DockerTreeViewItem> GetDockerTreeViewItem(Guid dockerConnectionId, string dockerConnectionName, string dockerConnectionEngineApiUrl)
+        private async Task<DockerTreeViewItem> GetDockerTreeViewItem(DockerConnection dockerConnection)
         {
             var dockerConnectionChildNodes = new ObservableCollection<ITreeNode>();
             try
-            {
-                DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnectionEngineApiUrl)).CreateClient();
+            {               
+                DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                 var containers = await dockerClient.Containers.ListContainersAsync(new ContainersListParameters() { Limit = long.MaxValue });
                 var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }));
-                dockerConnectionChildNodes.Add(new DockerContainerTitleTreeViewItem { DockerConnectionId = dockerConnectionId, Name = "Containers", ChildNodes = await GetDockerContainerTreeViewItems(dockerConnectionId, containers) });
-                dockerConnectionChildNodes.Add(new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnectionId, ChildNodes = await GetDockerImageTreeViewItems(dockerConnectionId, images) });
+                dockerConnectionChildNodes.Add(new DockerContainerTitleTreeViewItem { DockerConnectionId = dockerConnection.Id, Name = "Containers", ChildNodes = await GetDockerContainerTreeViewItems(dockerConnection.Id, containers) });
+                dockerConnectionChildNodes.Add(new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = await GetDockerImageTreeViewItems(dockerConnection.Id, images) });
 
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message, dockerConnectionName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            return new DockerTreeViewItem() { DockerConnectionId = dockerConnectionId, Name = dockerConnectionName, EngineApiUrl = dockerConnectionEngineApiUrl, ChildNodes = dockerConnectionChildNodes };
+            return new DockerTreeViewItem() { DockerConnectionId = dockerConnection.Id, Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = dockerConnectionChildNodes };
 
         }
         private async Task<ObservableCollection<ITreeNode>> GetDockerContainerTreeViewItems(Guid dockerConnectionId, IList<ContainerListResponse> containers)
@@ -149,7 +149,7 @@ namespace CaptainDocker
                 {
                     try
                     {
-                        DockerTreeViewItems.Add(await GetDockerTreeViewItem(dockerConnection.Id, dockerConnection.Name, dockerConnection.EngineApiUrl));
+                        DockerTreeViewItems.Add(await GetDockerTreeViewItem(dockerConnection));
                     }
                     catch (Exception)
                     {
@@ -192,7 +192,7 @@ namespace CaptainDocker
 
         private void NewDockerConnectionButton_Click(object sender, RoutedEventArgs e)
         {
-            new NewDockerConnectionForm().ShowDialog();
+            new DockerConnectionForm().ShowDialog();
             RefreshButton_ClickAsync(null, null);
         }
 
@@ -207,6 +207,22 @@ namespace CaptainDocker
             var menuItem = sender as System.Windows.Controls.MenuItem;
             var tag = menuItem.Tag as DockerImageTitleTreeViewItem;
             new BuildImageForm(tag.DockerConnectionId).ShowDialog();
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var dockerConnection = dbContext.DockerConnections.GetById(tag.DockerConnectionId).SingleOrDefault();
+                if (dockerConnection != null)
+                {
+                    try
+                    {
+                        DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
+                        RefreshImagesChildNodes(dockerConnection.Id, dockerClient);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
         }
 
         private void PushImageMenuItem_Click(object sender, RoutedEventArgs e)
@@ -231,7 +247,7 @@ namespace CaptainDocker
 
                         try
                         {
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                            DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                             var result = await dockerClient.Images.DeleteImageAsync(tag.Name, new ImageDeleteParameters()
                             {
                                 Force = true
@@ -282,7 +298,7 @@ namespace CaptainDocker
                 {
                     try
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                        DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                         RefreshImagesChildNodes(dockerConnection.Id, dockerClient);
                     }
                     catch (Exception ex)
@@ -321,7 +337,7 @@ namespace CaptainDocker
                     {
                         try
                         {
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                            DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                             var result = await dockerClient.Images.PruneImagesAsync(new ImagesPruneParameters()
                             {
                                 Filters = new Dictionary<string, IDictionary<string, bool>>
@@ -358,7 +374,7 @@ namespace CaptainDocker
                 {
                     try
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                        DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                         RefreshImagesChildNodes(dockerConnection.Id, dockerClient);
                     }
                     catch (Exception exception)
@@ -379,7 +395,7 @@ namespace CaptainDocker
                 if (dockerConnection != null)
                 {
                     var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
-                    var newDockerTreeViewItem = await GetDockerTreeViewItem(dockerConnection.Id, dockerConnection.Name, dockerConnection.EngineApiUrl);
+                    var newDockerTreeViewItem = await GetDockerTreeViewItem(dockerConnection);
                     dockerTreeViewItem.Name = newDockerTreeViewItem.Name;
                     dockerTreeViewItem.EngineApiUrl = newDockerTreeViewItem.EngineApiUrl;
                     dockerTreeViewItem.DockerConnectionId = newDockerTreeViewItem.DockerConnectionId;
@@ -387,7 +403,16 @@ namespace CaptainDocker
                 }
             }
         }
-        private void RemoveDockerConnectionMenuItem_Click(object sender, RoutedEventArgs e)
+        
+             
+        private async void EditDockerConnectionMenuItem_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            var tag = menuItem.Tag as DockerTreeViewItem;
+            new DockerConnectionForm(tag.DockerConnectionId).ShowDialog();
+            RefreshAsync();
+        }
+            private void RemoveDockerConnectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
             var tag = menuItem.Tag as DockerTreeViewItem;
@@ -431,7 +456,7 @@ namespace CaptainDocker
                 {
                     try
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                        DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                         RefreshContainerChildNodes(dockerConnection.Id, dockerClient);
                     }
                     catch (Exception exception)
@@ -451,7 +476,7 @@ namespace CaptainDocker
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var dockerConnection = dbContext.DockerConnections.GetById(tag.DockerConnectionId).SingleOrDefault();
-                    DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                    DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                     await dockerClient.Containers.RemoveContainerAsync(tag.ContainerId, new ContainerRemoveParameters()
                     {
                         Force = true

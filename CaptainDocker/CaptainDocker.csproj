@@ -62,6 +62,12 @@
     <Compile Include="Extensions\ComboBoxExtension.cs" />
     <Compile Include="Extensions\DockerRegistryExtension.cs" />
     <Compile Include="Extensions\DockerConnectionExtensions.cs" />
+    <Compile Include="Forms\ImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImageForm.Designer.cs">
+      <DependentUpon>ImageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ContainerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,11 +101,11 @@
     <Compile Include="Forms\ManageDockerRegistryForm.Designer.cs">
       <DependentUpon>ManageDockerRegistryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\NewDockerConnectionForm.cs">
+    <Compile Include="Forms\DockerConnectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\NewDockerConnectionForm.Designer.cs">
-      <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
+    <Compile Include="Forms\DockerConnectionForm.Designer.cs">
+      <DependentUpon>DockerConnectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AddImageTagForm.cs">
       <SubType>Form</SubType>
@@ -163,6 +169,12 @@
     <PackageReference Include="Docker.DotNet">
       <Version>3.125.14</Version>
     </PackageReference>
+    <PackageReference Include="Docker.DotNet.BasicAuth">
+      <Version>3.125.14</Version>
+    </PackageReference>
+    <PackageReference Include="Docker.DotNet.X509">
+      <Version>3.125.14</Version>
+    </PackageReference>
     <PackageReference Include="Docker.Registry.DotNet">
       <Version>1.2.1</Version>
     </PackageReference>
@@ -200,6 +212,9 @@
     <None Include="Resources\add-image-tag.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ImageForm.resx">
+      <DependentUpon>ImageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ContainerForm.resx">
       <DependentUpon>ContainerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,8 +230,8 @@
     <EmbeddedResource Include="Forms\ManageDockerRegistryForm.resx">
       <DependentUpon>ManageDockerRegistryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NewDockerConnectionForm.resx">
-      <DependentUpon>NewDockerConnectionForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DockerConnectionForm.resx">
+      <DependentUpon>DockerConnectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddImageTagForm.resx">
       <DependentUpon>AddImageTagForm.cs</DependentUpon>
@@ -241,6 +256,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <None Include="Resources\image2.png" />
+    <None Include="Resources\image1.png" />
+    <None Include="Resources\image.png" />
+    <None Include="Resources\container.png" />
     <None Include="Resources\create-container.png" />
     <None Include="Resources\pull.png" />
   </ItemGroup>

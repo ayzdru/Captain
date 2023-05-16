@@ -19,7 +19,22 @@ namespace CaptainDocker.Forms
 {
     public partial class PullImageForm : BaseForm
     {
-      
+        private System.Threading.CancellationTokenSource _cts;
+        public System.Threading.CancellationTokenSource Cts
+        {
+            get
+            {
+                if (_cts == null)
+                {
+                    _cts = new System.Threading.CancellationTokenSource();
+                }
+                return _cts;
+            }
+            set
+            {
+                _cts = value;
+            }
+        }
         public class ImageSelectListItem
         {
             public ImageSelectListItem(string imageId)
@@ -86,7 +101,7 @@ namespace CaptainDocker.Forms
                             var image = $"{textBoxRepository.Text}:{textBoxTag.Text}";
                             var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
                             var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
-                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage= image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ?  new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress);
+                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage= image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ?  new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress, Cts.Token);
                             MessageBox.Show("Pull Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
@@ -101,7 +116,10 @@ namespace CaptainDocker.Forms
         }
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Cts.Cancel();
+            Cts.Dispose();
+            Cts = null;
+            buttonPull.Enabled = true;
         }
 
         private void comboBoxDockerEngine_SelectedIndexChanged(object sender, EventArgs e)
