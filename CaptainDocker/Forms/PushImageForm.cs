@@ -221,7 +221,7 @@ namespace CaptainDocker.Forms
             Cts.Cancel();
             Cts.Dispose();
             Cts = null;
-            buttonPull.Enabled = true;
+            buttonPush.Enabled = true;
         }
     }
 }
