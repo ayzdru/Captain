@@ -52,10 +52,6 @@
             this.textBoxEnvironment = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridViewExposedPorts = new System.Windows.Forms.DataGridView();
-            this.ContainerPortColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TypeColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.HostIpColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HostPortColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkBoxPublishAllPorts = new System.Windows.Forms.CheckBox();
             this.groupBoxSpecifyExposedPorts = new System.Windows.Forms.GroupBox();
             this.checkBoxAttachToStdin = new System.Windows.Forms.CheckBox();
@@ -67,6 +63,11 @@
             this.removeSpecifyExposedPortsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.checkBoxAutoRemove = new System.Windows.Forms.CheckBox();
+            this.ContainerPortColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PortTypeColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.HostIpColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HostPortColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -96,6 +97,7 @@
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "&Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonCreate
             // 
@@ -290,7 +292,7 @@
             this.dataGridViewExposedPorts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewExposedPorts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ContainerPortColumn,
-            this.TypeColumn,
+            this.PortTypeColumn,
             this.HostIpColumn,
             this.HostPortColumn});
             this.dataGridViewExposedPorts.Location = new System.Drawing.Point(15, 38);
@@ -310,35 +312,6 @@
             this.dataGridViewExposedPorts.Size = new System.Drawing.Size(590, 252);
             this.dataGridViewExposedPorts.TabIndex = 32;
             // 
-            // ContainerPortColumn
-            // 
-            this.ContainerPortColumn.HeaderText = "Container Port";
-            this.ContainerPortColumn.MinimumWidth = 6;
-            this.ContainerPortColumn.Name = "ContainerPortColumn";
-            this.ContainerPortColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // TypeColumn
-            // 
-            this.TypeColumn.HeaderText = "Type";
-            this.TypeColumn.Items.AddRange(new object[] {
-            "tcp",
-            "udp",
-            "sctp"});
-            this.TypeColumn.MinimumWidth = 6;
-            this.TypeColumn.Name = "TypeColumn";
-            // 
-            // HostIpColumn
-            // 
-            this.HostIpColumn.HeaderText = "Host IP";
-            this.HostIpColumn.MinimumWidth = 6;
-            this.HostIpColumn.Name = "HostIpColumn";
-            // 
-            // HostPortColumn
-            // 
-            this.HostPortColumn.HeaderText = "Host Port";
-            this.HostPortColumn.MinimumWidth = 6;
-            this.HostPortColumn.Name = "HostPortColumn";
-            // 
             // checkBoxPublishAllPorts
             // 
             this.checkBoxPublishAllPorts.AutoSize = true;
@@ -350,12 +323,10 @@
             this.checkBoxPublishAllPorts.TabIndex = 33;
             this.checkBoxPublishAllPorts.Text = "Publish all exposed ports to the host interfaces";
             this.checkBoxPublishAllPorts.UseVisualStyleBackColor = true;
-            this.checkBoxPublishAllPorts.CheckedChanged += new System.EventHandler(this.checkBoxPublishAllPorts_CheckedChanged);
             // 
             // groupBoxSpecifyExposedPorts
             // 
             this.groupBoxSpecifyExposedPorts.Controls.Add(this.dataGridViewExposedPorts);
-            this.groupBoxSpecifyExposedPorts.Enabled = false;
             this.groupBoxSpecifyExposedPorts.Location = new System.Drawing.Point(13, 447);
             this.groupBoxSpecifyExposedPorts.Name = "groupBoxSpecifyExposedPorts";
             this.groupBoxSpecifyExposedPorts.Size = new System.Drawing.Size(610, 310);
@@ -399,7 +370,7 @@
             // 
             // textBoxCommand
             // 
-            this.textBoxCommand.Location = new System.Drawing.Point(136, 330);
+            this.textBoxCommand.Location = new System.Drawing.Point(138, 317);
             this.textBoxCommand.Name = "textBoxCommand";
             this.textBoxCommand.Size = new System.Drawing.Size(482, 30);
             this.textBoxCommand.TabIndex = 40;
@@ -407,7 +378,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 334);
+            this.label11.Location = new System.Drawing.Point(9, 321);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(94, 23);
             this.label11.TabIndex = 39;
@@ -442,17 +413,57 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label12.Location = new System.Drawing.Point(137, 363);
+            this.label12.Location = new System.Drawing.Point(139, 350);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(129, 17);
             this.label12.TabIndex = 42;
             this.label12.Text = "Example: install,quiet";
+            // 
+            // checkBoxAutoRemove
+            // 
+            this.checkBoxAutoRemove.AutoSize = true;
+            this.checkBoxAutoRemove.Location = new System.Drawing.Point(21, 370);
+            this.checkBoxAutoRemove.Name = "checkBoxAutoRemove";
+            this.checkBoxAutoRemove.Size = new System.Drawing.Size(537, 27);
+            this.checkBoxAutoRemove.TabIndex = 43;
+            this.checkBoxAutoRemove.Text = "Automatically remove the container when it exits (--rm command)";
+            this.checkBoxAutoRemove.UseVisualStyleBackColor = true;
+            // 
+            // ContainerPortColumn
+            // 
+            this.ContainerPortColumn.HeaderText = "Container Port";
+            this.ContainerPortColumn.MinimumWidth = 6;
+            this.ContainerPortColumn.Name = "ContainerPortColumn";
+            this.ContainerPortColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // PortTypeColumn
+            // 
+            this.PortTypeColumn.HeaderText = "Port Type";
+            this.PortTypeColumn.Items.AddRange(new object[] {
+            "tcp",
+            "udp",
+            "sctp"});
+            this.PortTypeColumn.MinimumWidth = 6;
+            this.PortTypeColumn.Name = "PortTypeColumn";
+            // 
+            // HostIpColumn
+            // 
+            this.HostIpColumn.HeaderText = "Host IP";
+            this.HostIpColumn.MinimumWidth = 6;
+            this.HostIpColumn.Name = "HostIpColumn";
+            // 
+            // HostPortColumn
+            // 
+            this.HostPortColumn.HeaderText = "Host Port";
+            this.HostPortColumn.MinimumWidth = 6;
+            this.HostPortColumn.Name = "HostPortColumn";
             // 
             // CreateContainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 879);
+            this.Controls.Add(this.checkBoxAutoRemove);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBoxCommand);
@@ -522,13 +533,14 @@
         private System.Windows.Forms.CheckBox checkBoxAttachToStderr;
         private System.Windows.Forms.TextBox textBoxCommand;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContainerPortColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn TypeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HostIpColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HostPortColumn;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripSpecifyExposedPorts;
         private System.Windows.Forms.ToolStripMenuItem removeSpecifyExposedPortsToolStripMenuItem;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox checkBoxAutoRemove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContainerPortColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn PortTypeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HostIpColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HostPortColumn;
     }
 }

@@ -51,10 +51,10 @@ namespace CaptainDocker.Forms
             public string RegistryUrl { get; set; }
             public string ImageId { get; set; }
         }
-        public Guid DockerConnectionId { get; set; }            
+        public Guid DockerConnectionId { get; set; }
         public PullImageForm(Guid dockerConnectionId)
         {
-            DockerConnectionId = dockerConnectionId;            
+            DockerConnectionId = dockerConnectionId;
             InitializeComponent();
         }
 
@@ -80,35 +80,40 @@ namespace CaptainDocker.Forms
         {
             buttonPull.Enabled = false;
             if (comboBoxDockerEngine.SelectedItem != null && comboBoxRegistry.SelectedItem != null)
-            {                
+            {
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var dockerEngineItem = comboBoxDockerEngine.SelectedItem as SelectListItem;
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if (dockerConnection != null)
-                    {                      
-                        var progress = new Progress<JSONMessage>(status =>
-                        {
-                            ProgressAppendText(status.Status);
-                            ProgressAppendText(status.Stream);
-                            ProgressAppendText(status.ProgressMessage);
-                            ProgressAppendText(status.ErrorMessage);                                                 
-                        });
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                       
+                    {
                         try
                         {
+                            var progress = new Progress<JSONMessage>(status =>
+                            {
+                                ProgressAppendText(status.Status);
+                                ProgressAppendText(status.Stream);
+                                ProgressAppendText(status.ProgressMessage);
+                                ProgressAppendText(status.ErrorMessage);
+                            });
+                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+
+
                             var image = $"{textBoxRepository.Text}:{textBoxTag.Text}";
                             var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
                             var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
-                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage= image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ?  new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress, Cts.Token);
+                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage = image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ? new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress, Cts.Token);
                             MessageBox.Show("Pull Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        richTextBoxProgress.ScrollToCaret();                       
+                        richTextBoxProgress.ScrollToCaret();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

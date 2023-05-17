@@ -77,6 +77,10 @@ namespace CaptainDocker.Forms
                         dockerConnection.CertificateCredentialPassword = textBoxCertificatePassword.Text;
                         dbContext.DockerConnections.Update(dockerConnection);
                     }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
                 dbContext.SaveChanges();
@@ -133,6 +137,10 @@ namespace CaptainDocker.Forms
                                      break;
                             }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

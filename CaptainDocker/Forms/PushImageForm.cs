@@ -83,7 +83,9 @@ namespace CaptainDocker.Forms
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if(dockerConnection!=null)
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                        try
+                        {
+DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
                         var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
                         List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
                         foreach (var image in images)
@@ -112,26 +114,23 @@ namespace CaptainDocker.Forms
                                 }
                             }                            
                         }
-                        comboBoxImage.DataSource = imageSelectListItems;                        
+                        comboBoxImage.DataSource = imageSelectListItems; 
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                                               
                     }
                 }
                 if (_isFirstDockerConnectionSelect && comboBoxImage.Items.Count>0)
                 {
                     _isFirstDockerConnectionSelect = false;
-                    try
+                    var selectedImage = comboBoxImage.Items.Cast<SelectListItem<ImageSelectListItem>>().Select((item, index) => new { Item = item, Index = index }).Where(s => s.Item.Value.ImageId == ImageId && s.Item.Text == ImageName).SingleOrDefault();
+                    if (selectedImage != null)
                     {
-                        var selectedImage = comboBoxImage.Items.Cast<SelectListItem<ImageSelectListItem>>().Select((item, index) => new { Item = item, Index = index }).Where(s => s.Item.Value.ImageId == ImageId && s.Item.Text == ImageName).SingleOrDefault();
-                        if (selectedImage != null)
-                        {
-                            comboBoxImage.SelectedIndex = selectedImage.Index;
-                        }
+                        comboBoxImage.SelectedIndex = selectedImage.Index;
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
-                    
-
                 }
             }
         }
@@ -157,6 +156,7 @@ namespace CaptainDocker.Forms
         }
         private async void buttonPush_Click(object sender, EventArgs e)
         {
+            buttonPush.Enabled = false;
             if (comboBoxDockerEngine.SelectedItem != null && DockerRegistry != null)
             {
                 using (var dbContext = new ApplicationDbContext())
@@ -165,34 +165,44 @@ namespace CaptainDocker.Forms
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if (dockerConnection != null)
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-
-                        var progress = new Progress<JSONMessage>(status =>
+                        try
                         {
-                            ProgressAppendText(status.Status);
-                            ProgressAppendText(status.Stream);
-                            ProgressAppendText(status.ProgressMessage);
-                            ProgressAppendText(status.ErrorMessage);
-                        });
-                        await dockerClient.Images.PushImageAsync(
-                            comboBoxImage.Text,
-                            new ImagePushParameters()
+                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                            var progress = new Progress<JSONMessage>(status =>
                             {
-                                  
-                            },
-                            new AuthConfig()
-                            {
-                                ServerAddress = DockerRegistry.Address,
-                                Username = DockerRegistry.Username,
-                                Password = DockerRegistry.Password
-                            },
-                            progress, Cts.Token
-                            );
-                        MessageBox.Show("Push Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                ProgressAppendText(status.Status);
+                                ProgressAppendText(status.Stream);
+                                ProgressAppendText(status.ProgressMessage);
+                                ProgressAppendText(status.ErrorMessage);
+                            });
+                            await dockerClient.Images.PushImageAsync(
+                                comboBoxImage.Text,
+                                new ImagePushParameters()
+                                {
+
+                                },
+                                new AuthConfig()
+                                {
+                                    ServerAddress = DockerRegistry.Address,
+                                    Username = DockerRegistry.Username,
+                                    Password = DockerRegistry.Password
+                                },
+                                progress, Cts.Token
+                                );
+                            MessageBox.Show("Push Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
-           
+            buttonPush.Enabled = true;
         }
 
         private void ComboBoxImage_SelectedIndexChanged(object sender, EventArgs e)

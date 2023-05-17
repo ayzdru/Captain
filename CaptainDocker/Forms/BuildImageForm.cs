@@ -46,6 +46,7 @@ namespace CaptainDocker.Forms
         public Guid DockerConnectionId { get; set; }
         private EnvDTE.Project[] GetProjects(EnvDTE.Project project)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             if (null == project)
             {
                 return new EnvDTE.Project[0];
@@ -147,47 +148,58 @@ namespace CaptainDocker.Forms
                 var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                 if (dockerConnection != null)
                 {
-                    DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                    var imageBuildParameters = new ImageBuildParameters
+                    try
                     {
-                        Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
-                        Tags = new List<string> { textBoxImageName.Text }
-                    };
-               
-                    var progress = new Progress<JSONMessage>(status =>
-                    {
-                        ProgressAppendText(status.Status);
-                        ProgressAppendText(status.Stream);
-                        ProgressAppendText(status.ProgressMessage);
-                        ProgressAppendText(status.ErrorMessage);
-                    });
-                    using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
-                    {
-                        await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null,null, progress, Cts.Token);
-                    }
-                    richTextBoxProgress.ScrollToCaret();
-
-                    if (comboBoxProjects.SelectedItem != null)
-                    {
-                        var projectItem = comboBoxProjects.SelectedItem as SelectListItem<string>;
-                        var project = dbContext.Projects.Where(q => q.Name == projectItem.Text).SingleOrDefault();
-                        if (project != null)
+                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                        var imageBuildParameters = new ImageBuildParameters
                         {
-                            project.ImageName = textBoxImageName.Text;
-                            project.Directory = textBoxDirectory.Text;
-                            project.Dockerfile = textBoxDockerfile.Text;
-                            dbContext.Projects.Update(project);
-                            dbContext.SaveChanges();
-                        }
-                        else
-                        {
-                            dbContext.Projects.Add(new Entities.Project(projectItem.Text, textBoxImageName.Text,
-                            textBoxDirectory.Text, textBoxDockerfile.Text));
-                            dbContext.SaveChanges();
-                        }
-                    }
-                    MessageBox.Show("Build Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
+                            Tags = new List<string> { textBoxImageName.Text }
+                        };
 
+                        var progress = new Progress<JSONMessage>(status =>
+                        {
+                            ProgressAppendText(status.Status);
+                            ProgressAppendText(status.Stream);
+                            ProgressAppendText(status.ProgressMessage);
+                            ProgressAppendText(status.ErrorMessage);
+                        });
+                        using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
+                        {
+                            await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null, null, progress, Cts.Token);
+                        }
+                        richTextBoxProgress.ScrollToCaret();
+
+                        if (comboBoxProjects.SelectedItem != null)
+                        {
+                            var projectItem = comboBoxProjects.SelectedItem as SelectListItem<string>;
+                            var project = dbContext.Projects.Where(q => q.Name == projectItem.Text).SingleOrDefault();
+                            if (project != null)
+                            {
+                                project.ImageName = textBoxImageName.Text;
+                                project.Directory = textBoxDirectory.Text;
+                                project.Dockerfile = textBoxDockerfile.Text;
+                                dbContext.Projects.Update(project);
+                                dbContext.SaveChanges();
+                            }
+                            else
+                            {
+                                dbContext.Projects.Add(new Entities.Project(projectItem.Text, textBoxImageName.Text,
+                                textBoxDirectory.Text, textBoxDockerfile.Text));
+                                dbContext.SaveChanges();
+                            }
+                        }
+                        MessageBox.Show("Build Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }                    
+                }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             buttonBuild.Enabled = true;

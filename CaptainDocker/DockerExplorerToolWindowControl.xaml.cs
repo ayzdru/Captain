@@ -43,8 +43,9 @@ namespace CaptainDocker
             openProjectSolutionLabel.Visibility = Visibility.Visible;
             Constants.Application.DatabaseConnection = null;
         }
-        private async void IsSolutionOpen()
+        private async void SolutionEvents_Opened()
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             if (CaptainDockerPackage._dte.Solution.IsOpen == true && dockerExplorerToolbar.IsEnabled == false)
             {
                 dockerExplorerToolbar.IsEnabled = true;
@@ -59,21 +60,17 @@ namespace CaptainDocker
                         {
                             dbContext.Database.EnsureCreated();
                         }
-                        RefreshAsync();
+                        await RefreshAsync();
                     }
 
                 }
                 catch (Exception ex)
                 {
-
+                    MessageBox.Show(ex.Message, "Database", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
-        private void SolutionEvents_Opened()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            IsSolutionOpen();
-        }
+     
 
         public DockerExplorerToolWindowControl()
         {
@@ -82,41 +79,40 @@ namespace CaptainDocker
             _solutionEvents.Opened += SolutionEvents_Opened;
             _solutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
             this.InitializeComponent();
-            IsSolutionOpen();
+            SolutionEvents_Opened();
         }
 
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; } = new ObservableCollection<DockerTreeViewItem>();
-        private async Task<DockerTreeViewItem> GetDockerTreeViewItem(DockerConnection dockerConnection)
+        private async Task<DockerTreeViewItem> GetDockerTreeViewItemAsync(DockerConnection dockerConnection)
         {
             var dockerConnectionChildNodes = new ObservableCollection<ITreeNode>();
             try
-            {               
+            {
                 DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                 var containers = await dockerClient.Containers.ListContainersAsync(new ContainersListParameters() { Limit = long.MaxValue });
                 var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }));
-                dockerConnectionChildNodes.Add(new DockerContainerTitleTreeViewItem { DockerConnectionId = dockerConnection.Id, Name = "Containers", ChildNodes = await GetDockerContainerTreeViewItems(dockerConnection.Id, containers) });
-                dockerConnectionChildNodes.Add(new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = await GetDockerImageTreeViewItems(dockerConnection.Id, images) });
+                dockerConnectionChildNodes.Add(new DockerContainerTitleTreeViewItem { DockerConnectionId = dockerConnection.Id, Name = "Containers", ChildNodes = GetDockerContainerTreeViewItems(dockerConnection.Id, containers) });
+                dockerConnectionChildNodes.Add(new DockerImageTitleTreeViewItem { Name = "Images", DockerConnectionId = dockerConnection.Id, ChildNodes = GetDockerImageTreeViewItems(dockerConnection.Id, images) });
 
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return new DockerTreeViewItem() { DockerConnectionId = dockerConnection.Id, Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = dockerConnectionChildNodes };
 
         }
-        private async Task<ObservableCollection<ITreeNode>> GetDockerContainerTreeViewItems(Guid dockerConnectionId, IList<ContainerListResponse> containers)
+        private ObservableCollection<ITreeNode> GetDockerContainerTreeViewItems(Guid dockerConnectionId, IList<ContainerListResponse> containers)
         {
             ObservableCollection<ITreeNode> dockerContainerTreeViewItems = new ObservableCollection<ITreeNode>();
             foreach (var container in containers)
             {
-                dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { DockerConnectionId = dockerConnectionId, ContainerId = container.ID, Name = $"[{container.Status}] {container.Image} - {container.ID}" });
+                dockerContainerTreeViewItems.Add(new DockerContainerTreeViewItem() { DockerConnectionId = dockerConnectionId, ContainerId = container.ID, Name = $"[{container.Status}] {string.Join(" ", container.Names)} - {container.Image} - {container.ID}" });
             }
             return dockerContainerTreeViewItems;
         }
-        private async Task<ObservableCollection<ITreeNode>> GetDockerImageTreeViewItems(Guid dockerConnectionId, IList<ImagesListResponse> images)
+        private ObservableCollection<ITreeNode> GetDockerImageTreeViewItems(Guid dockerConnectionId, IList<ImagesListResponse> images)
         {
             ObservableCollection<ITreeNode> dockerImageTreeViewItems = new ObservableCollection<ITreeNode>();
             foreach (var image in images)
@@ -138,7 +134,7 @@ namespace CaptainDocker
             }
             return dockerImageTreeViewItems;
         }
-        private async void RefreshAsync()
+        private async Task RefreshAsync()
         {
             DockerTreeViewItems.Clear();
             refreshButton.IsEnabled = false;
@@ -147,15 +143,7 @@ namespace CaptainDocker
                 var dockerConnections = dbContext.DockerConnections.ToList();
                 foreach (var dockerConnection in dockerConnections)
                 {
-                    try
-                    {
-                        DockerTreeViewItems.Add(await GetDockerTreeViewItem(dockerConnection));
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-
+                    DockerTreeViewItems.Add(await GetDockerTreeViewItemAsync(dockerConnection));
                 }
                 dockerExplorerTreeView.ItemsSource = DockerTreeViewItems;
 
@@ -182,11 +170,30 @@ namespace CaptainDocker
                 dockerConnectionId = tag.DockerConnectionId;
             }
             new CreateContainerForm(dockerConnectionId, imageId, imageName).ShowDialog();
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var dockerConnection = dbContext.DockerConnections.GetById(dockerConnectionId).SingleOrDefault();
+                if (dockerConnection != null)
+                {
+                    try
+                    {
+                        DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
+                        RefreshContainerChildNodes(dockerConnection.Id, dockerClient);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
         private async void RefreshButton_ClickAsync(object sender, RoutedEventArgs e)
         {
             RefreshAsync();
-
         }
 
 
@@ -219,8 +226,12 @@ namespace CaptainDocker
                     }
                     catch (Exception ex)
                     {
-
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -256,9 +267,9 @@ namespace CaptainDocker
                             var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[1].ChildNodes.Cast<DockerImageTreeViewItem>().Where(d => d.Name == tag.Name && d.ImageId == tag.ImageId).SingleOrDefault();
                             removed = dockerTreeViewItem.ChildNodes[1].ChildNodes.Remove(dockerImageTreeViewItem);
                         }
-                        catch (Exception exception)
+                        catch (Exception ex)
                         {
-
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
                         if (!removed)
@@ -266,6 +277,10 @@ namespace CaptainDocker
                             MessageBox.Show($"{tag.Name} image could not be deleted.", "Image", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -303,8 +318,12 @@ namespace CaptainDocker
                     }
                     catch (Exception ex)
                     {
-
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -317,7 +336,7 @@ namespace CaptainDocker
             }
 
             var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true }));
-            var dockerImageTreeViewItems = await GetDockerImageTreeViewItems(dockerConnectionId, images);
+            var dockerImageTreeViewItems = GetDockerImageTreeViewItems(dockerConnectionId, images);
             foreach (var dockerImageTreeViewItem in dockerImageTreeViewItems)
             {
                 dockerTreeViewItem.ChildNodes[1].ChildNodes.Add(dockerImageTreeViewItem);
@@ -353,10 +372,14 @@ namespace CaptainDocker
                             });
                             RefreshImagesChildNodes(dockerConnection.Id, dockerClient);
                         }
-                        catch (Exception exception)
+                        catch (Exception ex)
                         {
-
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -377,11 +400,15 @@ namespace CaptainDocker
                         DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                         RefreshImagesChildNodes(dockerConnection.Id, dockerClient);
                     }
-                    catch (Exception exception)
+                    catch (Exception ex)
                     {
-
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
+                }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -395,16 +422,20 @@ namespace CaptainDocker
                 if (dockerConnection != null)
                 {
                     var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
-                    var newDockerTreeViewItem = await GetDockerTreeViewItem(dockerConnection);
+                    var newDockerTreeViewItem = await GetDockerTreeViewItemAsync(dockerConnection);
                     dockerTreeViewItem.Name = newDockerTreeViewItem.Name;
                     dockerTreeViewItem.EngineApiUrl = newDockerTreeViewItem.EngineApiUrl;
                     dockerTreeViewItem.DockerConnectionId = newDockerTreeViewItem.DockerConnectionId;
                     dockerTreeViewItem.ChildNodes = newDockerTreeViewItem.ChildNodes;
                 }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
-        
-             
+
+
         private async void EditDockerConnectionMenuItem_ClickAsync(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
@@ -412,7 +443,7 @@ namespace CaptainDocker
             new DockerConnectionForm(tag.DockerConnectionId).ShowDialog();
             RefreshAsync();
         }
-            private void RemoveDockerConnectionMenuItem_Click(object sender, RoutedEventArgs e)
+        private void RemoveDockerConnectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as System.Windows.Controls.MenuItem;
             var tag = menuItem.Tag as DockerTreeViewItem;
@@ -437,7 +468,7 @@ namespace CaptainDocker
             }
 
             var containers = await dockerClient.Containers.ListContainersAsync(new ContainersListParameters() { Limit = long.MaxValue });
-            var dockerContainerTreeViewItems = await GetDockerContainerTreeViewItems(dockerConnectionId, containers);
+            var dockerContainerTreeViewItems = GetDockerContainerTreeViewItems(dockerConnectionId, containers);
             foreach (var dockerContainerTreeViewItem in dockerContainerTreeViewItems)
             {
                 dockerTreeViewItem.ChildNodes[0].ChildNodes.Add(dockerContainerTreeViewItem);
@@ -459,11 +490,14 @@ namespace CaptainDocker
                         DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
                         RefreshContainerChildNodes(dockerConnection.Id, dockerClient);
                     }
-                    catch (Exception exception)
+                    catch (Exception ex)
                     {
-
+                        MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
+                }
+                else
+                {
+                    MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -476,14 +510,28 @@ namespace CaptainDocker
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var dockerConnection = dbContext.DockerConnections.GetById(tag.DockerConnectionId).SingleOrDefault();
-                    DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
-                    await dockerClient.Containers.RemoveContainerAsync(tag.ContainerId, new ContainerRemoveParameters()
+                    if (dockerConnection != null)
                     {
-                        Force = true
-                    });
-                    var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
-                    var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[0].ChildNodes.Cast<DockerContainerTreeViewItem>().Where(d => d.Name == tag.Name && d.ContainerId == tag.ContainerId).SingleOrDefault();
-                    dockerTreeViewItem.ChildNodes[0].ChildNodes.Remove(dockerImageTreeViewItem);
+                        try
+                        {
+                            DockerClient dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient();
+                            await dockerClient.Containers.RemoveContainerAsync(tag.ContainerId, new ContainerRemoveParameters()
+                            {
+                                Force = true
+                            });
+                            var dockerTreeViewItem = DockerTreeViewItems.Where(d => d.DockerConnectionId == tag.DockerConnectionId).SingleOrDefault();
+                            var dockerImageTreeViewItem = dockerTreeViewItem.ChildNodes[0].ChildNodes.Cast<DockerContainerTreeViewItem>().Where(d => d.Name == tag.Name && d.ContainerId == tag.ContainerId).SingleOrDefault();
+                            dockerTreeViewItem.ChildNodes[0].ChildNodes.Remove(dockerImageTreeViewItem);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }

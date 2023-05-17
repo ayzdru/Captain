@@ -21,6 +21,22 @@ namespace CaptainDocker.Forms
 {
     public partial class CreateContainerForm : BaseForm
     {
+        private System.Threading.CancellationTokenSource _cts;
+        public System.Threading.CancellationTokenSource Cts
+        {
+            get
+            {
+                if (_cts == null)
+                {
+                    _cts = new System.Threading.CancellationTokenSource();
+                }
+                return _cts;
+            }
+            set
+            {
+                _cts = value;
+            }
+        }
         public class ImageSelectListItem
         {
             public ImageSelectListItem(string imageId)
@@ -68,36 +84,47 @@ namespace CaptainDocker.Forms
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if (dockerConnection != null)
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
-                        List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
-                        foreach (var image in images)
+                        try
                         {
-                            if (image.RepoTags != null)
+                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                            var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
+                            List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
+                            foreach (var image in images)
                             {
-                                foreach (var repoTag in image.RepoTags)
+                                if (image.RepoTags != null)
                                 {
-                                    ImageSelectListItem value = null;
-                                    if (repoTag.Contains("/"))
+                                    foreach (var repoTag in image.RepoTags)
                                     {
-                                        value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                        ImageSelectListItem value = null;
+                                        if (repoTag.Contains("/"))
+                                        {
+                                            value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                        }
+                                        else
+                                        {
+                                            value = new ImageSelectListItem(image.ID);
+                                        }
+                                        imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                     }
-                                    else
+                                }
+                                else
+                                {
+                                    foreach (var repoDigest in image.RepoDigests)
                                     {
-                                        value = new ImageSelectListItem(image.ID);
+                                        imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
                                     }
-                                    imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                 }
                             }
-                            else
-                            {
-                                foreach (var repoDigest in image.RepoDigests)
-                                {
-                                    imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
-                                }
-                            }
+                            comboBoxImage.DataSource = imageSelectListItems;
                         }
-                        comboBoxImage.DataSource = imageSelectListItems;
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 if (_isFirstDockerConnectionSelect && comboBoxImage.Items.Count > 0 && string.IsNullOrEmpty(ImageId) == false && string.IsNullOrEmpty(ImageName) == false)
@@ -114,6 +141,7 @@ namespace CaptainDocker.Forms
 
         private async void buttonCreate_Click(object sender, EventArgs e)
         {
+            buttonCreate.Enabled = false;
             if (comboBoxDockerEngine.SelectedItem != null)
             {
                 using (var dbContext = new ApplicationDbContext())
@@ -122,55 +150,73 @@ namespace CaptainDocker.Forms
                     var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                     if (dockerConnection != null)
                     {
-                        var exposedPorts = new Dictionary<string, EmptyStruct>();
-                        var portBindings = new Dictionary<string, IList<PortBinding>>();
-                        var ports = dataGridViewExposedPorts.Rows.OfType<DataGridViewRow>().Where(q => q.Cells[0].Value != null && q.Cells[1].Value != null);
-                        var bindings = dataGridViewExposedPorts.Rows.OfType<DataGridViewRow>().Where(q => q.Cells[0].Value != null && q.Cells[2].Value != null && q.Cells[3].Value != null);
-                        if (ports.Count() > 0 && bindings.Count() > 0)
+                        try
                         {
-                            exposedPorts = ports.Select(s =>
-                            new { Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}" }).ToDictionary(t => t.Key, t => new EmptyStruct()); ;
-                            portBindings = bindings.Select(s =>
-                                new { Key = $"{s.Cells[0].Value.ToString()}", Value = new List<PortBinding>() { new PortBinding() { HostIP = s.Cells[2].Value.ToString(), HostPort = s.Cells[3].Value.ToString() } } }).ToDictionary(t => t.Key, t => (IList<PortBinding>)t.Value); ;
-
-                        }
-
-                        var env = textBoxEnvironment.Text.TrimStart().TrimEnd().Split(new char[] { ',' },
-    StringSplitOptions.RemoveEmptyEntries).ToList();
-                        var entrypoint = textBoxEntrypoint.Text.TrimStart().TrimEnd().Split(new char[] { ',' },
-    StringSplitOptions.RemoveEmptyEntries).ToList();
-                        var cmd = textBoxCommand.Text.TrimStart().TrimEnd().Split(',').ToList();
-
-                        if (env.Count == 0)
-                        {
-                            env = null;
-                        }
-                        if (entrypoint.Count == 0) 
-                        { 
-                            entrypoint = null; 
-                        }                       
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        await dockerClient.Containers.CreateContainerAsync(new CreateContainerParameters()
-                        {
-                            Image = comboBoxImage.Text,
-                            Name = textBoxName.Text,
-                            Entrypoint = entrypoint,
-                            Env = env,
-                            AttachStderr = checkBoxAttachToStderr.Checked,
-                            AttachStdin = checkBoxAttachToStdin.Checked,
-                            AttachStdout = checkBoxAttachToStdout.Checked,
-                            Cmd = cmd,
-                            ExposedPorts = exposedPorts,
-                            HostConfig = new HostConfig()
+                            var exposedPorts = new Dictionary<string, EmptyStruct>();
+                            var portBindings = new Dictionary<string, IList<PortBinding>>();
+                            var ports = dataGridViewExposedPorts.Rows.OfType<DataGridViewRow>().Where(q => q.Cells[0].Value != null && q.Cells[1].Value != null);
+                            var bindings = dataGridViewExposedPorts.Rows.OfType<DataGridViewRow>().Where(q => q.Cells[0].Value != null && q.Cells[1].Value != null && q.Cells[3].Value != null);
+                            if (ports.Count() > 0 && bindings.Count() > 0)
                             {
-                                PublishAllPorts = checkBoxPublishAllPorts.Checked,
-                                PortBindings = portBindings
+                                exposedPorts = ports.Select(s =>
+                                new { Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}" }).ToDictionary(t => t.Key, t => default(EmptyStruct)); ;
+                                portBindings = bindings.Select(s =>
+                                    new { Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}", Value = new List<PortBinding>() { new PortBinding() { HostIP = s.Cells[2].Value==null ? "" : s.Cells[2].Value.ToString(), HostPort = s.Cells[3].Value.ToString() } } }).ToDictionary(t => t.Key, t => (IList<PortBinding>)t.Value); ;
+
                             }
-                        });
+
+                            var env = textBoxEnvironment.Text.TrimStart().TrimEnd().Split(new char[] { ',' },
+        StringSplitOptions.RemoveEmptyEntries).ToList();
+                            var entrypoint = textBoxEntrypoint.Text.TrimStart().TrimEnd().Split(new char[] { ',' },
+        StringSplitOptions.RemoveEmptyEntries).ToList();
+                            var cmd = textBoxCommand.Text.TrimStart().TrimEnd().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            var containerParameters = new CreateContainerParameters()
+                            {
+                                Image = comboBoxImage.Text,
+                                Name = textBoxName.Text,
+                                AttachStderr = checkBoxAttachToStderr.Checked,
+                                AttachStdin = checkBoxAttachToStdin.Checked,
+                                AttachStdout = checkBoxAttachToStdout.Checked,
+                                ExposedPorts = exposedPorts,
+                                HostConfig = new HostConfig()
+                                {
+                                    AutoRemove = checkBoxAutoRemove.Checked,
+                                    PublishAllPorts = checkBoxPublishAllPorts.Checked,
+                                    PortBindings = portBindings,
+                                    DNS = new List<string>(),
+                                    DNSOptions = new List<string>(),
+                                    DNSSearch = new List<string>()
+                                }
+                            };
+                            if (env.Count != 0)
+                            {
+                                containerParameters.Env = env;
+                            }
+                            if (entrypoint.Count != 0)
+                            {
+                                containerParameters.Entrypoint = entrypoint;
+                            }
+                            if (cmd.Count != 0)
+                            {
+                                containerParameters.Cmd = cmd;
+                            }
+                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
+                            var response = await dockerClient.Containers.CreateContainerAsync(containerParameters);
+                            await dockerClient.Containers.StartContainerAsync(response.ID, new ContainerStartParameters() { }, Cts.Token);
+                            MessageBox.Show($"'{textBoxName.Text}-{response.ID}' container created with '{comboBoxImage.Text}' image.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
-
+            buttonCreate.Enabled = true;
         }
 
         private void ComboBoxImage_SelectedIndexChanged(object sender, EventArgs e)
@@ -189,10 +235,7 @@ namespace CaptainDocker.Forms
             }
         }
 
-        private void checkBoxPublishAllPorts_CheckedChanged(object sender, EventArgs e)
-        {
-            groupBoxSpecifyExposedPorts.Enabled = !checkBoxPublishAllPorts.Checked;
-        }
+       
 
         private void removeSpecifyExposedPortsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -200,6 +243,14 @@ namespace CaptainDocker.Forms
             {
                 dataGridViewExposedPorts.Rows.Remove(dataGridViewExposedPorts.SelectedRows[0]);
             }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Cts.Cancel();
+            Cts.Dispose();
+            Cts = null;
+            buttonCreate.Enabled = true;
         }
     }
 }
