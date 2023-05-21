@@ -202,7 +202,10 @@ namespace CaptainDocker.Forms
                             }
                             DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
                             var response = await dockerClient.Containers.CreateContainerAsync(containerParameters);
-                            await dockerClient.Containers.StartContainerAsync(response.ID, new ContainerStartParameters() { }, Cts.Token);
+                            if (checkBoxStartContainerAfterCreated.Checked == true)
+                            {
+                                await dockerClient.Containers.StartContainerAsync(response.ID, new ContainerStartParameters() { }, Cts.Token);
+                            }
                             MessageBox.Show($"'{textBoxName.Text}-{response.ID}' container created with '{comboBoxImage.Text}' image.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)

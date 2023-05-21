@@ -30,25 +30,21 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContainerForm));
             this.label5 = new System.Windows.Forms.Label();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonFinish = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.buttonStop = new System.Windows.Forms.Button();
+            this.buttonRestart = new System.Windows.Forms.Button();
+            this.buttonKill = new System.Windows.Forms.Button();
+            this.buttonPause = new System.Windows.Forms.Button();
+            this.buttonUnpause = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelDescription = new System.Windows.Forms.Label();
+            this.labelHeader = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.comboBoxImage = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.textBoxEntrypoint = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxEnvironment = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBoxCommand = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.richTextBoxInspect = new System.Windows.Forms.RichTextBox();
+            this.buttonAttach = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -60,45 +56,118 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Top;
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(632, 2);
+            this.label5.Size = new System.Drawing.Size(776, 2);
             this.label5.TabIndex = 4;
             this.label5.Text = "label5";
             // 
-            // buttonCancel
+            // buttonClose
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(474, 10);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(148, 35);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            // 
-            // buttonFinish
-            // 
-            this.buttonFinish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFinish.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonFinish.Location = new System.Drawing.Point(321, 10);
-            this.buttonFinish.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(148, 35);
-            this.buttonFinish.TabIndex = 1;
-            this.buttonFinish.Text = "Finish";
-            this.buttonFinish.UseVisualStyleBackColor = true;
+            this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClose.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonClose.Location = new System.Drawing.Point(673, 12);
+            this.buttonClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(91, 35);
+            this.buttonClose.TabIndex = 1;
+            this.buttonClose.Text = "&Close";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.buttonAttach);
+            this.panel2.Controls.Add(this.buttonStart);
+            this.panel2.Controls.Add(this.buttonStop);
+            this.panel2.Controls.Add(this.buttonRestart);
+            this.panel2.Controls.Add(this.buttonKill);
+            this.panel2.Controls.Add(this.buttonPause);
+            this.panel2.Controls.Add(this.buttonUnpause);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.buttonCancel);
-            this.panel2.Controls.Add(this.buttonFinish);
+            this.panel2.Controls.Add(this.buttonClose);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 425);
+            this.panel2.Location = new System.Drawing.Point(0, 551);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(632, 58);
+            this.panel2.Size = new System.Drawing.Size(776, 58);
             this.panel2.TabIndex = 15;
+            // 
+            // buttonStart
+            // 
+            this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStart.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonStart.Location = new System.Drawing.Point(91, 12);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(91, 35);
+            this.buttonStart.TabIndex = 10;
+            this.buttonStart.Text = "&Start";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
+            // buttonStop
+            // 
+            this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStop.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonStop.Location = new System.Drawing.Point(188, 12);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(91, 35);
+            this.buttonStop.TabIndex = 9;
+            this.buttonStop.Text = "S&top";
+            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            // 
+            // buttonRestart
+            // 
+            this.buttonRestart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRestart.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonRestart.Location = new System.Drawing.Point(285, 12);
+            this.buttonRestart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonRestart.Name = "buttonRestart";
+            this.buttonRestart.Size = new System.Drawing.Size(91, 35);
+            this.buttonRestart.TabIndex = 8;
+            this.buttonRestart.Text = "&Restart";
+            this.buttonRestart.UseVisualStyleBackColor = true;
+            this.buttonRestart.Click += new System.EventHandler(this.buttonRestart_Click);
+            // 
+            // buttonKill
+            // 
+            this.buttonKill.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonKill.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonKill.Location = new System.Drawing.Point(382, 12);
+            this.buttonKill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonKill.Name = "buttonKill";
+            this.buttonKill.Size = new System.Drawing.Size(91, 35);
+            this.buttonKill.TabIndex = 7;
+            this.buttonKill.Text = "&Kill";
+            this.buttonKill.UseVisualStyleBackColor = true;
+            this.buttonKill.Click += new System.EventHandler(this.buttonKill_Click);
+            // 
+            // buttonPause
+            // 
+            this.buttonPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPause.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonPause.Location = new System.Drawing.Point(479, 12);
+            this.buttonPause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonPause.Name = "buttonPause";
+            this.buttonPause.Size = new System.Drawing.Size(91, 35);
+            this.buttonPause.TabIndex = 6;
+            this.buttonPause.Text = "&Pause";
+            this.buttonPause.UseVisualStyleBackColor = true;
+            this.buttonPause.Click += new System.EventHandler(this.buttonPause_Click);
+            // 
+            // buttonUnpause
+            // 
+            this.buttonUnpause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonUnpause.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonUnpause.Location = new System.Drawing.Point(576, 12);
+            this.buttonUnpause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonUnpause.Name = "buttonUnpause";
+            this.buttonUnpause.Size = new System.Drawing.Size(91, 35);
+            this.buttonUnpause.TabIndex = 5;
+            this.buttonUnpause.Text = "&Unpause";
+            this.buttonUnpause.UseVisualStyleBackColor = true;
+            this.buttonUnpause.Click += new System.EventHandler(this.buttonUnpause_Click);
             // 
             // label6
             // 
@@ -106,40 +175,40 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label6.Location = new System.Drawing.Point(0, 90);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(632, 2);
+            this.label6.Size = new System.Drawing.Size(776, 2);
             this.label6.TabIndex = 3;
             this.label6.Text = "label6";
             // 
-            // label2
+            // labelDescription
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(104, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 23);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Description";
+            this.labelDescription.AutoSize = true;
+            this.labelDescription.Location = new System.Drawing.Point(104, 59);
+            this.labelDescription.Name = "labelDescription";
+            this.labelDescription.Size = new System.Drawing.Size(96, 23);
+            this.labelDescription.TabIndex = 1;
+            this.labelDescription.Text = "Description";
             // 
-            // label1
+            // labelHeader
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(101, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 41);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Container";
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelHeader.Location = new System.Drawing.Point(101, 10);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(147, 41);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "Container";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.labelDescription);
+            this.panel1.Controls.Add(this.labelHeader);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(632, 92);
+            this.panel1.Size = new System.Drawing.Size(776, 92);
             this.panel1.TabIndex = 10;
             // 
             // pictureBox1
@@ -154,119 +223,34 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // label7
+            // richTextBoxInspect
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 194);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 23);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Name:";
+            this.richTextBoxInspect.Location = new System.Drawing.Point(12, 97);
+            this.richTextBoxInspect.Name = "richTextBoxInspect";
+            this.richTextBoxInspect.ReadOnly = true;
+            this.richTextBoxInspect.Size = new System.Drawing.Size(752, 449);
+            this.richTextBoxInspect.TabIndex = 16;
+            this.richTextBoxInspect.Text = "";
             // 
-            // comboBoxImage
+            // buttonAttach
             // 
-            this.comboBoxImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxImage.DisplayMember = "Text";
-            this.comboBoxImage.FormattingEnabled = true;
-            this.comboBoxImage.Location = new System.Drawing.Point(140, 153);
-            this.comboBoxImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBoxImage.Name = "comboBoxImage";
-            this.comboBoxImage.Size = new System.Drawing.Size(480, 31);
-            this.comboBoxImage.TabIndex = 25;
-            this.comboBoxImage.ValueMember = "Value";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 156);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 23);
-            this.label8.TabIndex = 24;
-            this.label8.Text = "Image:";
-            // 
-            // textBoxName
-            // 
-            this.textBoxName.Location = new System.Drawing.Point(140, 191);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(482, 30);
-            this.textBoxName.TabIndex = 26;
-            // 
-            // textBoxEntrypoint
-            // 
-            this.textBoxEntrypoint.Location = new System.Drawing.Point(140, 228);
-            this.textBoxEntrypoint.Name = "textBoxEntrypoint";
-            this.textBoxEntrypoint.Size = new System.Drawing.Size(482, 30);
-            this.textBoxEntrypoint.TabIndex = 28;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 231);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(93, 23);
-            this.label3.TabIndex = 27;
-            this.label3.Text = "Entrypoint:";
-            // 
-            // textBoxEnvironment
-            // 
-            this.textBoxEnvironment.Location = new System.Drawing.Point(140, 264);
-            this.textBoxEnvironment.Name = "textBoxEnvironment";
-            this.textBoxEnvironment.Size = new System.Drawing.Size(482, 30);
-            this.textBoxEnvironment.TabIndex = 30;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 268);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 23);
-            this.label4.TabIndex = 29;
-            this.label4.Text = "Environment:";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label10.Location = new System.Drawing.Point(12, 350);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(608, 0);
-            this.label10.TabIndex = 31;
-            // 
-            // textBoxCommand
-            // 
-            this.textBoxCommand.Location = new System.Drawing.Point(140, 301);
-            this.textBoxCommand.Name = "textBoxCommand";
-            this.textBoxCommand.Size = new System.Drawing.Size(482, 30);
-            this.textBoxCommand.TabIndex = 40;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 305);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(94, 23);
-            this.label11.TabIndex = 39;
-            this.label11.Text = "Command:";
+            this.buttonAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAttach.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAttach.Location = new System.Drawing.Point(4, 12);
+            this.buttonAttach.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonAttach.Name = "buttonAttach";
+            this.buttonAttach.Size = new System.Drawing.Size(82, 35);
+            this.buttonAttach.TabIndex = 11;
+            this.buttonAttach.Text = "&Attach";
+            this.buttonAttach.UseVisualStyleBackColor = true;
+            this.buttonAttach.Click += new System.EventHandler(this.buttonAttach_Click);
             // 
             // ContainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 483);
-            this.Controls.Add(this.textBoxCommand);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBoxEnvironment);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBoxEntrypoint);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxName);
-            this.Controls.Add(this.comboBoxImage);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
+            this.ClientSize = new System.Drawing.Size(776, 609);
+            this.Controls.Add(this.richTextBoxInspect);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -275,36 +259,32 @@
             this.Name = "ContainerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Container";
+            this.Load += new System.EventHandler(this.ContainerForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonFinish;
+        private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelDescription;
+        private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBoxImage;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.TextBox textBoxEntrypoint;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxEnvironment;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBoxCommand;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.RichTextBox richTextBoxInspect;
+        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Button buttonRestart;
+        private System.Windows.Forms.Button buttonKill;
+        private System.Windows.Forms.Button buttonPause;
+        private System.Windows.Forms.Button buttonUnpause;
+        private System.Windows.Forms.Button buttonAttach;
     }
 }

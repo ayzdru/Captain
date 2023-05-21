@@ -27,6 +27,8 @@ namespace CaptainDocker
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
+
     /// <summary>
     /// Interaction logic for DockerExplorerToolWindowControl.
     /// </summary>
@@ -70,7 +72,7 @@ namespace CaptainDocker
                 }
             }
         }
-     
+
 
         public DockerExplorerToolWindowControl()
         {
@@ -532,6 +534,30 @@ namespace CaptainDocker
                     {
                         MessageBox.Show("Docker Connection is not exist.", "Docker Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+            }
+        }
+        private void OnItemMouseDoubleClick(object sender, MouseButtonEventArgs args)
+        {
+            if (sender is TreeViewItem)
+            {
+                if (!((TreeViewItem)sender).IsSelected)
+                {
+                    return;
+                }
+                var header = (sender as TreeViewItem).Header;
+                if (header != null)
+                {
+                    if(header is DockerContainerTreeViewItem)
+                    {
+                        var containerTreeViewItem = (DockerContainerTreeViewItem)header;
+                        new ContainerForm(containerTreeViewItem.DockerConnectionId, containerTreeViewItem.ContainerId).ShowDialog();
+                    }
+                    else if(header is DockerImageTreeViewItem)
+                    {
+                        var imageTreeViewItem = (DockerImageTreeViewItem)header;
+                        new ImageForm(imageTreeViewItem.DockerConnectionId, imageTreeViewItem.ImageId).ShowDialog();
+                    }       
                 }
             }
         }

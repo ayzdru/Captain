@@ -507,7 +507,11 @@
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
-
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="OnItemMouseDoubleClick" />
+                </Style>
+            </TreeView.ItemContainerStyle>
         </TreeView>
         <Label x:Name="openProjectSolutionLabel" Grid.Column="0" Grid.Row="1" Content="Please Open a Project/Solution.." TextOptions.TextFormattingMode="Display" IsHitTestVisible="False"/>
     </Grid>
