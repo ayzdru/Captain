@@ -73,6 +73,8 @@ namespace CaptainDocker.Forms
                 comboBoxDockerEngine.DataSource = dockerConnections;
                 comboBoxDockerEngine.SelectById(DockerConnectionId);
             }
+            comboBoxRestartPolicyFlag.DataSource = Enum.GetValues(typeof(RestartPolicyKind));
+            comboBoxRestartPolicyFlag.SelectedItem = RestartPolicyKind.Undefined;
         }
         private async void ComboBoxDockerEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -185,7 +187,8 @@ namespace CaptainDocker.Forms
                                     PortBindings = portBindings,
                                     DNS = new List<string>(),
                                     DNSOptions = new List<string>(),
-                                    DNSSearch = new List<string>()
+                                    DNSSearch = new List<string>(),
+                                    RestartPolicy = new RestartPolicy() { Name = (RestartPolicyKind)comboBoxRestartPolicyFlag.SelectedItem, MaximumRetryCount = long.Parse(textBoxRestartPolicyMaximumRetryCount.Text) }
                                 }
                             };
                             if (env.Count != 0)

@@ -69,12 +69,18 @@
             this.label12 = new System.Windows.Forms.Label();
             this.checkBoxAutoRemove = new System.Windows.Forms.CheckBox();
             this.checkBoxStartContainerAfterCreated = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxRestartPolicyMaximumRetryCount = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboBoxRestartPolicyFlag = new System.Windows.Forms.ComboBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExposedPorts)).BeginInit();
             this.groupBoxSpecifyExposedPorts.SuspendLayout();
             this.contextMenuStripSpecifyExposedPorts.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label5
@@ -119,7 +125,7 @@
             this.panel2.Controls.Add(this.buttonCancel);
             this.panel2.Controls.Add(this.buttonCreate);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 821);
+            this.panel2.Location = new System.Drawing.Point(0, 872);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(632, 58);
@@ -237,6 +243,8 @@
             // 
             // textBoxName
             // 
+            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxName.Location = new System.Drawing.Point(140, 191);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(482, 30);
@@ -244,6 +252,8 @@
             // 
             // textBoxEntrypoint
             // 
+            this.textBoxEntrypoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEntrypoint.Location = new System.Drawing.Point(140, 228);
             this.textBoxEntrypoint.Name = "textBoxEntrypoint";
             this.textBoxEntrypoint.Size = new System.Drawing.Size(482, 30);
@@ -260,6 +270,8 @@
             // 
             // textBoxEnvironment
             // 
+            this.textBoxEnvironment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEnvironment.Location = new System.Drawing.Point(140, 264);
             this.textBoxEnvironment.Name = "textBoxEnvironment";
             this.textBoxEnvironment.Size = new System.Drawing.Size(482, 30);
@@ -277,7 +289,8 @@
             // dataGridViewExposedPorts
             // 
             this.dataGridViewExposedPorts.AllowUserToOrderColumns = true;
-            this.dataGridViewExposedPorts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridViewExposedPorts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewExposedPorts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewExposedPorts.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -310,7 +323,7 @@
             this.dataGridViewExposedPorts.RowHeadersWidth = 51;
             this.dataGridViewExposedPorts.RowTemplate.Height = 24;
             this.dataGridViewExposedPorts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewExposedPorts.Size = new System.Drawing.Size(590, 252);
+            this.dataGridViewExposedPorts.Size = new System.Drawing.Size(590, 220);
             this.dataGridViewExposedPorts.TabIndex = 32;
             // 
             // ContainerPortColumn
@@ -348,7 +361,7 @@
             this.checkBoxPublishAllPorts.Checked = true;
             this.checkBoxPublishAllPorts.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxPublishAllPorts.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.checkBoxPublishAllPorts.Location = new System.Drawing.Point(21, 393);
+            this.checkBoxPublishAllPorts.Location = new System.Drawing.Point(21, 511);
             this.checkBoxPublishAllPorts.Name = "checkBoxPublishAllPorts";
             this.checkBoxPublishAllPorts.Size = new System.Drawing.Size(339, 24);
             this.checkBoxPublishAllPorts.TabIndex = 33;
@@ -357,18 +370,22 @@
             // 
             // groupBoxSpecifyExposedPorts
             // 
+            this.groupBoxSpecifyExposedPorts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxSpecifyExposedPorts.Controls.Add(this.dataGridViewExposedPorts);
-            this.groupBoxSpecifyExposedPorts.Location = new System.Drawing.Point(13, 447);
+            this.groupBoxSpecifyExposedPorts.Location = new System.Drawing.Point(15, 571);
             this.groupBoxSpecifyExposedPorts.Name = "groupBoxSpecifyExposedPorts";
-            this.groupBoxSpecifyExposedPorts.Size = new System.Drawing.Size(610, 310);
+            this.groupBoxSpecifyExposedPorts.Size = new System.Drawing.Size(610, 263);
             this.groupBoxSpecifyExposedPorts.TabIndex = 34;
             this.groupBoxSpecifyExposedPorts.TabStop = false;
             this.groupBoxSpecifyExposedPorts.Text = "Specify Exposed Ports";
             // 
             // checkBoxAttachToStdin
             // 
+            this.checkBoxAttachToStdin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxAttachToStdin.AutoSize = true;
-            this.checkBoxAttachToStdin.Location = new System.Drawing.Point(19, 779);
+            this.checkBoxAttachToStdin.Location = new System.Drawing.Point(21, 840);
             this.checkBoxAttachToStdin.Name = "checkBoxAttachToStdin";
             this.checkBoxAttachToStdin.Size = new System.Drawing.Size(145, 27);
             this.checkBoxAttachToStdin.TabIndex = 36;
@@ -377,10 +394,11 @@
             // 
             // checkBoxAttachToStdout
             // 
+            this.checkBoxAttachToStdout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxAttachToStdout.AutoSize = true;
             this.checkBoxAttachToStdout.Checked = true;
             this.checkBoxAttachToStdout.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAttachToStdout.Location = new System.Drawing.Point(164, 779);
+            this.checkBoxAttachToStdout.Location = new System.Drawing.Point(166, 840);
             this.checkBoxAttachToStdout.Name = "checkBoxAttachToStdout";
             this.checkBoxAttachToStdout.Size = new System.Drawing.Size(157, 27);
             this.checkBoxAttachToStdout.TabIndex = 37;
@@ -389,10 +407,11 @@
             // 
             // checkBoxAttachToStderr
             // 
+            this.checkBoxAttachToStderr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxAttachToStderr.AutoSize = true;
             this.checkBoxAttachToStderr.Checked = true;
             this.checkBoxAttachToStderr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAttachToStderr.Location = new System.Drawing.Point(319, 779);
+            this.checkBoxAttachToStderr.Location = new System.Drawing.Point(321, 840);
             this.checkBoxAttachToStderr.Name = "checkBoxAttachToStderr";
             this.checkBoxAttachToStderr.Size = new System.Drawing.Size(152, 27);
             this.checkBoxAttachToStderr.TabIndex = 38;
@@ -401,6 +420,8 @@
             // 
             // textBoxCommand
             // 
+            this.textBoxCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxCommand.Location = new System.Drawing.Point(138, 317);
             this.textBoxCommand.Name = "textBoxCommand";
             this.textBoxCommand.Size = new System.Drawing.Size(482, 30);
@@ -408,6 +429,8 @@
             // 
             // label11
             // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(9, 321);
             this.label11.Name = "label11";
@@ -432,6 +455,8 @@
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label10.Location = new System.Drawing.Point(136, 297);
@@ -442,6 +467,8 @@
             // 
             // label12
             // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label12.Location = new System.Drawing.Point(139, 350);
@@ -454,7 +481,7 @@
             // 
             this.checkBoxAutoRemove.AutoSize = true;
             this.checkBoxAutoRemove.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.checkBoxAutoRemove.Location = new System.Drawing.Point(21, 370);
+            this.checkBoxAutoRemove.Location = new System.Drawing.Point(21, 481);
             this.checkBoxAutoRemove.Name = "checkBoxAutoRemove";
             this.checkBoxAutoRemove.Size = new System.Drawing.Size(469, 24);
             this.checkBoxAutoRemove.TabIndex = 43;
@@ -467,18 +494,79 @@
             this.checkBoxStartContainerAfterCreated.Checked = true;
             this.checkBoxStartContainerAfterCreated.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxStartContainerAfterCreated.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.checkBoxStartContainerAfterCreated.Location = new System.Drawing.Point(21, 417);
+            this.checkBoxStartContainerAfterCreated.Location = new System.Drawing.Point(21, 541);
             this.checkBoxStartContainerAfterCreated.Name = "checkBoxStartContainerAfterCreated";
             this.checkBoxStartContainerAfterCreated.Size = new System.Drawing.Size(372, 24);
             this.checkBoxStartContainerAfterCreated.TabIndex = 44;
             this.checkBoxStartContainerAfterCreated.Text = "Start container after created (docker run command)";
             this.checkBoxStartContainerAfterCreated.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.textBoxRestartPolicyMaximumRetryCount);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.comboBoxRestartPolicyFlag);
+            this.groupBox1.Location = new System.Drawing.Point(15, 370);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(610, 105);
+            this.groupBox1.TabIndex = 45;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Restart Policy";
+            // 
+            // textBoxRestartPolicyMaximumRetryCount
+            // 
+            this.textBoxRestartPolicyMaximumRetryCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxRestartPolicyMaximumRetryCount.Location = new System.Drawing.Point(124, 69);
+            this.textBoxRestartPolicyMaximumRetryCount.Name = "textBoxRestartPolicyMaximumRetryCount";
+            this.textBoxRestartPolicyMaximumRetryCount.Size = new System.Drawing.Size(482, 30);
+            this.textBoxRestartPolicyMaximumRetryCount.TabIndex = 50;
+            this.textBoxRestartPolicyMaximumRetryCount.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label14.Location = new System.Drawing.Point(12, 65);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(79, 34);
+            this.label14.TabIndex = 49;
+            this.label14.Text = "Maximum \r\nRetry Count:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(13, 32);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(45, 23);
+            this.label13.TabIndex = 48;
+            this.label13.Text = "Flag:";
+            // 
+            // comboBoxRestartPolicyFlag
+            // 
+            this.comboBoxRestartPolicyFlag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxRestartPolicyFlag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRestartPolicyFlag.FormattingEnabled = true;
+            this.comboBoxRestartPolicyFlag.Items.AddRange(new object[] {
+            "no",
+            "on-failure",
+            "always",
+            "unless-stopped"});
+            this.comboBoxRestartPolicyFlag.Location = new System.Drawing.Point(125, 29);
+            this.comboBoxRestartPolicyFlag.Name = "comboBoxRestartPolicyFlag";
+            this.comboBoxRestartPolicyFlag.Size = new System.Drawing.Size(479, 31);
+            this.comboBoxRestartPolicyFlag.TabIndex = 47;
+            // 
             // CreateContainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 879);
+            this.ClientSize = new System.Drawing.Size(632, 930);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkBoxStartContainerAfterCreated);
             this.Controls.Add(this.checkBoxAutoRemove);
             this.Controls.Add(this.label12);
@@ -516,6 +604,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExposedPorts)).EndInit();
             this.groupBoxSpecifyExposedPorts.ResumeLayout(false);
             this.contextMenuStripSpecifyExposedPorts.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,5 +650,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn HostIpColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn HostPortColumn;
         private System.Windows.Forms.CheckBox checkBoxStartContainerAfterCreated;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox comboBoxRestartPolicyFlag;
+        private System.Windows.Forms.TextBox textBoxRestartPolicyMaximumRetryCount;
+        private System.Windows.Forms.Label label14;
     }
 }

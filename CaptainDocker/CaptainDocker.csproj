@@ -68,6 +68,12 @@
     <Compile Include="Forms\AttachContainerForm.Designer.cs">
       <DependentUpon>AttachContainerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DockerRegistryInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DockerRegistryInfoForm.Designer.cs">
+      <DependentUpon>DockerRegistryInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,21 +175,21 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Docker.DotNet">
-      <Version>3.125.14</Version>
+      <Version>3.125.15</Version>
     </PackageReference>
     <PackageReference Include="Docker.DotNet.BasicAuth">
-      <Version>3.125.14</Version>
+      <Version>3.125.15</Version>
     </PackageReference>
     <PackageReference Include="Docker.DotNet.X509">
-      <Version>3.125.14</Version>
+      <Version>3.125.15</Version>
     </PackageReference>
     <PackageReference Include="Docker.Registry.DotNet">
       <Version>1.2.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.5.33428.388" ExcludeAssets="runtime">
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.6.36389" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.5.4074">
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.6.2164">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -216,6 +222,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AttachContainerForm.resx">
       <DependentUpon>AttachContainerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DockerRegistryInfoForm.resx">
+      <DependentUpon>DockerRegistryInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ImageForm.resx">
       <DependentUpon>ImageForm.cs</DependentUpon>

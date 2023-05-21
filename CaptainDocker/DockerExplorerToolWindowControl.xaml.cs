@@ -166,9 +166,9 @@ namespace CaptainDocker
                 imageId = tag.ImageId;
                 imageName = tag.Name;
             }
-            else if (menuItem.Tag is DockerContainerTreeViewItem)
+            else if (menuItem.Tag is DockerContainerTitleTreeViewItem)
             {
-                var tag = menuItem.Tag as DockerContainerTreeViewItem;
+                var tag = menuItem.Tag as DockerContainerTitleTreeViewItem;
                 dockerConnectionId = tag.DockerConnectionId;
             }
             new CreateContainerForm(dockerConnectionId, imageId, imageName).ShowDialog();

@@ -1,6 +1,6 @@
 ﻿namespace CaptainDocker.Forms
 {
-    partial class ImageForm
+    partial class DockerRegistryInfoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockerRegistryInfoForm));
             this.label5 = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -37,7 +37,7 @@
             this.labelHeader = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.richTextBoxInspect = new System.Windows.Forms.RichTextBox();
+            this.richTextBoxInfo = new System.Windows.Forms.RichTextBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -102,9 +102,9 @@
             this.labelHeader.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelHeader.Location = new System.Drawing.Point(101, 10);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(101, 41);
+            this.labelHeader.Size = new System.Drawing.Size(226, 41);
             this.labelHeader.TabIndex = 0;
-            this.labelHeader.Text = "Image";
+            this.labelHeader.Text = "Docker Registry";
             // 
             // panel1
             // 
@@ -122,7 +122,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Image = global::CaptainDocker.Properties.Resources.manage_docker_registry;
             this.pictureBox1.Location = new System.Drawing.Point(15, 13);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
@@ -131,33 +131,33 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // richTextBoxInspect
+            // richTextBoxInfo
             // 
-            this.richTextBoxInspect.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.richTextBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxInspect.Location = new System.Drawing.Point(12, 97);
-            this.richTextBoxInspect.Name = "richTextBoxInspect";
-            this.richTextBoxInspect.ReadOnly = true;
-            this.richTextBoxInspect.Size = new System.Drawing.Size(752, 449);
-            this.richTextBoxInspect.TabIndex = 17;
-            this.richTextBoxInspect.Text = "";
+            this.richTextBoxInfo.Location = new System.Drawing.Point(12, 97);
+            this.richTextBoxInfo.Name = "richTextBoxInfo";
+            this.richTextBoxInfo.ReadOnly = true;
+            this.richTextBoxInfo.Size = new System.Drawing.Size(752, 449);
+            this.richTextBoxInfo.TabIndex = 17;
+            this.richTextBoxInfo.Text = "";
             // 
-            // ImageForm
+            // DockerRegistryInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 609);
-            this.Controls.Add(this.richTextBoxInspect);
+            this.Controls.Add(this.richTextBoxInfo);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ImageForm";
+            this.Name = "DockerRegistryInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Image";
-            this.Load += new System.EventHandler(this.ImageForm_Load);
+            this.Text = "Docker Registry";
+            this.Load += new System.EventHandler(this.DockerRegistryInfoForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -176,6 +176,6 @@
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RichTextBox richTextBoxInspect;
+        private System.Windows.Forms.RichTextBox richTextBoxInfo;
     }
 }

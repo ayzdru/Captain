@@ -32,6 +32,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonAttach = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonRestart = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.richTextBoxInspect = new System.Windows.Forms.RichTextBox();
-            this.buttonAttach = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -90,6 +90,19 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(776, 58);
             this.panel2.TabIndex = 15;
+            // 
+            // buttonAttach
+            // 
+            this.buttonAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAttach.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAttach.Location = new System.Drawing.Point(4, 12);
+            this.buttonAttach.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonAttach.Name = "buttonAttach";
+            this.buttonAttach.Size = new System.Drawing.Size(82, 35);
+            this.buttonAttach.TabIndex = 11;
+            this.buttonAttach.Text = "&Attach";
+            this.buttonAttach.UseVisualStyleBackColor = true;
+            this.buttonAttach.Click += new System.EventHandler(this.buttonAttach_Click);
             // 
             // buttonStart
             // 
@@ -225,25 +238,15 @@
             // 
             // richTextBoxInspect
             // 
+            this.richTextBoxInspect.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxInspect.Location = new System.Drawing.Point(12, 97);
             this.richTextBoxInspect.Name = "richTextBoxInspect";
             this.richTextBoxInspect.ReadOnly = true;
             this.richTextBoxInspect.Size = new System.Drawing.Size(752, 449);
             this.richTextBoxInspect.TabIndex = 16;
             this.richTextBoxInspect.Text = "";
-            // 
-            // buttonAttach
-            // 
-            this.buttonAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAttach.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAttach.Location = new System.Drawing.Point(4, 12);
-            this.buttonAttach.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonAttach.Name = "buttonAttach";
-            this.buttonAttach.Size = new System.Drawing.Size(82, 35);
-            this.buttonAttach.TabIndex = 11;
-            this.buttonAttach.Text = "&Attach";
-            this.buttonAttach.UseVisualStyleBackColor = true;
-            this.buttonAttach.Click += new System.EventHandler(this.buttonAttach_Click);
             // 
             // ContainerForm
             // 

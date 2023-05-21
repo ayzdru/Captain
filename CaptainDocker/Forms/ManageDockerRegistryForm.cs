@@ -86,5 +86,11 @@ namespace CaptainDocker.Forms
         {
             buttonRemove.Enabled = buttonEdit.Enabled = dataGridViewDockerRegistries.SelectedRows.Count > 0;
         }
+
+        private void dataGridViewDockerRegistries_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var dockerRegistryId = Guid.Parse(dataGridViewDockerRegistries.Rows[e.RowIndex].Cells[0].Value.ToString());
+            new DockerRegistryInfoForm(dockerRegistryId).ShowDialog();
+        }
     }
 }
