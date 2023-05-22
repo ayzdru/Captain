@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -74,6 +75,7 @@ namespace CaptainDocker.Forms
         }
         private async void ContainerForm_Load(object sender, EventArgs e)
         {
+            RichTextBox.CheckForIllegalCrossThreadCalls = false;
             await InspectContainer();
         }
 
@@ -160,6 +162,45 @@ namespace CaptainDocker.Forms
             this.Hide();
             new AttachContainerForm(DockerConnectionId, ContainerId, labelHeader.Text, labelDescription.Text).ShowDialog();
             this.Show();
+        }
+
+        private async void buttonInspect_Click(object sender, EventArgs e)
+        {
+            try
+            {               
+                await InspectContainer();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, _dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void buttonLogs_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                richTextBoxInspect.Clear();
+                var stream = await _dockerClient.Containers.GetContainerLogsAsync(ContainerId, false, new ContainerLogsParameters() { Timestamps = true, ShowStderr = true, ShowStdout = true, Follow = true });
+                var buffer = new byte[81920];
+                bool finishedReading = false;
+                while (finishedReading == false)
+                {
+                    var result = await stream.ReadOutputAsync(buffer, 0, buffer.Length, default).ConfigureAwait(false);
+                    var output = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                    richTextBoxInspect.AppendText(output);
+                    Array.Clear(buffer, 0, buffer.Length);
+                    if (result.EOF)
+                    {
+                        finishedReading = true;
+                    }
+                }
+                stream.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, _dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

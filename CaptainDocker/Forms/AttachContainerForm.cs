@@ -72,7 +72,7 @@ namespace CaptainDocker.Forms
                 {
                     while (true)
                     {
-                        var buffer = new byte[1024];
+                        var buffer = new byte[81920];
                         bool finishedReading = false;
                         while (finishedReading == false)
                         {

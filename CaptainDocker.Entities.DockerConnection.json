@@ -1,0 +1,13 @@
+[
+  {
+    "__Key__": "bab21efb-8772-4345-adb0-73e37ac5537a",
+    "Id": "bab21efb-8772-4345-adb0-73e37ac5537a",
+    "AuthenticationType": "",
+    "BasicAuthCredentialPassword": "",
+    "BasicAuthCredentialUsername": "",
+    "CertificateCredentialFilePath": "",
+    "CertificateCredentialPassword": "",
+    "EngineApiUrl": "http://192.168.1.55:2375",
+    "Name": "KuberneteMaster"
+  }
+]

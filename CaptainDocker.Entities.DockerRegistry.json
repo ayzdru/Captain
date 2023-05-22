@@ -1,0 +1,18 @@
+[
+  {
+    "__Key__": "108cce57-3691-4d49-8ecb-335b0a8f9bd2",
+    "Id": "108cce57-3691-4d49-8ecb-335b0a8f9bd2",
+    "Address": "registry.hub.docker.com",
+    "Name": "docker",
+    "Password": "",
+    "Username": ""
+  },
+  {
+    "__Key__": "26a03e3c-c982-4825-b090-9084db4c11d8",
+    "Id": "26a03e3c-c982-4825-b090-9084db4c11d8",
+    "Address": "http://192.168.1.55:5000/",
+    "Name": "docker-custom-registry",
+    "Password": "",
+    "Username": ""
+  }
+]
