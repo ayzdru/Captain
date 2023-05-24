@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -58,6 +59,7 @@ namespace CaptainDocker.Forms
                 labelHeader.Text = string.Join(",", image.RepoTags);
                 labelDescription.Text = image.ID;
                 var options = new JsonSerializerOptions { WriteIndented = true };
+                options.Converters.Add(new JsonStringEnumConverter());
                 richTextBoxInspect.Text = JsonSerializer.Serialize(image, options);
             }
             catch (Exception ex)

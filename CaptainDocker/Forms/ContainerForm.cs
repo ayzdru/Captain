@@ -16,6 +16,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -66,6 +67,7 @@ namespace CaptainDocker.Forms
                 labelHeader.Text = container.Name;
                 labelDescription.Text = container.ID;
                 var options = new JsonSerializerOptions { WriteIndented = true };
+                options.Converters.Add(new JsonStringEnumConverter());
                 richTextBoxInspect.Text = JsonSerializer.Serialize(container, options);
             }
             catch (Exception ex)
