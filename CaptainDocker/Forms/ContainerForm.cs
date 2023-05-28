@@ -204,5 +204,13 @@ namespace CaptainDocker.Forms
                 MessageBox.Show(ex.Message, _dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void ContainerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(_dockerClient!=null)
+            {
+                _dockerClient.Dispose();
+            }            
+        }
     }
 }

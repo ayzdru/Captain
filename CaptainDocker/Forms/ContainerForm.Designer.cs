@@ -32,6 +32,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonLogs = new System.Windows.Forms.Button();
+            this.buttonInspect = new System.Windows.Forms.Button();
             this.buttonAttach = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
@@ -45,8 +47,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.richTextBoxInspect = new System.Windows.Forms.RichTextBox();
-            this.buttonInspect = new System.Windows.Forms.Button();
-            this.buttonLogs = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -94,6 +94,32 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(967, 58);
             this.panel2.TabIndex = 15;
+            // 
+            // buttonLogs
+            // 
+            this.buttonLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonLogs.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonLogs.Location = new System.Drawing.Point(107, 12);
+            this.buttonLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonLogs.Name = "buttonLogs";
+            this.buttonLogs.Size = new System.Drawing.Size(82, 35);
+            this.buttonLogs.TabIndex = 13;
+            this.buttonLogs.Text = "&Logs";
+            this.buttonLogs.UseVisualStyleBackColor = true;
+            this.buttonLogs.Click += new System.EventHandler(this.buttonLogs_Click);
+            // 
+            // buttonInspect
+            // 
+            this.buttonInspect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInspect.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonInspect.Location = new System.Drawing.Point(19, 12);
+            this.buttonInspect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonInspect.Name = "buttonInspect";
+            this.buttonInspect.Size = new System.Drawing.Size(82, 35);
+            this.buttonInspect.TabIndex = 12;
+            this.buttonInspect.Text = "&Inspect";
+            this.buttonInspect.UseVisualStyleBackColor = true;
+            this.buttonInspect.Click += new System.EventHandler(this.buttonInspect_Click);
             // 
             // buttonAttach
             // 
@@ -252,32 +278,6 @@
             this.richTextBoxInspect.TabIndex = 16;
             this.richTextBoxInspect.Text = "";
             // 
-            // buttonInspect
-            // 
-            this.buttonInspect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonInspect.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonInspect.Location = new System.Drawing.Point(19, 12);
-            this.buttonInspect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonInspect.Name = "buttonInspect";
-            this.buttonInspect.Size = new System.Drawing.Size(82, 35);
-            this.buttonInspect.TabIndex = 12;
-            this.buttonInspect.Text = "&Inspect";
-            this.buttonInspect.UseVisualStyleBackColor = true;
-            this.buttonInspect.Click += new System.EventHandler(this.buttonInspect_Click);
-            // 
-            // buttonLogs
-            // 
-            this.buttonLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLogs.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonLogs.Location = new System.Drawing.Point(107, 12);
-            this.buttonLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonLogs.Name = "buttonLogs";
-            this.buttonLogs.Size = new System.Drawing.Size(82, 35);
-            this.buttonLogs.TabIndex = 13;
-            this.buttonLogs.Text = "&Logs";
-            this.buttonLogs.UseVisualStyleBackColor = true;
-            this.buttonLogs.Click += new System.EventHandler(this.buttonLogs_Click);
-            // 
             // ContainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
@@ -292,6 +292,7 @@
             this.Name = "ContainerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Container";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ContainerForm_FormClosing);
             this.Load += new System.EventHandler(this.ContainerForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

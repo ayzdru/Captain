@@ -141,55 +141,67 @@ namespace CaptainDocker.Forms
         }
         private async void ButtonBuild_Click(object sender, EventArgs e)
         {
+            if(File.Exists(textBoxDockerfile.Text)== false)
+            {
+                MessageBox.Show("Dockerfile is not exist!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (Directory.Exists(textBoxDirectory.Text) == false)
+            {
+                MessageBox.Show("Project directory is not exist!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             buttonBuild.Enabled = false;
             using (var dbContext = new ApplicationDbContext())
-            {
+            {                
                 var dockerEngineItem = comboBoxDockerEngine.SelectedItem as SelectListItem;
                 var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                 if (dockerConnection != null)
                 {
                     try
                     {
-                        DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var imageBuildParameters = new ImageBuildParameters
+                        using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
                         {
-                            Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
-                            Tags = new List<string> { textBoxImageName.Text }
-                        };
-
-                        var progress = new Progress<JSONMessage>(status =>
-                        {
-                            ProgressAppendText(status.Status);
-                            ProgressAppendText(status.Stream);
-                            ProgressAppendText(status.ProgressMessage);
-                            ProgressAppendText(status.ErrorMessage);
-                        });
-                        using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
-                        {
-                            await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null, null, progress, Cts.Token);
-                        }
-                        richTextBoxProgress.ScrollToCaret();
-
-                        if (comboBoxProjects.SelectedItem != null)
-                        {
-                            var projectItem = comboBoxProjects.SelectedItem as SelectListItem<string>;
-                            var project = dbContext.Projects.Where(q => q.Name == projectItem.Text).SingleOrDefault();
-                            if (project != null)
+                            var imageBuildParameters = new ImageBuildParameters
                             {
-                                project.ImageName = textBoxImageName.Text;
-                                project.Directory = textBoxDirectory.Text;
-                                project.Dockerfile = textBoxDockerfile.Text;
-                                dbContext.Projects.Update(project);
-                                dbContext.SaveChanges();
-                            }
-                            else
+                                Dockerfile = Path.GetFileName(textBoxDockerfile.Text),
+                                Tags = new List<string> { textBoxImageName.Text }
+                            };
+
+                            var progress = new Progress<JSONMessage>(status =>
                             {
-                                dbContext.Projects.Add(new Entities.Project(projectItem.Text, textBoxImageName.Text,
-                                textBoxDirectory.Text, textBoxDockerfile.Text));
-                                dbContext.SaveChanges();
+                                ProgressAppendText(status.Status);
+                                ProgressAppendText(status.Stream);
+                                ProgressAppendText(status.ProgressMessage);
+                                ProgressAppendText(status.ErrorMessage);
+                            });
+                            using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
+                            {
+                             await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null, null, progress, Cts.Token);
+                            }     
+                            richTextBoxProgress.ScrollToCaret();
+                            if (comboBoxProjects.SelectedItem != null)
+                            {
+                                var projectItem = comboBoxProjects.SelectedItem as SelectListItem<string>;
+                                var project = dbContext.Projects.Where(q => q.Name == projectItem.Text).SingleOrDefault();
+                                if (project != null)
+                                {
+                                    project.ImageName = textBoxImageName.Text;
+                                    project.Directory = textBoxDirectory.Text;
+                                    project.Dockerfile = textBoxDockerfile.Text;
+                                    dbContext.Projects.Update(project);
+                                    dbContext.SaveChanges();
+                                }
+                                else
+                                {
+                                    dbContext.Projects.Add(new Entities.Project(projectItem.Text, textBoxImageName.Text,
+                                    textBoxDirectory.Text, textBoxDockerfile.Text));
+                                    dbContext.SaveChanges();
+                                }
                             }
+                            MessageBox.Show("Build Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         }
-                        MessageBox.Show("Build Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                     catch (Exception ex)

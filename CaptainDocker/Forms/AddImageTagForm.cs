@@ -81,36 +81,38 @@ namespace CaptainDocker.Forms
                     {
                         try
                         {
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                            var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
-                            List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
-                            foreach (var image in images)
+                            using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
                             {
-                                if (image.RepoTags != null)
+                                var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
+                                List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
+                                foreach (var image in images)
                                 {
-                                    foreach (var repoTag in image.RepoTags)
+                                    if (image.RepoTags != null)
                                     {
-                                        ImageSelectListItem value = null;
-                                        if (repoTag.Contains("/"))
+                                        foreach (var repoTag in image.RepoTags)
                                         {
-                                            value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                            ImageSelectListItem value = null;
+                                            if (repoTag.Contains("/"))
+                                            {
+                                                value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                            }
+                                            else
+                                            {
+                                                value = new ImageSelectListItem(image.ID);
+                                            }
+                                            imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                         }
-                                        else
+                                    }
+                                    else
+                                    {
+                                        foreach (var repoDigest in image.RepoDigests)
                                         {
-                                            value = new ImageSelectListItem(image.ID);
+                                            imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
                                         }
-                                        imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                     }
                                 }
-                                else
-                                {
-                                    foreach (var repoDigest in image.RepoDigests)
-                                    {
-                                        imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
-                                    }
-                                }
+                                comboBoxImage.DataSource = imageSelectListItems;
                             }
-                            comboBoxImage.DataSource = imageSelectListItems;
                         }
                         catch (Exception ex)
                         {
@@ -157,10 +159,12 @@ namespace CaptainDocker.Forms
                         {
                             try
                             {
-                                DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                                await dockerClient.Images.TagImageAsync(imageItem.Text, new ImageTagParameters() { RepositoryName = textBoxRepository.Text, Tag = textBoxTag.Text });
-                                this.ImageTag = new ImageTagResponse(textBoxRepository.Text, textBoxTag.Text);
-                                MessageBox.Show($"{textBoxRepository.Text}-{textBoxTag.Text} image tag added.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
+                                {
+                                    await dockerClient.Images.TagImageAsync(imageItem.Text, new ImageTagParameters() { RepositoryName = textBoxRepository.Text, Tag = textBoxTag.Text });
+                                    this.ImageTag = new ImageTagResponse(textBoxRepository.Text, textBoxTag.Text);
+                                    MessageBox.Show($"{textBoxRepository.Text}-{textBoxTag.Text} image tag added.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
                             }
                             catch (Exception ex)
                             {

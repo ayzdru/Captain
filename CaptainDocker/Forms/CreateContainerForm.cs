@@ -88,36 +88,38 @@ namespace CaptainDocker.Forms
                     {
                         try
                         {
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                            var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
-                            List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
-                            foreach (var image in images)
+                            using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
                             {
-                                if (image.RepoTags != null)
+                                var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
+                                List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
+                                foreach (var image in images)
                                 {
-                                    foreach (var repoTag in image.RepoTags)
+                                    if (image.RepoTags != null)
                                     {
-                                        ImageSelectListItem value = null;
-                                        if (repoTag.Contains("/"))
+                                        foreach (var repoTag in image.RepoTags)
                                         {
-                                            value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                            ImageSelectListItem value = null;
+                                            if (repoTag.Contains("/"))
+                                            {
+                                                value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                            }
+                                            else
+                                            {
+                                                value = new ImageSelectListItem(image.ID);
+                                            }
+                                            imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                         }
-                                        else
+                                    }
+                                    else
+                                    {
+                                        foreach (var repoDigest in image.RepoDigests)
                                         {
-                                            value = new ImageSelectListItem(image.ID);
+                                            imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
                                         }
-                                        imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                     }
                                 }
-                                else
-                                {
-                                    foreach (var repoDigest in image.RepoDigests)
-                                    {
-                                        imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
-                                    }
-                                }
+                                comboBoxImage.DataSource = imageSelectListItems;
                             }
-                            comboBoxImage.DataSource = imageSelectListItems;
                         }
                         catch (Exception ex)
                         {
@@ -163,7 +165,7 @@ namespace CaptainDocker.Forms
                                 exposedPorts = ports.Select(s =>
                                 new { Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}" }).ToDictionary(t => t.Key, t => default(EmptyStruct)); ;
                                 portBindings = bindings.Select(s =>
-                                    new { Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}", Value = new List<PortBinding>() { new PortBinding() { HostIP = s.Cells[2].Value==null ? "" : s.Cells[2].Value.ToString(), HostPort = s.Cells[3].Value.ToString() } } }).ToDictionary(t => t.Key, t => (IList<PortBinding>)t.Value); ;
+                                    new { Key = $"{s.Cells[0].Value.ToString()}/{s.Cells[1].Value.ToString()}", Value = new List<PortBinding>() { new PortBinding() { HostIP = s.Cells[2].Value == null ? "" : s.Cells[2].Value.ToString(), HostPort = s.Cells[3].Value.ToString() } } }).ToDictionary(t => t.Key, t => (IList<PortBinding>)t.Value); ;
 
                             }
 
@@ -178,7 +180,10 @@ namespace CaptainDocker.Forms
                                 Name = textBoxName.Text,
                                 AttachStderr = checkBoxAttachToStderr.Checked,
                                 AttachStdin = checkBoxAttachToStdin.Checked,
-                                AttachStdout = checkBoxAttachToStdout.Checked,
+                                AttachStdout = checkBoxAttachToStdout.Checked,   
+                                OpenStdin = checkBoxOpenStdin.Checked,
+                                StdinOnce = checkBoxStdinOnce.Checked,
+                                Tty = checkBoxTty.Checked,
                                 ExposedPorts = exposedPorts,
                                 HostConfig = new HostConfig()
                                 {
@@ -203,13 +208,15 @@ namespace CaptainDocker.Forms
                             {
                                 containerParameters.Cmd = cmd;
                             }
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                            var response = await dockerClient.Containers.CreateContainerAsync(containerParameters);
-                            if (checkBoxStartContainerAfterCreated.Checked == true)
+                            using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
                             {
-                                await dockerClient.Containers.StartContainerAsync(response.ID, new ContainerStartParameters() { }, Cts.Token);
+                                var response = await dockerClient.Containers.CreateContainerAsync(containerParameters);
+                                if (checkBoxStartContainerAfterCreated.Checked == true)
+                                {
+                                    await dockerClient.Containers.StartContainerAsync(response.ID, new ContainerStartParameters() { }, Cts.Token);
+                                }
+                                MessageBox.Show($"'{textBoxName.Text}-{response.ID}' container created with '{comboBoxImage.Text}' image.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
-                            MessageBox.Show($"'{textBoxName.Text}-{response.ID}' container created with '{comboBoxImage.Text}' image.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {

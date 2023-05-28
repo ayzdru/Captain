@@ -85,36 +85,38 @@ namespace CaptainDocker.Forms
                     {
                         try
                         {
-DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                        var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
-                        List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
-                        foreach (var image in images)
-                        {
-                            if (image.RepoTags != null)
+                            using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
                             {
-                                foreach (var repoTag in image.RepoTags)
+                                var images = (await dockerClient.Images.ListImagesAsync(new ImagesListParameters() { All = true })).ToList();
+                                List<SelectListItem<ImageSelectListItem>> imageSelectListItems = new List<SelectListItem<ImageSelectListItem>>();
+                                foreach (var image in images)
                                 {
-                                    ImageSelectListItem value = null;
-                                    if (repoTag.Contains("/"))
+                                    if (image.RepoTags != null)
                                     {
-                                        value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                        foreach (var repoTag in image.RepoTags)
+                                        {
+                                            ImageSelectListItem value = null;
+                                            if (repoTag.Contains("/"))
+                                            {
+                                                value = new ImageSelectListItem(repoTag.Split('/')[0], image.ID);
+                                            }
+                                            else
+                                            {
+                                                value = new ImageSelectListItem(image.ID);
+                                            }
+                                            imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
+                                        }
                                     }
                                     else
                                     {
-                                        value = new ImageSelectListItem(image.ID);
+                                        foreach (var repoDigest in image.RepoDigests)
+                                        {
+                                            imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
+                                        }
                                     }
-                                    imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoTag, Value = value });
                                 }
+                                comboBoxImage.DataSource = imageSelectListItems;
                             }
-                            else
-                            {
-                                foreach (var repoDigest in image.RepoDigests)
-                                {
-                                    imageSelectListItems.Add(new SelectListItem<ImageSelectListItem>() { Text = repoDigest, Value = new ImageSelectListItem(image.ID) });
-                                }
-                            }                            
-                        }
-                        comboBoxImage.DataSource = imageSelectListItems; 
                         }
                         catch (Exception ex)
                         {
@@ -167,29 +169,31 @@ DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnecti
                     {
                         try
                         {
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-                            var progress = new Progress<JSONMessage>(status =>
+                            using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
+                            {
+                                var progress = new Progress<JSONMessage>(status =>
                             {
                                 ProgressAppendText(status.Status);
                                 ProgressAppendText(status.Stream);
                                 ProgressAppendText(status.ProgressMessage);
                                 ProgressAppendText(status.ErrorMessage);
                             });
-                            await dockerClient.Images.PushImageAsync(
-                                comboBoxImage.Text,
-                                new ImagePushParameters()
-                                {
+                                await dockerClient.Images.PushImageAsync(
+                                    comboBoxImage.Text,
+                                    new ImagePushParameters()
+                                    {
 
-                                },
-                                new AuthConfig()
-                                {
-                                    ServerAddress = DockerRegistry.Address,
-                                    Username = DockerRegistry.Username,
-                                    Password = DockerRegistry.Password
-                                },
-                                progress, Cts.Token
-                                );
-                            MessageBox.Show("Push Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    },
+                                    new AuthConfig()
+                                    {
+                                        ServerAddress = DockerRegistry.Address,
+                                        Username = DockerRegistry.Username,
+                                        Password = DockerRegistry.Password
+                                    },
+                                    progress, Cts.Token
+                                    );
+                                MessageBox.Show("Push Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                         catch (Exception ex)
                         {

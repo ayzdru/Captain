@@ -157,6 +157,7 @@
             this.Name = "ImageForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ImageForm_FormClosing);
             this.Load += new System.EventHandler(this.ImageForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

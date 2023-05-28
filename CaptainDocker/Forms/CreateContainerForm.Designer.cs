@@ -74,6 +74,9 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.comboBoxRestartPolicyFlag = new System.Windows.Forms.ComboBox();
+            this.checkBoxTty = new System.Windows.Forms.CheckBox();
+            this.checkBoxOpenStdin = new System.Windows.Forms.CheckBox();
+            this.checkBoxStdinOnce = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -89,7 +92,7 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Top;
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(632, 2);
+            this.label5.Size = new System.Drawing.Size(786, 2);
             this.label5.TabIndex = 4;
             this.label5.Text = "label5";
             // 
@@ -97,7 +100,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.Location = new System.Drawing.Point(474, 10);
+            this.buttonCancel.Location = new System.Drawing.Point(628, 10);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(148, 35);
@@ -110,7 +113,7 @@
             // 
             this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCreate.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCreate.Location = new System.Drawing.Point(321, 10);
+            this.buttonCreate.Location = new System.Drawing.Point(475, 10);
             this.buttonCreate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(148, 35);
@@ -125,10 +128,10 @@
             this.panel2.Controls.Add(this.buttonCancel);
             this.panel2.Controls.Add(this.buttonCreate);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 872);
+            this.panel2.Location = new System.Drawing.Point(0, 922);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(632, 58);
+            this.panel2.Size = new System.Drawing.Size(786, 58);
             this.panel2.TabIndex = 15;
             // 
             // label6
@@ -137,7 +140,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label6.Location = new System.Drawing.Point(0, 90);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(632, 2);
+            this.label6.Size = new System.Drawing.Size(786, 2);
             this.label6.TabIndex = 3;
             this.label6.Text = "label6";
             // 
@@ -170,7 +173,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(632, 92);
+            this.panel1.Size = new System.Drawing.Size(786, 92);
             this.panel1.TabIndex = 10;
             // 
             // pictureBox1
@@ -204,7 +207,7 @@
             this.comboBoxDockerEngine.Location = new System.Drawing.Point(140, 116);
             this.comboBoxDockerEngine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxDockerEngine.Name = "comboBoxDockerEngine";
-            this.comboBoxDockerEngine.Size = new System.Drawing.Size(480, 31);
+            this.comboBoxDockerEngine.Size = new System.Drawing.Size(634, 31);
             this.comboBoxDockerEngine.TabIndex = 21;
             this.comboBoxDockerEngine.ValueMember = "Value";
             this.comboBoxDockerEngine.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDockerEngine_SelectedIndexChanged);
@@ -227,7 +230,7 @@
             this.comboBoxImage.Location = new System.Drawing.Point(140, 153);
             this.comboBoxImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxImage.Name = "comboBoxImage";
-            this.comboBoxImage.Size = new System.Drawing.Size(480, 31);
+            this.comboBoxImage.Size = new System.Drawing.Size(634, 31);
             this.comboBoxImage.TabIndex = 25;
             this.comboBoxImage.ValueMember = "Value";
             this.comboBoxImage.SelectedIndexChanged += new System.EventHandler(this.ComboBoxImage_SelectedIndexChanged);
@@ -247,7 +250,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxName.Location = new System.Drawing.Point(140, 191);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(482, 30);
+            this.textBoxName.Size = new System.Drawing.Size(636, 30);
             this.textBoxName.TabIndex = 26;
             // 
             // textBoxEntrypoint
@@ -256,7 +259,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEntrypoint.Location = new System.Drawing.Point(140, 228);
             this.textBoxEntrypoint.Name = "textBoxEntrypoint";
-            this.textBoxEntrypoint.Size = new System.Drawing.Size(482, 30);
+            this.textBoxEntrypoint.Size = new System.Drawing.Size(636, 30);
             this.textBoxEntrypoint.TabIndex = 28;
             // 
             // label3
@@ -274,7 +277,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEnvironment.Location = new System.Drawing.Point(140, 264);
             this.textBoxEnvironment.Name = "textBoxEnvironment";
-            this.textBoxEnvironment.Size = new System.Drawing.Size(482, 30);
+            this.textBoxEnvironment.Size = new System.Drawing.Size(636, 30);
             this.textBoxEnvironment.TabIndex = 30;
             // 
             // label4
@@ -323,7 +326,7 @@
             this.dataGridViewExposedPorts.RowHeadersWidth = 51;
             this.dataGridViewExposedPorts.RowTemplate.Height = 24;
             this.dataGridViewExposedPorts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewExposedPorts.Size = new System.Drawing.Size(590, 220);
+            this.dataGridViewExposedPorts.Size = new System.Drawing.Size(744, 234);
             this.dataGridViewExposedPorts.TabIndex = 32;
             // 
             // ContainerPortColumn
@@ -376,7 +379,7 @@
             this.groupBoxSpecifyExposedPorts.Controls.Add(this.dataGridViewExposedPorts);
             this.groupBoxSpecifyExposedPorts.Location = new System.Drawing.Point(15, 571);
             this.groupBoxSpecifyExposedPorts.Name = "groupBoxSpecifyExposedPorts";
-            this.groupBoxSpecifyExposedPorts.Size = new System.Drawing.Size(610, 263);
+            this.groupBoxSpecifyExposedPorts.Size = new System.Drawing.Size(764, 277);
             this.groupBoxSpecifyExposedPorts.TabIndex = 34;
             this.groupBoxSpecifyExposedPorts.TabStop = false;
             this.groupBoxSpecifyExposedPorts.Text = "Specify Exposed Ports";
@@ -385,7 +388,7 @@
             // 
             this.checkBoxAttachToStdin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxAttachToStdin.AutoSize = true;
-            this.checkBoxAttachToStdin.Location = new System.Drawing.Point(21, 840);
+            this.checkBoxAttachToStdin.Location = new System.Drawing.Point(31, 854);
             this.checkBoxAttachToStdin.Name = "checkBoxAttachToStdin";
             this.checkBoxAttachToStdin.Size = new System.Drawing.Size(145, 27);
             this.checkBoxAttachToStdin.TabIndex = 36;
@@ -398,7 +401,7 @@
             this.checkBoxAttachToStdout.AutoSize = true;
             this.checkBoxAttachToStdout.Checked = true;
             this.checkBoxAttachToStdout.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAttachToStdout.Location = new System.Drawing.Point(166, 840);
+            this.checkBoxAttachToStdout.Location = new System.Drawing.Point(176, 854);
             this.checkBoxAttachToStdout.Name = "checkBoxAttachToStdout";
             this.checkBoxAttachToStdout.Size = new System.Drawing.Size(157, 27);
             this.checkBoxAttachToStdout.TabIndex = 37;
@@ -411,7 +414,7 @@
             this.checkBoxAttachToStderr.AutoSize = true;
             this.checkBoxAttachToStderr.Checked = true;
             this.checkBoxAttachToStderr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAttachToStderr.Location = new System.Drawing.Point(321, 840);
+            this.checkBoxAttachToStderr.Location = new System.Drawing.Point(331, 854);
             this.checkBoxAttachToStderr.Name = "checkBoxAttachToStderr";
             this.checkBoxAttachToStderr.Size = new System.Drawing.Size(152, 27);
             this.checkBoxAttachToStderr.TabIndex = 38;
@@ -424,7 +427,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxCommand.Location = new System.Drawing.Point(138, 317);
             this.textBoxCommand.Name = "textBoxCommand";
-            this.textBoxCommand.Size = new System.Drawing.Size(482, 30);
+            this.textBoxCommand.Size = new System.Drawing.Size(636, 30);
             this.textBoxCommand.TabIndex = 40;
             // 
             // label11
@@ -511,7 +514,7 @@
             this.groupBox1.Controls.Add(this.comboBoxRestartPolicyFlag);
             this.groupBox1.Location = new System.Drawing.Point(15, 370);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(610, 105);
+            this.groupBox1.Size = new System.Drawing.Size(764, 105);
             this.groupBox1.TabIndex = 45;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Restart Policy";
@@ -522,7 +525,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxRestartPolicyMaximumRetryCount.Location = new System.Drawing.Point(124, 69);
             this.textBoxRestartPolicyMaximumRetryCount.Name = "textBoxRestartPolicyMaximumRetryCount";
-            this.textBoxRestartPolicyMaximumRetryCount.Size = new System.Drawing.Size(482, 30);
+            this.textBoxRestartPolicyMaximumRetryCount.Size = new System.Drawing.Size(636, 30);
             this.textBoxRestartPolicyMaximumRetryCount.TabIndex = 50;
             this.textBoxRestartPolicyMaximumRetryCount.Text = "0";
             // 
@@ -558,14 +561,50 @@
             "unless-stopped"});
             this.comboBoxRestartPolicyFlag.Location = new System.Drawing.Point(125, 29);
             this.comboBoxRestartPolicyFlag.Name = "comboBoxRestartPolicyFlag";
-            this.comboBoxRestartPolicyFlag.Size = new System.Drawing.Size(479, 31);
+            this.comboBoxRestartPolicyFlag.Size = new System.Drawing.Size(633, 31);
             this.comboBoxRestartPolicyFlag.TabIndex = 47;
+            // 
+            // checkBoxTty
+            // 
+            this.checkBoxTty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxTty.AutoSize = true;
+            this.checkBoxTty.Location = new System.Drawing.Point(489, 854);
+            this.checkBoxTty.Name = "checkBoxTty";
+            this.checkBoxTty.Size = new System.Drawing.Size(230, 27);
+            this.checkBoxTty.TabIndex = 46;
+            this.checkBoxTty.Text = "Allocate a pseudo-TTY (-t)";
+            this.checkBoxTty.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOpenStdin
+            // 
+            this.checkBoxOpenStdin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxOpenStdin.AutoSize = true;
+            this.checkBoxOpenStdin.Location = new System.Drawing.Point(32, 887);
+            this.checkBoxOpenStdin.Name = "checkBoxOpenStdin";
+            this.checkBoxOpenStdin.Size = new System.Drawing.Size(351, 27);
+            this.checkBoxOpenStdin.TabIndex = 47;
+            this.checkBoxOpenStdin.Text = "Keep STDIN open even if not attached (-i)";
+            this.checkBoxOpenStdin.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStdinOnce
+            // 
+            this.checkBoxStdinOnce.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxStdinOnce.AutoSize = true;
+            this.checkBoxStdinOnce.Location = new System.Drawing.Point(389, 887);
+            this.checkBoxStdinOnce.Name = "checkBoxStdinOnce";
+            this.checkBoxStdinOnce.Size = new System.Drawing.Size(401, 27);
+            this.checkBoxStdinOnce.TabIndex = 48;
+            this.checkBoxStdinOnce.Text = "Close stdin after one attached client disconnects";
+            this.checkBoxStdinOnce.UseVisualStyleBackColor = true;
             // 
             // CreateContainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 930);
+            this.ClientSize = new System.Drawing.Size(786, 980);
+            this.Controls.Add(this.checkBoxStdinOnce);
+            this.Controls.Add(this.checkBoxOpenStdin);
+            this.Controls.Add(this.checkBoxTty);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkBoxStartContainerAfterCreated);
             this.Controls.Add(this.checkBoxAutoRemove);
@@ -655,5 +694,8 @@
         private System.Windows.Forms.ComboBox comboBoxRestartPolicyFlag;
         private System.Windows.Forms.TextBox textBoxRestartPolicyMaximumRetryCount;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox checkBoxTty;
+        private System.Windows.Forms.CheckBox checkBoxOpenStdin;
+        private System.Windows.Forms.CheckBox checkBoxStdinOnce;
     }
 }

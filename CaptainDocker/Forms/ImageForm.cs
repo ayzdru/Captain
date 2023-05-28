@@ -76,5 +76,13 @@ namespace CaptainDocker.Forms
         {
             this.Close();
         }
+
+        private void ImageForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(_dockerClient!=null)
+            {
+                _dockerClient.Dispose();
+            }
+        }
     }
 }

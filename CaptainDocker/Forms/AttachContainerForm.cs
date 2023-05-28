@@ -66,7 +66,7 @@ namespace CaptainDocker.Forms
         private async void ContainerForm_Load(object sender, EventArgs e)
         {
             RichTextBox.CheckForIllegalCrossThreadCalls = false;
-            _stream =await _dockerClient.Containers.AttachContainerAsync("4118f9aa3dbe", true, new ContainerAttachParameters() { Stderr = true, Stdin = true, Stdout = true, Stream = true });
+            _stream =await _dockerClient.Containers.AttachContainerAsync(ContainerId, true, new ContainerAttachParameters() { Stderr = true, Stdin = true, Stdout = true, Stream = true });
             var read = Task.Run(async () => {
                 try
                 {
@@ -125,7 +125,11 @@ namespace CaptainDocker.Forms
 
         private void AttachContainerForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(_stream!=null)
+            if (_dockerClient != null)
+            {
+                _dockerClient.Dispose();
+            }
+            if (_stream!=null)
             {                
                 _stream.Dispose();
             }

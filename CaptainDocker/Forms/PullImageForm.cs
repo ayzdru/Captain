@@ -96,14 +96,14 @@ namespace CaptainDocker.Forms
                                 ProgressAppendText(status.ProgressMessage);
                                 ProgressAppendText(status.ErrorMessage);
                             });
-                            DockerClient dockerClient = new DockerClientConfiguration(new Uri(dockerConnection.EngineApiUrl)).CreateClient();
-
-
-                            var image = $"{textBoxRepository.Text}:{textBoxTag.Text}";
-                            var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
-                            var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
-                            await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage = image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ? new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress, Cts.Token);
-                            MessageBox.Show("Pull Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
+                            {
+                                var image = $"{textBoxRepository.Text}:{textBoxTag.Text}";
+                                var dockerRegistryItem = comboBoxRegistry.SelectedItem as SelectListItem;
+                                var dockerRegistry = dbContext.DockerRegistries.GetById(dockerRegistryItem.Value).SingleOrDefault();
+                                await dockerClient.Images.CreateImageAsync(new ImagesCreateParameters() { FromImage = image }, dockerRegistry.Address.Contains(Constants.Application.DefaultRegistry) ? new AuthConfig() : new AuthConfig() { ServerAddress = dockerRegistry.Address, Username = dockerRegistry.Username, Password = dockerRegistry.Password }, progress, Cts.Token);
+                                MessageBox.Show("Pull Image process completed.\nPlease review the progress logs.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                         catch (Exception ex)
                         {
