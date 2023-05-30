@@ -75,7 +75,7 @@ namespace CaptainDocker.Forms
             DockerConnectionId = dockerConnectionId;
             ThreadHelper.ThrowIfNotOnUIThread();
             InitializeComponent();
-            
+
 
         }
         private void ButtonDirectoryBrowse_Click(object sender, EventArgs e)
@@ -92,40 +92,46 @@ namespace CaptainDocker.Forms
                 textBoxDockerfile.Text = openFileDialogDockerfile.FileName;
             }
         }
+        private void ArchiveAddFile(string file, string directory, TarOutputStream archive, string virtualFileName = null)
+        {
+            //Replacing slashes as KyleGobel suggested and removing leading /                 
+            string tarName = file.Contains(directory) ? file.Substring(directory.Length).Replace('\\', '/').TrimStart('/') : Path.GetFileName(file);
+
+            //Let's create the entry header
+            var entry = TarEntry.CreateTarEntry(string.IsNullOrEmpty(virtualFileName) == true ? tarName : virtualFileName);
+            var fileStream = File.OpenRead(file);
+            entry.Size = fileStream.Length;
+            archive.PutNextEntry(entry);
+
+            //Now write the bytes of data
+            byte[] localBuffer = new byte[32 * 1024];
+            while (true)
+            {
+                int numRead = fileStream.Read(localBuffer, 0, localBuffer.Length);
+                if (numRead <= 0)
+                    break;
+
+                archive.Write(localBuffer, 0, numRead);
+            }
+
+            //Nothing more to do with this entry
+            archive.CloseEntry();
+        }
         private Stream CreateTarballForDockerfileDirectory(string directory)
         {
             var tarball = new MemoryStream();
             var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).ToList();
             using (var archive = new TarOutputStream(tarball) { IsStreamOwner = false })
             {
-                files.Add(textBoxDockerfile.Text);
+                ArchiveAddFile(textBoxDockerfile.Text, directory, archive, "Dockerfile");
                 foreach (var file in files)
                 {
-
-                    //Replacing slashes as KyleGobel suggested and removing leading /                 
-                    string tarName = file.Contains(directory) ? file.Substring(directory.Length).Replace('\\', '/').TrimStart('/') : Path.GetFileName(file);
-                    
-                    //Let's create the entry header
-                    var entry = TarEntry.CreateTarEntry(tarName);
-                    var fileStream = File.OpenRead(file);
-                    entry.Size = fileStream.Length;
-                    archive.PutNextEntry(entry);
-
-                    //Now write the bytes of data
-                    byte[] localBuffer = new byte[32 * 1024];
-                    while (true)
+                    if(file == textBoxDockerfile.Text)
                     {
-                        int numRead = fileStream.Read(localBuffer, 0, localBuffer.Length);
-                        if (numRead <= 0)
-                            break;
-
-                        archive.Write(localBuffer, 0, numRead);
+                        continue;
                     }
-
-                    //Nothing more to do with this entry
-                    archive.CloseEntry();
+                    ArchiveAddFile(file, directory, archive);
                 }
-
                 archive.Close();
                 tarball.Position = 0;
             }
@@ -141,7 +147,7 @@ namespace CaptainDocker.Forms
         }
         private async void ButtonBuild_Click(object sender, EventArgs e)
         {
-            if(File.Exists(textBoxDockerfile.Text)== false)
+            if (File.Exists(textBoxDockerfile.Text) == false)
             {
                 MessageBox.Show("Dockerfile is not exist!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -153,7 +159,7 @@ namespace CaptainDocker.Forms
             }
             buttonBuild.Enabled = false;
             using (var dbContext = new ApplicationDbContext())
-            {                
+            {
                 var dockerEngineItem = comboBoxDockerEngine.SelectedItem as SelectListItem;
                 var dockerConnection = dbContext.DockerConnections.GetById(dockerEngineItem.Value).SingleOrDefault();
                 if (dockerConnection != null)
@@ -177,8 +183,8 @@ namespace CaptainDocker.Forms
                             });
                             using (var tarball = CreateTarballForDockerfileDirectory(textBoxDirectory.Text))
                             {
-                             await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null, null, progress, Cts.Token);
-                            }     
+                                await dockerClient.Images.BuildImageFromDockerfileAsync(imageBuildParameters, tarball, null, null, progress, Cts.Token);
+                            }
                             richTextBoxProgress.ScrollToCaret();
                             if (comboBoxProjects.SelectedItem != null)
                             {
@@ -207,7 +213,7 @@ namespace CaptainDocker.Forms
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }                    
+                    }
                 }
                 else
                 {
