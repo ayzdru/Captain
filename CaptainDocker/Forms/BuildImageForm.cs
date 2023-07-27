@@ -120,7 +120,7 @@ namespace CaptainDocker.Forms
         private Stream CreateTarballForDockerfileDirectory(string directory)
         {
             var tarball = new MemoryStream();
-            var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).ToList();
+            var files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).Where(q=> q.Contains("\\bin\\") == false && q.Contains("\\obj\\") == false).ToList();
             using (var archive = new TarOutputStream(tarball) { IsStreamOwner = false })
             {
                 ArchiveAddFile(textBoxDockerfile.Text, directory, archive, "Dockerfile");

@@ -88,9 +88,10 @@ namespace CaptainDocker
         public ObservableCollection<DockerTreeViewItem> DockerTreeViewItems { get; set; } = new ObservableCollection<DockerTreeViewItem>();
         private async Task<DockerTreeViewItem> GetDockerTreeViewItemAsync(DockerConnection dockerConnection)
         {
+            var dockerConnectionChildNodes = new ObservableCollection<ITreeNode>();
             try
             {
-                var dockerConnectionChildNodes = new ObservableCollection<ITreeNode>();
+                
                 using (var dockerClient = dockerConnection.GetDockerClientConfiguration().CreateClient())
                 {
                     dockerConnectionChildNodes.Add(new DockerContainerTitleTreeViewItem { DockerConnectionId = dockerConnection.Id, Name = "Containers", ChildNodes = await GetDockerContainerTreeViewItemsAsync(dockerConnection.Id, dockerClient) });
@@ -102,7 +103,8 @@ namespace CaptainDocker
             {
                 MessageBox.Show(ex.Message, dockerConnection.Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            return null;
+            return new DockerTreeViewItem() { DockerConnectionId = dockerConnection.Id, Name = dockerConnection.Name, EngineApiUrl = dockerConnection.EngineApiUrl, ChildNodes = dockerConnectionChildNodes };
+
         }
         private async Task<ObservableCollection<ITreeNode>> GetDockerContainerTreeViewItemsAsync(Guid dockerConnectionId, DockerClient dockerClient)
         {
